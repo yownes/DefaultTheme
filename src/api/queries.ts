@@ -42,3 +42,20 @@ export const TOP_SALES = gql`
     }
   }
 `;
+
+export const PRODUCTS = gql`
+  query Products($category: String, $page: Int, $search: String) {
+    productsList(category_id: $category, page: $page, search: $search) {
+      last
+      totalPages
+      content {
+        id
+        name
+        image
+        special
+        price
+        manufacturer
+      }
+    }
+  }
+`;

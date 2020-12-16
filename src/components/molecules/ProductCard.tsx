@@ -36,7 +36,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Text marginVertical="m">{name}</Text>
         <Box flexDirection="row">
           <Tag>{price}</Tag>
-          {special === true && <Text>{special}</Text>}
+          {special !== null && <Text>{special}</Text>}
         </Box>
       </Box>
     </Box>
