@@ -5,6 +5,7 @@ import { CATEGORIES } from "../api/queries";
 import { Categories as ICategories } from "../api/types/Categories";
 import { Box, Loading } from "../components/atoms";
 import Category from "../components/molecules/Category";
+import { TopSalesProducts } from "../components/organisms";
 
 const Categories = () => {
   const { loading, data } = useQuery<ICategories>(CATEGORIES);
@@ -17,6 +18,9 @@ const Categories = () => {
         {data?.categoriesList?.content?.map((category) => (
           <Category key={category?.id} category={category!} />
         ))}
+      </Box>
+      <Box padding="l" marginTop="xl">
+        <TopSalesProducts />
       </Box>
     </SafeAreaView>
   );

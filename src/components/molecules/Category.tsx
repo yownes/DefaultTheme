@@ -32,16 +32,6 @@ interface ListItemProps {
 export const LIST_ITEM_HEIGHT = 54;
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    backgroundColor: "white",
-    padding: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
   childContainer: {
     height: LIST_ITEM_HEIGHT,
   },

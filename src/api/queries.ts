@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const HOME = gql`
   query Home {
@@ -23,6 +23,21 @@ export const CATEGORIES = gql`
           id
           name
         }
+      }
+    }
+  }
+`;
+
+export const TOP_SALES = gql`
+  query TopSales {
+    productsList(size: 4) {
+      content {
+        id
+        name
+        image
+        special
+        price
+        manufacturer
       }
     }
   }
