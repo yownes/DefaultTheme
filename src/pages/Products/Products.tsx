@@ -7,8 +7,8 @@ import {
   Products as IProducts,
   ProductsVariables,
 } from "../../api/types/Products";
-import { ProductCard } from "../../components/molecules";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ProductCard, VerticalProductCard } from "../../components/molecules";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -16,12 +16,14 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import Filters from "./Components/Filters";
+import Filters, { BAR_HEIGHT } from "./Components/Filters";
+import { useTheme } from "../../lib/theme";
 
-const BAR_HEIGHT = 70;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const Products = ({ navigation, route }: ProductsProps) => {
   const category = route.params?.category;
+  const theme = useTheme();
   const transY = useSharedValue(0);
   const last = useSharedValue(0);
   const [isList, setIsList] = useState(true);
@@ -64,27 +66,33 @@ const Products = ({ navigation, route }: ProductsProps) => {
       <Animated.View style={filterStyle}>
         <Filters list={isList} onListChange={setIsList} />
       </Animated.View>
-      <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={32}>
-        <Box
-          paddingHorizontal="l"
-          flex={1}
-          paddingTop="m"
-          style={{ marginTop: BAR_HEIGHT }}
-        >
-          {data?.productsList?.content?.map((product) => (
-            <TouchableOpacity
-              key={product?.id}
-              onPress={() =>
-                navigation.navigate("Product", { id: product!!.id!! })
-              }
-            >
-              <Box paddingBottom="m">
+      <AnimatedFlatList
+        contentContainerStyle={{
+          marginTop: BAR_HEIGHT,
+          paddingTop: theme.spacing.m,
+          paddingHorizontal: theme.spacing.l,
+        }}
+        numColumns={isList ? 1 : 2}
+        data={data?.productsList?.content}
+        onScroll={onScroll}
+        key={isList ? "list" : "grid"}
+        scrollEventThrottle={32}
+        renderItem={({ item: product }) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Product", { id: product!!.id!! })
+            }
+          >
+            <Box paddingBottom="m">
+              {isList ? (
                 <ProductCard product={product!!} />
-              </Box>
-            </TouchableOpacity>
-          ))}
-        </Box>
-      </Animated.ScrollView>
+              ) : (
+                <VerticalProductCard product={product!!} />
+              )}
+            </Box>
+          </TouchableOpacity>
+        )}
+      ></AnimatedFlatList>
     </>
   );
 };

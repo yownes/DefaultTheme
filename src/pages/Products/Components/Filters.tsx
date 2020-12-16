@@ -8,17 +8,24 @@ interface FiltersProps {
   onListChange: (value: boolean) => void;
 }
 
+export const BAR_HEIGHT = 44;
+
 const Filters = ({ list, onListChange }: FiltersProps) => {
   return (
     <Box
-      padding="l"
+      padding="m"
+      alignItems="center"
       backgroundColor="white"
       justifyContent="space-between"
       flexDirection="row"
     >
       <Text>Filters</Text>
       <TouchableOpacity onPress={() => onListChange(!list)}>
-        {list ? <List color="dark" /> : <Grid color="dark" />}
+        {list ? (
+          <Grid color="dark" width={24} height={24} />
+        ) : (
+          <List color="dark" width={24} height={24} />
+        )}
       </TouchableOpacity>
       <Text>More filters</Text>
     </Box>
