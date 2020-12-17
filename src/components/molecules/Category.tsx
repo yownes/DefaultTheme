@@ -27,6 +27,7 @@ interface CategoryProps {
 
 interface ListItemProps {
   item?: Categories_categoriesList_content_categories;
+  title?: string;
 }
 
 export const LIST_ITEM_HEIGHT = 54;
@@ -48,12 +49,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const ListItem = ({ item }: ListItemProps) => {
+const ListItem = ({ title, item }: ListItemProps) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Products", { category: item?.id });
+        navigation.navigate("Products", { category: item });
       }}
     >
       <Box
@@ -64,7 +65,7 @@ const ListItem = ({ item }: ListItemProps) => {
         style={styles.childContainer}
       >
         <Text variant="body" color="greyscale4">
-          {item?.name}
+          {title ?? item?.name}
         </Text>
       </Box>
     </TouchableOpacity>
@@ -105,7 +106,7 @@ const Category = ({ category }: CategoryProps) => {
             }
             open.value = !open.value;
           } else {
-            navigation.navigate("Products", { category: category.id });
+            navigation.navigate("Products", { category: category });
           }
         }}
       >
@@ -129,14 +130,7 @@ const Category = ({ category }: CategoryProps) => {
       <Animated.View style={[styles.items, style]}>
         <View ref={aref}>
           {len > 0 && (
-            <ListItem
-              item={{
-                name: "~ Ver todos ~",
-                id: category.id,
-                __typename: "Category",
-              }}
-              key={"All"}
-            />
+            <ListItem item={category} title="~ Ver todos ~" key={"All"} />
           )}
           {category.categories?.map((cat, i) => (
             <ListItem item={cat!!} key={cat?.id} />

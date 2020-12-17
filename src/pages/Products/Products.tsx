@@ -28,7 +28,7 @@ const Products = ({ navigation, route }: ProductsProps) => {
   const last = useSharedValue(0);
   const [isList, setIsList] = useState(true);
   const { loading, data } = useQuery<IProducts, ProductsVariables>(PRODUCTS, {
-    variables: { category },
+    variables: { category: category?.id },
   });
   const onScroll = useAnimatedScrollHandler<{ y?: number }>({
     onScroll({ contentOffset }, { y }) {
