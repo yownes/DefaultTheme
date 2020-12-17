@@ -3,16 +3,16 @@ import {
   createBox,
   useResponsiveProp,
   useTheme,
-} from '@shopify/restyle';
-import React, { ReactNode } from 'react';
+} from "@shopify/restyle";
+import React, { ReactNode } from "react";
 import {
   ActivityIndicator,
   TouchableOpacity,
   TouchableOpacityProps,
-} from 'react-native';
+} from "react-native";
 
-import Text from './Text';
-import { Theme } from '../../lib/theme';
+import Text from "./Text";
+import { Theme } from "../../lib/theme";
 
 const BaseButton = createBox<
   Theme,
@@ -21,17 +21,20 @@ const BaseButton = createBox<
   }
 >(TouchableOpacity);
 
-type Props = React.ComponentProps<typeof BaseButton> &
-  ColorProps<Theme> & {
-    label: string;
-    isLoading?: boolean;
-  };
+type Props = Omit<
+  React.ComponentProps<typeof BaseButton> &
+    ColorProps<Theme> & {
+      label: string;
+      isLoading?: boolean;
+    },
+  "children"
+>;
 
 const Button = ({
   label,
   isLoading,
-  color = 'dark',
-  backgroundColor = 'primary',
+  color = "white",
+  backgroundColor = "primary",
   ...props
 }: Props) => {
   const theme = useTheme<Theme>();
@@ -39,15 +42,17 @@ const Button = ({
   return (
     <BaseButton
       flexDirection="row"
-      padding="s"
+      padding="m"
       borderRadius={5}
       justifyContent="center"
       backgroundColor={backgroundColor}
-      {...props}>
+      {...props}
+    >
       <Text
         variant="buttonLabel"
         color={color}
-        marginRight={isLoading ? 's' : undefined}>
+        marginRight={isLoading ? "s" : undefined}
+      >
         {label}
       </Text>
       {isLoading ? (

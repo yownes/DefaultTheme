@@ -48,6 +48,11 @@ const theme = createTheme({
       fontWeight: "bold",
       fontSize: 12,
     },
+    header4: {
+      fontWeight: "bold",
+      fontSize: 12,
+      textTransform: "uppercase",
+    },
     body: {
       fontSize: 12,
       color: "dark",
