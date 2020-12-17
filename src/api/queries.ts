@@ -87,3 +87,18 @@ export const PRODUCT = gql`
     }
   }
 `;
+
+export const ABOUT = gql`
+  query About {
+    page(id: "4") {
+      id
+      description
+    }
+    contact {
+      store
+      address
+      email
+      telephone
+    }
+  }
+`;

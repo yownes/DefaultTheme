@@ -16,18 +16,6 @@ import Quantity from "./Components/Quantity";
 
 const { height } = Dimensions.get("window");
 
-function formatAttributesState(
-  attributes: (Product_product_attributes | null)[] | null | undefined
-) {
-  return attributes?.reduce(
-    (prev, attr) => ({
-      ...prev,
-      [attr?.name]: null,
-    }),
-    {}
-  );
-}
-
 const Product = ({ route }: ProductProps) => {
   const theme = useTheme();
   const { loading, data } = useQuery<IProduct, ProductVariables>(PRODUCT, {
