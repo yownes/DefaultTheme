@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { VerticalProductCard } from ".";
+import VerticalProductCard from "./VerticalProductCard";
 import { BasicProduct } from "../../api/types/BasicProduct";
 import { useTheme } from "../../lib/theme";
 import { Box, Text } from "../atoms";
@@ -26,7 +26,7 @@ const HorizontalScrollProducts = ({
         contentContainerStyle={{ paddingLeft: theme.spacing.l }}
       >
         {products.map((product) => (
-          <VerticalProductCard product={product} />
+          <VerticalProductCard key={product.id} product={product} />
         ))}
       </ScrollView>
     </Box>
