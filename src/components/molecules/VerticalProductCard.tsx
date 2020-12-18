@@ -1,11 +1,11 @@
 import React from "react";
 import { Dimensions, Image } from "react-native";
-import { TopSales_productsList_content } from "../../api/types/TopSales";
+import { BasicProduct } from "../../api/types/BasicProduct";
 import { useTheme } from "../../lib/theme";
-import { Box, Card, Tag, Text } from "../atoms";
+import { Box, Tag, Text } from "../atoms";
 
 interface ProductCardProps {
-  product: TopSales_productsList_content;
+  product: BasicProduct;
 }
 
 const { width } = Dimensions.get("window");

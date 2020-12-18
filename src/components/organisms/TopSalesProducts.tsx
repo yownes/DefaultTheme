@@ -15,9 +15,9 @@ const TopSalesProducts = () => {
       </Text>
       <Slider
         views={
-          data?.productsList?.content?.map((product) => (
+          data?.bestSells?.map((product) => (
             <ProductCard key={product?.id} product={product} />
-          )) ?? []
+          )) ?? [<Text>Sorry</Text>]
         }
       />
     </Box>

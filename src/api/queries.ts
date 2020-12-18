@@ -1,5 +1,16 @@
 import { gql } from "@apollo/client";
 
+const PRODUCT_FRAGMENT = gql`
+  fragment BasicProduct on Product {
+    id
+    name
+    price
+    special
+    image
+    manufacturer
+  }
+`;
+
 export const HOME = gql`
   query Home {
     home {
@@ -8,7 +19,34 @@ export const HOME = gql`
         description
       }
     }
+    latestProducts: productsList(
+      page: 1
+      size: 6
+      sort: "date_added"
+      order: "DESC"
+    ) {
+      content {
+        ...BasicProduct
+      }
+    }
+
+    specialProducts: productsList(
+      page: 1
+      size: 6
+      special: true
+      sort: "date_added"
+      order: "DESC"
+    ) {
+      content {
+        ...BasicProduct
+      }
+    }
+
+    bestSells {
+      ...BasicProduct
+    }
   }
+  ${PRODUCT_FRAGMENT}
 `;
 
 export const CATEGORIES = gql`
@@ -30,17 +68,11 @@ export const CATEGORIES = gql`
 
 export const TOP_SALES = gql`
   query TopSales {
-    productsList(size: 4) {
-      content {
-        id
-        name
-        image
-        special
-        price
-        manufacturer
-      }
+    bestSells {
+      ...BasicProduct
     }
   }
+  ${PRODUCT_FRAGMENT}
 `;
 
 export const PRODUCTS = gql`
@@ -49,15 +81,11 @@ export const PRODUCTS = gql`
       last
       totalPages
       content {
-        id
-        name
-        image
-        special
-        price
-        manufacturer
+        ...BasicProduct
       }
     }
   }
+  ${PRODUCT_FRAGMENT}
 `;
 
 export const PRODUCT = gql`

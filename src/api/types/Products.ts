@@ -11,9 +11,9 @@ export interface Products_productsList_content {
   __typename: "Product";
   id: string | null;
   name: string | null;
-  image: string | null;
-  special: string | null;
   price: string | null;
+  special: string | null;
+  image: string | null;
   manufacturer: string | null;
 }
 

@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: TopSales
+// GraphQL fragment: BasicProduct
 // ====================================================
 
-export interface TopSales_bestSells {
+export interface BasicProduct {
   __typename: "Product";
   id: string | null;
   name: string | null;
@@ -15,8 +15,4 @@ export interface TopSales_bestSells {
   special: string | null;
   image: string | null;
   manufacturer: string | null;
-}
-
-export interface TopSales {
-  bestSells: (TopSales_bestSells | null)[] | null;
 }
