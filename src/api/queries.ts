@@ -18,6 +18,20 @@ export const HOME = gql`
         title
         description
       }
+      banner
+      slides {
+        speed
+        slides {
+          id
+          imageUrl
+          title
+          description
+          size {
+            width
+            height
+          }
+        }
+      }
     }
     latestProducts: productsList(
       page: 1

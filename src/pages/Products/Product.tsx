@@ -14,7 +14,7 @@ import { useTheme } from "../../lib/theme";
 import { ProductProps } from "../../navigation/Products";
 import Quantity from "./Components/Quantity";
 
-const { height } = Dimensions.get("window");
+const { height } = Dimensions.get("screen");
 
 const Product = ({ route }: ProductProps) => {
   const theme = useTheme();
