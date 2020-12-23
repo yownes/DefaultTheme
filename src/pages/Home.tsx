@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
 import { Home as IHome } from "../api/types/Home";
@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
 
 const Home = ({ navigation }: any) => {
   const { loading, data } = useQuery<IHome>(HOME);
-  navigation.setOptions({
-    title: data?.home?.meta?.title ?? "",
-  });
+  useEffect(() => {
+    navigation.setOptions({
+      title: data?.home?.meta?.title ?? "",
+    });
+  }, [navigation, data]);
   if (loading) {
     return <Loading />;
   }

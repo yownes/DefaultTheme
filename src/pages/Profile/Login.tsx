@@ -3,6 +3,9 @@ import { TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Box, Button, Input, Text } from "../../components/atoms";
 import { LoginProps } from "../../navigation/Profile";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../../api/mutations";
+import { Login as ILogin, LoginVariables } from "../../api/types/Login";
 
 interface LoginState {
   mail: string;
@@ -18,8 +21,20 @@ const Login = ({ navigation }: LoginProps) => {
   const { control, handleSubmit, errors } = useForm<LoginState>({
     defaultValues: intialState,
   });
+  const [login] = useMutation<ILogin, LoginVariables>(LOGIN);
   function onSubmit(data: LoginState) {
-    console.log(data);
+    login({
+      variables: {
+        email: data.mail,
+        password: data.password,
+      },
+    })
+      .then(({ data, context }) => {
+        console.log(data?.accountLogin, context);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
   return (
     <Box padding="xl">

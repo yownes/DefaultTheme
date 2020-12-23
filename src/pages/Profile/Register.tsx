@@ -3,12 +3,19 @@ import { Dimensions, TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Box, Button, Input, Text } from "../../components/atoms";
 import { RegisterProps } from "../../navigation/Profile";
+import { useMutation } from "@apollo/client";
+import { REGISTER } from "../../api/mutations";
+import {
+  Register as IRegister,
+  RegisterVariables,
+} from "../../api/types/Register";
 
 const { width } = Dimensions.get("window");
 
 interface RegisterState {
   mail: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   password: string;
   confirmPassword: string;
 }
@@ -16,7 +23,8 @@ interface RegisterState {
 const intialState: RegisterState = {
   mail: "",
   password: "",
-  name: "",
+  firstName: "",
+  lastName: "",
   confirmPassword: "",
 };
 
@@ -24,8 +32,18 @@ const Register = ({ navigation }: RegisterProps) => {
   const { control, handleSubmit, errors } = useForm<RegisterState>({
     defaultValues: intialState,
   });
+  const [register] = useMutation<IRegister, RegisterVariables>(REGISTER);
   function onSubmit(data: RegisterState) {
-    console.log(data);
+    register({
+      variables: {
+        customer: {
+          email: data.mail,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+        },
+      },
+    });
   }
   return (
     <Box padding="xl">
@@ -36,13 +54,28 @@ const Register = ({ navigation }: RegisterProps) => {
         <Box paddingBottom="l">
           <Controller
             control={control}
-            name="name"
+            name="firstName"
             render={({ onChange, onBlur, value }) => (
               <Input
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
                 placeholder="Nombre"
+              />
+            )}
+            rules={{ required: true }}
+          />
+        </Box>
+        <Box paddingBottom="l">
+          <Controller
+            control={control}
+            name="lastName"
+            render={({ onChange, onBlur, value }) => (
+              <Input
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Apellidos"
               />
             )}
             rules={{ required: true }}

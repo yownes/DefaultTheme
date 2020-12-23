@@ -144,3 +144,22 @@ export const ABOUT = gql`
     }
   }
 `;
+
+/**
+ * CUSTOMER
+ */
+
+export const CART = gql`
+  query Cart {
+    cart {
+      total
+      products {
+        quantity
+        total
+        product {
+          name
+        }
+      }
+    }
+  }
+`;

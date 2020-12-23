@@ -7,6 +7,13 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CustomerInput {
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  password?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
