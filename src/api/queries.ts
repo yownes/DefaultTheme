@@ -149,6 +149,20 @@ export const ABOUT = gql`
  * CUSTOMER
  */
 
+export const PROFILE = gql`
+  query Profile {
+    accountCheckLogged {
+      status
+      customer {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+`;
+
 export const CART = gql`
   query Cart {
     cart {
@@ -160,6 +174,29 @@ export const CART = gql`
           name
         }
       }
+    }
+  }
+`;
+
+export const ADDRESS_LIST = gql`
+  query AddressList {
+    accountAddressList {
+      id
+      firstName
+      lastName
+      company
+      address1
+      address2
+      zone {
+        id
+        name
+      }
+      country {
+        id
+        name
+      }
+      zipcode
+      city
     }
   }
 `;

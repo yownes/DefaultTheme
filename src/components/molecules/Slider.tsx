@@ -11,17 +11,17 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Box, Dot } from "../atoms";
-import { CARD_HEIGHT } from "./ProductCard";
 
 interface SliderProps {
   views: ReactNode[];
+  viewHeight: number;
 }
 
 const { width } = Dimensions.get("window");
 
 const THRESHOLD = 30;
 
-const Slider = ({ views }: SliderProps) => {
+const Slider = ({ views, viewHeight }: SliderProps) => {
   const idx = useSharedValue(0);
   const translationX = useSharedValue(0);
   const total = views.length - 1;
@@ -124,7 +124,7 @@ const Slider = ({ views }: SliderProps) => {
             {views.map((_, i) => {
               const selected = useDerivedValue(() => idx.value === i);
               return (
-                <Box padding="m" key={i} style={{ marginTop: CARD_HEIGHT }}>
+                <Box padding="m" key={i} style={{ marginTop: viewHeight }}>
                   <Dot selected={selected} />
                 </Box>
               );
