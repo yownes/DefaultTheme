@@ -1,16 +1,18 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Image } from "react-native";
 import { Box, Text } from "../atoms";
 
 interface PlaceholderProps {
   image?: string;
+  View?: ReactNode;
   text: string;
 }
 
-const Placeholder = ({ image, text }: PlaceholderProps) => {
+const Placeholder = ({ image, text, View }: PlaceholderProps) => {
   return (
     <Box>
-      <Image source={{ uri: image }} />
+      {image && <Image source={{ uri: image }} />}
+      {View}
       <Text textAlign="center">{text}</Text>
     </Box>
   );

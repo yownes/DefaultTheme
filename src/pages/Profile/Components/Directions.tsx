@@ -4,7 +4,12 @@ import { ADDRESS_LIST } from "../../../api/queries";
 import { AddressList } from "../../../api/types/AddressList";
 import { Box, Button, Text } from "../../../components/atoms";
 import { ProfileProps } from "../../../navigation/Profile";
-import { Address, Placeholder, Slider } from "../../../components/molecules";
+import {
+  Address,
+  Placeholder,
+  Slider,
+  ShippingImage,
+} from "../../../components/molecules";
 
 interface DirectionsProps {
   navigation: ProfileProps["navigation"];
@@ -25,7 +30,10 @@ const Directions = ({ navigation }: DirectionsProps) => {
           viewHeight={250}
         />
       ) : (
-        <Placeholder text="Aún no tienes ninguna dirección añadida, crea una para poder comprar" />
+        <Placeholder
+          View={<ShippingImage />}
+          text="Aún no tienes ninguna dirección añadida, crea una para poder comprar"
+        />
       )}
       <Button
         onPress={() => navigation.navigate("AddDirection")}

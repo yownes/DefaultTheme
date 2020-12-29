@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Text } from "../../../components/atoms";
-import { Placeholder } from "../../../components/molecules";
+import { BillingImage, Placeholder } from "../../../components/molecules";
 import { ProfileProps } from "../../../navigation/Profile";
 
 interface PaymentsProps {
@@ -13,7 +13,10 @@ const Payments = ({ navigation }: PaymentsProps) => {
       <Text variant="header3" marginBottom="l">
         Método de pago
       </Text>
-      <Placeholder text="Aún no tienes ningún método de pago añadido, crea uno para poder comprar" />
+      <Placeholder
+        View={<BillingImage />}
+        text="Aún no tienes ningún método de pago añadido, crea uno para poder comprar"
+      />
       <Button
         onPress={() => navigation.navigate("AddDirection")}
         marginTop="l"
