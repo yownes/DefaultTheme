@@ -170,8 +170,16 @@ export const CART = gql`
       products {
         quantity
         total
-        product {
+        option {
           name
+          value
+          type
+        }
+        product {
+          id
+          name
+          image
+          price
         }
       }
     }

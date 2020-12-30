@@ -11,7 +11,13 @@ const link = new HttpLink({
   uri: "http://yownes.localhost/module/yownes/graphql",
 });
 
-const cache = new InMemoryCache({});
+const cache = new InMemoryCache({
+  typePolicies: {
+    CartProductOption: {
+      keyFields: false,
+    },
+  },
+});
 
 const withToken = setContext(async () => {
   const token = await getToken();

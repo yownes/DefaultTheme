@@ -12,9 +12,9 @@ import {
 } from "../../api/types/Product";
 import { Box, Button, Tag, Text } from "../../components/atoms";
 import { Star } from "../../components/icons";
+import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
 import { ProductProps } from "../../navigation/Products";
-import Quantity from "./Components/Quantity";
 
 const { height } = Dimensions.get("screen");
 

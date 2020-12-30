@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Box, Text } from "../../../components/atoms";
-import { useTheme } from "../../../lib/theme";
+import { Box, Text } from "../atoms";
+import { useTheme } from "../../lib/theme";
 
 interface QuantityProps {
   qty: number;
