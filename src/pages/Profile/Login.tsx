@@ -32,6 +32,7 @@ const Login = ({ navigation }: LoginProps) => {
     })
       .then(({ data, context }) => {
         console.log(data?.accountLogin, context);
+        navigation.replace("Profile");
       })
       .catch((e) => {
         console.log(e);
