@@ -31,3 +31,28 @@ export const ADD_TO_CART = gql`
     }
   }
 `;
+
+export const REMOVE_FROM_CART = gql`
+  mutation RemoveFromCart($key: String) {
+    removeCart(key: $key) {
+      id
+      total
+      products {
+        key
+        quantity
+        total
+        option {
+          name
+          value
+          type
+        }
+        product {
+          id
+          name
+          image
+          price
+        }
+      }
+    }
+  }
+`;

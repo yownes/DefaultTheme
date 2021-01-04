@@ -166,8 +166,10 @@ export const PROFILE = gql`
 export const CART = gql`
   query Cart {
     cart {
+      id
       total
       products {
+        key
         quantity
         total
         option {

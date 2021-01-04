@@ -3,6 +3,7 @@ import {
   InMemoryCache,
   HttpLink,
   ApolloLink,
+  Reference,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { extractTokenFromHeaders, getToken, saveToken } from "./auth";
@@ -15,6 +16,15 @@ const cache = new InMemoryCache({
   typePolicies: {
     CartProductOption: {
       keyFields: false,
+    },
+    Cart: {
+      fields: {
+        products: {
+          merge(existing: Reference[], incoming: Reference[]) {
+            return incoming;
+          },
+        },
+      },
     },
   },
 });

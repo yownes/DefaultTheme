@@ -4,17 +4,17 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Cart
+// GraphQL mutation operation: RemoveFromCart
 // ====================================================
 
-export interface Cart_cart_products_option {
+export interface RemoveFromCart_removeCart_products_option {
   __typename: "CartProductOption";
   name: string | null;
   value: string | null;
   type: string | null;
 }
 
-export interface Cart_cart_products_product {
+export interface RemoveFromCart_removeCart_products_product {
   __typename: "Product";
   id: string | null;
   name: string | null;
@@ -22,22 +22,26 @@ export interface Cart_cart_products_product {
   price: string | null;
 }
 
-export interface Cart_cart_products {
+export interface RemoveFromCart_removeCart_products {
   __typename: "CartProduct";
   key: string | null;
   quantity: number | null;
   total: string | null;
-  option: (Cart_cart_products_option | null)[] | null;
-  product: Cart_cart_products_product | null;
+  option: (RemoveFromCart_removeCart_products_option | null)[] | null;
+  product: RemoveFromCart_removeCart_products_product | null;
 }
 
-export interface Cart_cart {
+export interface RemoveFromCart_removeCart {
   __typename: "Cart";
   id: string | null;
   total: string | null;
-  products: (Cart_cart_products | null)[] | null;
+  products: (RemoveFromCart_removeCart_products | null)[] | null;
 }
 
-export interface Cart {
-  cart: Cart_cart | null;
+export interface RemoveFromCart {
+  removeCart: RemoveFromCart_removeCart | null;
+}
+
+export interface RemoveFromCartVariables {
+  key?: string | null;
 }

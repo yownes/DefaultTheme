@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, Card, Tag, Text } from "../../../components/atoms";
 import { Quantity } from "../../../components/molecules";
 import { Cart_cart_products } from "../../../api/types/Cart";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
+import { REMOVE_FROM_CART } from "../../../api/mutations";
+import {
+  RemoveFromCart,
+  RemoveFromCartVariables,
+} from "../../../api/types/RemoveFromCart";
+import { useMutation } from "@apollo/client";
 
 interface RowProps {
   product: Cart_cart_products;
@@ -30,7 +40,18 @@ const points = [0, -THRESHOLD, -width];
 
 const Row = ({ product }: RowProps) => {
   const translateX = useSharedValue(0);
-  const gestureEvent = useAnimatedGestureHandler<{ x: number }>({
+  const [removeCart] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
+    REMOVE_FROM_CART
+  );
+
+  const deleteProduct = useCallback(() => {
+    removeCart({ variables: { key: product.key } });
+  }, [product]);
+
+  const gestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { x: number }
+  >({
     onStart(_, ctx) {
       ctx.x = translateX.value;
     },
@@ -40,6 +61,10 @@ const Row = ({ product }: RowProps) => {
     onEnd({ velocityX }) {
       const pt = snapPoint(translateX.value, velocityX, points);
       translateX.value = withSpring(pt);
+
+      if (pt === -width) {
+        runOnJS(deleteProduct)();
+      }
     },
   });
   const style = useAnimatedStyle(() => ({
@@ -48,7 +73,7 @@ const Row = ({ product }: RowProps) => {
   }));
   return (
     <Box>
-      <TouchableOpacity style={StyleSheet.absoluteFill}>
+      <TouchableOpacity style={StyleSheet.absoluteFill} onPress={deleteProduct}>
         <Box
           backgroundColor="greyscale5"
           padding="l"

@@ -23,7 +23,7 @@ const Cart = ({ navigation }: CartProps) => {
       <ScrollView>
         <Box>
           {data?.cart?.products?.map((prod, i) => (
-            <Box paddingBottom="m" key={prod?.product?.id}>
+            <Box paddingBottom="m" key={prod?.key}>
               <Row product={prod!!} />
             </Box>
           ))}
