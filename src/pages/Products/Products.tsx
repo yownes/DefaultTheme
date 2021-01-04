@@ -8,7 +8,7 @@ import {
   ProductsVariables,
 } from "../../api/types/Products";
 import { ProductCard, VerticalProductCard } from "../../components/molecules";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -78,19 +78,13 @@ const Products = ({ navigation, route }: ProductsProps) => {
         key={isList ? "list" : "grid"}
         scrollEventThrottle={32}
         renderItem={({ item: product }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Product", { id: product!!.id!! })
-            }
-          >
-            <Box paddingBottom="m">
-              {isList ? (
-                <ProductCard product={product!!} />
-              ) : (
-                <VerticalProductCard product={product!!} />
-              )}
-            </Box>
-          </TouchableOpacity>
+          <Box paddingBottom="m">
+            {isList ? (
+              <ProductCard product={product!!} />
+            ) : (
+              <VerticalProductCard product={product!!} />
+            )}
+          </Box>
         )}
       ></AnimatedFlatList>
     </>
