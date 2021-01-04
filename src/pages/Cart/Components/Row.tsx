@@ -1,8 +1,16 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, Card, Tag, Text } from "../../../components/atoms";
 import { Quantity } from "../../../components/molecules";
 import { Cart_cart_products } from "../../../api/types/Cart";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+import { clamp, snapPoint } from "react-native-redash";
 
 interface RowProps {
   product: Cart_cart_products;
@@ -13,44 +21,93 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  deleteBtn: {},
 });
 
+const THRESHOLD = 100;
+const { width } = Dimensions.get("window");
+const points = [0, -THRESHOLD, -width];
+
 const Row = ({ product }: RowProps) => {
+  const translateX = useSharedValue(0);
+  const gestureEvent = useAnimatedGestureHandler<{ x: number }>({
+    onStart(_, ctx) {
+      ctx.x = translateX.value;
+    },
+    onActive({ translationX }, ctx) {
+      translateX.value = clamp(translationX + ctx.x, -width, 0);
+    },
+    onEnd({ velocityX }) {
+      const pt = snapPoint(translateX.value, velocityX, points);
+      translateX.value = withSpring(pt);
+    },
+  });
+  const style = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+    position: "relative",
+  }));
   return (
-    <Card padding="s" flexDirection="row" alignItems="center">
-      <Image source={{ uri: product.product?.image }} style={styles.image} />
-      <Box
-        padding="m"
-        justifyContent="space-between"
-        alignSelf="stretch"
-        flex={1}
-      >
-        <Box justifyContent="space-between" flexDirection="row">
-          <Box flex={1}>
-            <Text style={{ flexShrink: 1 }}>{product.product?.name}</Text>
-          </Box>
-          <Box>
-            <Tag>{product.product?.price}</Tag>
-          </Box>
-        </Box>
+    <Box>
+      <TouchableOpacity style={StyleSheet.absoluteFill}>
         <Box
-          flexDirection="row"
-          justifyContent="space-between"
+          backgroundColor="greyscale5"
+          padding="l"
           alignItems="flex-end"
+          justifyContent="center"
+          flex={1}
         >
-          <Box>
-            {product.option?.map((option) => (
-              <Text key={option?.name} paddingRight="m">
-                <Text variant="header3">{option?.name}:</Text> {option?.value}
-              </Text>
-            ))}
-          </Box>
-          <Box alignItems="flex-end">
-            <Quantity qty={product.quantity!!} limit={2} onChange={() => {}} />
-          </Box>
+          <Text>Eliminar</Text>
         </Box>
-      </Box>
-    </Card>
+      </TouchableOpacity>
+      <PanGestureHandler onGestureEvent={gestureEvent}>
+        <Animated.View style={style}>
+          <Card padding="s" flexDirection="row" alignItems="center">
+            {product.product?.image && (
+              <Image
+                source={{ uri: product.product.image }}
+                style={styles.image}
+              />
+            )}
+            <Box
+              padding="m"
+              justifyContent="space-between"
+              alignSelf="stretch"
+              flex={1}
+            >
+              <Box justifyContent="space-between" flexDirection="row">
+                <Box flex={1}>
+                  <Text style={{ flexShrink: 1 }}>{product.product?.name}</Text>
+                </Box>
+                <Box>
+                  <Tag>{product.product?.price}</Tag>
+                </Box>
+              </Box>
+              <Box
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="flex-end"
+              >
+                <Box>
+                  {product.option?.map((option) => (
+                    <Text key={option?.name} paddingRight="m">
+                      <Text variant="header3">{option?.name}:</Text>{" "}
+                      {option?.value}
+                    </Text>
+                  ))}
+                </Box>
+                <Box alignItems="flex-end">
+                  <Quantity
+                    qty={product.quantity!!}
+                    limit={2}
+                    onChange={() => {}}
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </Card>
+        </Animated.View>
+      </PanGestureHandler>
+    </Box>
   );
 };
 
