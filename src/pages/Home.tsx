@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
 import { Home as IHome } from "../api/types/Home";
-import { Box, Button, Text, Loading } from "../components/atoms";
+import { Box, Button, Loading } from "../components/atoms";
 import { HOME } from "../api/queries";
 import { HorizontalScrollProducts, HomeSlide } from "../components/molecules";
 import { ScrollView } from "react-native-gesture-handler";
