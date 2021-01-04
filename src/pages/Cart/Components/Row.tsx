@@ -15,12 +15,13 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
-import { REMOVE_FROM_CART } from "../../../api/mutations";
+import { REMOVE_FROM_CART, UPDATE_CART } from "../../../api/mutations";
 import {
   RemoveFromCart,
   RemoveFromCartVariables,
 } from "../../../api/types/RemoveFromCart";
 import { useMutation } from "@apollo/client";
+import { UpdateCart, UpdateCartVariables } from "../../../api/types/UpdateCart";
 
 interface RowProps {
   product: Cart_cart_products;
@@ -42,6 +43,9 @@ const Row = ({ product }: RowProps) => {
   const translateX = useSharedValue(0);
   const [removeCart] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
     REMOVE_FROM_CART
+  );
+  const [updateCart] = useMutation<UpdateCart, UpdateCartVariables>(
+    UPDATE_CART
   );
 
   const deleteProduct = useCallback(() => {
@@ -123,8 +127,10 @@ const Row = ({ product }: RowProps) => {
                 <Box alignItems="flex-end">
                   <Quantity
                     qty={product.quantity!!}
-                    limit={2}
-                    onChange={() => {}}
+                    limit={10}
+                    onChange={(qty) => {
+                      updateCart({ variables: { key: product.key, qty } });
+                    }}
                   />
                 </Box>
               </Box>
