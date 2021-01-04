@@ -9,14 +9,8 @@ function BillingImage() {
   const theme = useTheme();
   return (
     <Svg viewBox="0 0 1080 688" style={{ width: "100%", height: 250 }}>
-      <G id="prefix__Ilustraciones">
-        <Circle
-          id="prefix__Circulo_3_"
-          cx={476.9}
-          cy={369}
-          r={156.3}
-          fill={theme.colors.primary}
-        />
+      <G>
+        <Circle cx={476.9} cy={369} r={156.3} fill={theme.colors.primary} />
         <Path
           fill={theme.colors.dark}
           d="M434.7 357.8c-1.1 0-1.9.9-1.9 1.9s.9 1.9 1.9 1.9c18.2 0 33-14.8 33-33 0-1.1-.9-1.9-1.9-1.9s-1.9.9-1.9 1.9c0 16.1-13.1 29.2-29.2 29.2z"

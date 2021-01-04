@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Button, Text } from "../../../components/atoms";
-import { BillingImage, Placeholder } from "../../../components/molecules";
+import { Placeholder } from "../../../components/molecules";
 import { ProfileProps } from "../../../navigation/Profile";
+import BillingImage from "../../../components/images/Billing";
 
 interface PaymentsProps {
   navigation: ProfileProps["navigation"];

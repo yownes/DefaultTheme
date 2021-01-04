@@ -4,12 +4,8 @@ import { ADDRESS_LIST } from "../../../api/queries";
 import { AddressList } from "../../../api/types/AddressList";
 import { Box, Button, Text } from "../../../components/atoms";
 import { ProfileProps } from "../../../navigation/Profile";
-import {
-  Address,
-  Placeholder,
-  Slider,
-  ShippingImage,
-} from "../../../components/molecules";
+import { Address, Placeholder, Slider } from "../../../components/molecules";
+import ShippingImage from "../../../components/images/Shipping";
 
 interface DirectionsProps {
   navigation: ProfileProps["navigation"];
