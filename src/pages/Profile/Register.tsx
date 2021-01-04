@@ -9,6 +9,7 @@ import {
   Register as IRegister,
   RegisterVariables,
 } from "../../api/types/Register";
+import RegisterImage from "../../components/images/Register";
 
 const { width } = Dimensions.get("window");
 
@@ -46,8 +47,9 @@ const Register = ({ navigation }: RegisterProps) => {
     });
   }
   return (
-    <Box padding="xl">
+    <Box padding="xl" paddingTop="s">
       <Box>
+        <RegisterImage />
         <Text variant="header3" paddingBottom="xl">
           Registro
         </Text>

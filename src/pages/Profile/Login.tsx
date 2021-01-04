@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Box, Button, Input, Text } from "../../components/atoms";
+import LoginImage from "../../components/images/Login";
 import { LoginProps } from "../../navigation/Profile";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../api/mutations";
@@ -37,9 +38,10 @@ const Login = ({ navigation }: LoginProps) => {
       });
   }
   return (
-    <Box padding="xl">
+    <Box padding="xl" paddingTop="s">
       <Box>
-        <Text variant="header3" paddingBottom="xl">
+        <LoginImage />
+        <Text variant="header3" textAlign="center" paddingBottom="xl">
           Inicio sesión
         </Text>
         <Box paddingBottom="l">
