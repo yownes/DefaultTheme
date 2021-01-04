@@ -17,9 +17,14 @@ const styles = StyleSheet.create({
 
 const Row = ({ product }: RowProps) => {
   return (
-    <Card padding="s" flexDirection="row">
+    <Card padding="s" flexDirection="row" alignItems="center">
       <Image source={{ uri: product.product?.image }} style={styles.image} />
-      <Box padding="m" justifyContent="space-between" flex={1}>
+      <Box
+        padding="m"
+        justifyContent="space-between"
+        alignSelf="stretch"
+        flex={1}
+      >
         <Box justifyContent="space-between" flexDirection="row">
           <Box flex={1}>
             <Text style={{ flexShrink: 1 }}>{product.product?.name}</Text>
@@ -28,12 +33,16 @@ const Row = ({ product }: RowProps) => {
             <Tag>{product.product?.price}</Tag>
           </Box>
         </Box>
-        <Box flexDirection="row" justifyContent="space-between">
-          <Box flexDirection="row">
+        <Box
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="flex-end"
+        >
+          <Box>
             {product.option?.map((option) => (
-              <Text
-                key={option?.name}
-              >{`${option?.name} ${option?.value}`}</Text>
+              <Text key={option?.name} paddingRight="m">
+                <Text variant="header3">{option?.name}:</Text> {option?.value}
+              </Text>
             ))}
           </Box>
           <Box alignItems="flex-end">
