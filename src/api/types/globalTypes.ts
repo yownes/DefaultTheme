@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CartOption {
+  id?: string | null;
+  value?: string | null;
+}
+
 export interface CustomerInput {
   firstName?: string | null;
   lastName?: string | null;

@@ -25,8 +25,8 @@ export const REGISTER = gql`
 `;
 
 export const ADD_TO_CART = gql`
-  mutation AddToCart($id: String, $quantity: Int) {
-    addToCart(id: $id, quantity: $quantity) {
+  mutation AddToCart($id: String, $quantity: Int, $options: [CartOption]) {
+    addToCart(id: $id, quantity: $quantity, options: $options) {
       total
     }
   }

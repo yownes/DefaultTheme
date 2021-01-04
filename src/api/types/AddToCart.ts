@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { CartOption } from "./globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: AddToCart
 // ====================================================
@@ -19,4 +21,5 @@ export interface AddToCart {
 export interface AddToCartVariables {
   id?: string | null;
   quantity?: number | null;
+  options?: (CartOption | null)[] | null;
 }

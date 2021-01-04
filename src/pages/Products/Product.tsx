@@ -25,7 +25,7 @@ const Product = ({ route }: ProductProps) => {
   });
   const [addToCart] = useMutation<AddToCart, AddToCartVariables>(ADD_TO_CART);
   const [qty, setQty] = useState(1);
-  const [attrs, setAttrs] = useState({});
+  const [options, setOptions] = useState({});
   return (
     <ScrollView>
       <Image
@@ -71,7 +71,7 @@ const Product = ({ route }: ProductProps) => {
                   <TouchableOpacity
                     key={value?.id}
                     onPress={() =>
-                      setAttrs((attrs) => ({
+                      setOptions((attrs) => ({
                         ...attrs,
                         [option.name]: value.id,
                       }))
@@ -80,7 +80,7 @@ const Product = ({ route }: ProductProps) => {
                     <Box
                       marginRight="l"
                       backgroundColor={
-                        attrs[option.name] === value?.id
+                        options[option.name] === value?.id
                           ? "greyscale5"
                           : "greyscale2"
                       }
@@ -107,7 +107,14 @@ const Product = ({ route }: ProductProps) => {
         <Button
           label="Añadir a la cesta"
           onPress={() => {
-            addToCart({ variables: { id: route.params.id, quantity: qty } });
+            const opts = Object.entries(options).map(([id, value]) => ({
+              id,
+              value: value as string,
+            }));
+
+            addToCart({
+              variables: { id: route.params.id, quantity: qty, options: opts },
+            });
           }}
           flex={1}
         />
