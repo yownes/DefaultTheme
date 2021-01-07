@@ -7,6 +7,7 @@ import { LoginProps } from "../../navigation/Profile";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../api/mutations";
 import { Login as ILogin, LoginVariables } from "../../api/types/Login";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface LoginState {
   mail: string;
@@ -39,63 +40,65 @@ const Login = ({ navigation }: LoginProps) => {
       });
   }
   return (
-    <Box padding="xl" paddingTop="s">
-      <Box>
-        <LoginImage />
-        <Text variant="header3" textAlign="center" paddingBottom="xl">
-          Inicio sesión
-        </Text>
-        <Box paddingBottom="l">
+    <ScrollView>
+      <Box padding="xl" paddingTop="s">
+        <Box>
+          <LoginImage />
+          <Text variant="header3" textAlign="center" paddingBottom="xl">
+            Inicio sesión
+          </Text>
+          <Box paddingBottom="l">
+            <Controller
+              control={control}
+              name="mail"
+              render={({ onChange, onBlur, value }) => (
+                <Input
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  keyboardType="email-address"
+                  placeholder="Email"
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </Box>
           <Controller
             control={control}
-            name="mail"
+            name="password"
             render={({ onChange, onBlur, value }) => (
               <Input
+                secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                keyboardType="email-address"
-                placeholder="Email"
+                placeholder="Contraseña"
               />
             )}
             rules={{ required: true }}
           />
+          <TouchableOpacity style={{ paddingVertical: 10 }} onPress={() => {}}>
+            <Text variant="small" textAlign="right">
+              ¿Has olvidado la contraseña?
+            </Text>
+          </TouchableOpacity>
+          <Button
+            marginTop="l"
+            label="Iniciar sesión"
+            onPress={handleSubmit(onSubmit)}
+          />
+          <Button
+            marginTop="l"
+            backgroundColor="background"
+            color="dark"
+            label="Registrarme"
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+          />
         </Box>
-        <Controller
-          control={control}
-          name="password"
-          render={({ onChange, onBlur, value }) => (
-            <Input
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Contraseña"
-            />
-          )}
-          rules={{ required: true }}
-        />
-        <TouchableOpacity style={{ paddingVertical: 10 }} onPress={() => {}}>
-          <Text variant="small" textAlign="right">
-            ¿Has olvidado la contraseña?
-          </Text>
-        </TouchableOpacity>
-        <Button
-          marginTop="l"
-          label="Iniciar sesión"
-          onPress={handleSubmit(onSubmit)}
-        />
-        <Button
-          marginTop="l"
-          backgroundColor="background"
-          color="dark"
-          label="Registrarme"
-          onPress={() => {
-            navigation.navigate("Register");
-          }}
-        />
       </Box>
-    </Box>
+    </ScrollView>
   );
 };
 

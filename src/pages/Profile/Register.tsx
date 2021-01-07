@@ -10,6 +10,7 @@ import {
   RegisterVariables,
 } from "../../api/types/Register";
 import RegisterImage from "../../components/images/Register";
+import { ScrollView } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
 
@@ -47,104 +48,106 @@ const Register = ({ navigation }: RegisterProps) => {
     });
   }
   return (
-    <Box padding="xl" paddingTop="s">
-      <Box>
-        <RegisterImage />
-        <Text variant="header3" paddingBottom="xl">
-          Registro
-        </Text>
-        <Box paddingBottom="l">
+    <ScrollView>
+      <Box padding="xl" paddingTop="s">
+        <Box>
+          <RegisterImage />
+          <Text variant="header3" paddingBottom="xl">
+            Registro
+          </Text>
+          <Box paddingBottom="l">
+            <Controller
+              control={control}
+              name="firstName"
+              render={({ onChange, onBlur, value }) => (
+                <Input
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Nombre"
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </Box>
+          <Box paddingBottom="l">
+            <Controller
+              control={control}
+              name="lastName"
+              render={({ onChange, onBlur, value }) => (
+                <Input
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Apellidos"
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </Box>
+          <Box paddingBottom="l">
+            <Controller
+              control={control}
+              name="mail"
+              render={({ onChange, onBlur, value }) => (
+                <Input
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  keyboardType="email-address"
+                  placeholder="Email"
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </Box>
+          <Box paddingBottom="l">
+            <Controller
+              control={control}
+              name="password"
+              render={({ onChange, onBlur, value }) => (
+                <Input
+                  secureTextEntry
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Contraseña"
+                />
+              )}
+              rules={{ required: true }}
+            />
+          </Box>
           <Controller
             control={control}
-            name="firstName"
-            render={({ onChange, onBlur, value }) => (
-              <Input
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Nombre"
-              />
-            )}
-            rules={{ required: true }}
-          />
-        </Box>
-        <Box paddingBottom="l">
-          <Controller
-            control={control}
-            name="lastName"
-            render={({ onChange, onBlur, value }) => (
-              <Input
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Apellidos"
-              />
-            )}
-            rules={{ required: true }}
-          />
-        </Box>
-        <Box paddingBottom="l">
-          <Controller
-            control={control}
-            name="mail"
-            render={({ onChange, onBlur, value }) => (
-              <Input
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                keyboardType="email-address"
-                placeholder="Email"
-              />
-            )}
-            rules={{ required: true }}
-          />
-        </Box>
-        <Box paddingBottom="l">
-          <Controller
-            control={control}
-            name="password"
+            name="confirmPassword"
             render={({ onChange, onBlur, value }) => (
               <Input
                 secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="Contraseña"
+                placeholder="Confirmar contraseña"
               />
             )}
             rules={{ required: true }}
           />
+          <Button
+            marginTop="l"
+            label="Registrarme"
+            onPress={handleSubmit(onSubmit)}
+          />
+          <Button
+            marginTop="l"
+            backgroundColor="background"
+            color="dark"
+            label="Iniciar Sesión"
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          />
         </Box>
-        <Controller
-          control={control}
-          name="confirmPassword"
-          render={({ onChange, onBlur, value }) => (
-            <Input
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Confirmar contraseña"
-            />
-          )}
-          rules={{ required: true }}
-        />
-        <Button
-          marginTop="l"
-          label="Registrarme"
-          onPress={handleSubmit(onSubmit)}
-        />
-        <Button
-          marginTop="l"
-          backgroundColor="background"
-          color="dark"
-          label="Iniciar Sesión"
-          onPress={() => {
-            navigation.navigate("Login");
-          }}
-        />
       </Box>
-    </Box>
+    </ScrollView>
   );
 };
 
