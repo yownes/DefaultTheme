@@ -9,6 +9,7 @@ import { CARD_HEIGHT } from "../molecules/ProductCard";
 const TopSalesProducts = () => {
   const { loading, data } = useQuery<TopSales>(TOP_SALES);
   if (loading) return <Loading />;
+  if (!data) return null;
   return (
     <Box>
       <Text variant="header3" paddingBottom="m">
@@ -17,9 +18,9 @@ const TopSalesProducts = () => {
       <Slider
         viewHeight={CARD_HEIGHT}
         views={
-          data?.bestSells?.map((product) => (
+          data.bestSells?.map((product) => (
             <ProductCard key={product?.id} product={product!!} />
-          )) ?? [<Text>Sorry</Text>]
+          )) ?? []
         }
       />
     </Box>

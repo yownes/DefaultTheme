@@ -8,9 +8,10 @@ import { TopSales } from "../../api/types/TopSales";
 const InterestProducts = () => {
   const { loading, data } = useQuery<TopSales>(TOP_SALES);
   if (loading) return <Loading />;
+  if (!data) return null;
   return (
     <HorizontalScrollProducts
-      products={data?.bestSells}
+      products={data.bestSells}
       title="Tal vez te interese"
     />
   );
