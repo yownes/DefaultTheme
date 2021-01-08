@@ -6,8 +6,6 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import Animated, {
-  measure,
-  runOnUI,
   useAnimatedRef,
   useAnimatedStyle,
   useDerivedValue,
@@ -98,12 +96,6 @@ const Category = ({ category }: CategoryProps) => {
       <TouchableWithoutFeedback
         onPress={() => {
           if (len > 0) {
-            if (height.value === 0) {
-              runOnUI(() => {
-                "worklet";
-                height.value = measure(aref).height;
-              })();
-            }
             open.value = !open.value;
           } else {
             navigation.navigate("Products", { category: category });
@@ -128,7 +120,12 @@ const Category = ({ category }: CategoryProps) => {
         </Box>
       </TouchableWithoutFeedback>
       <Animated.View style={[styles.items, style]}>
-        <View ref={aref}>
+        <View
+          ref={aref}
+          onLayout={({ nativeEvent: { layout } }) => {
+            height.value = layout.height;
+          }}
+        >
           {len > 0 && (
             <ListItem item={category} title="~ Ver todos ~" key={"All"} />
           )}
