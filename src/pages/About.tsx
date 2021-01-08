@@ -1,9 +1,8 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { ABOUT } from "../api/queries";
-import { Box, Card, Text } from "../components/atoms";
+import { Box, Card, HtmlText, Text } from "../components/atoms";
 import { About as IAbout } from "../api/types/About";
-import HTML from "react-native-render-html";
 import { ScrollView } from "react-native";
 
 interface AboutProps {}
@@ -13,7 +12,8 @@ const About = ({}: AboutProps) => {
   return (
     <ScrollView>
       <Card margin="m" padding="l">
-        <HTML source={{ html: data?.page?.description || "" }} />
+        <Text>{data?.page?.description}</Text>
+        <HtmlText>{data?.page?.description}</HtmlText>
         <Box marginTop="xl" alignItems="center">
           <Text>{data?.contact?.telephone}</Text>
           <Text padding="xl" textAlign="center">

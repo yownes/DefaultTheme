@@ -10,7 +10,7 @@ import {
   ProductVariables,
   Product_product_attributes,
 } from "../../api/types/Product";
-import { Box, Button, Tag, Text } from "../../components/atoms";
+import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
 import { Star } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
@@ -38,7 +38,7 @@ const Product = ({ route }: ProductProps) => {
         <Text paddingBottom="l" variant="header4">
           {data?.product?.manufacturer}
         </Text>
-        <Text>{data?.product?.shortDescription}</Text>
+        <HtmlText>{data?.product?.shortDescription}</HtmlText>
         <Box flexDirection="row" paddingVertical="l">
           <Tag>{data?.product?.price}</Tag>
         </Box>
@@ -100,7 +100,9 @@ const Product = ({ route }: ProductProps) => {
         <Text variant="header4" paddingBottom="l">
           Descripción
         </Text>
-        <Text color="greyscale4">{data?.product?.description}</Text>
+        <HtmlText color="greyscale4">
+          {data?.product?.description}
+        </HtmlText>
       </Box>
       <Box padding="l" paddingTop="m" flexDirection="row">
         <Button label="Tallas" onPress={() => {}} flex={1} marginRight="l" />
