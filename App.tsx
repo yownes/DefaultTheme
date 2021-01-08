@@ -7,15 +7,18 @@ import { ThemeProvider } from "@shopify/restyle";
 import theme from "./src/lib/theme";
 import { ApolloProvider } from "@apollo/client";
 import client from "./src/lib/apollo-client";
+import { AuthProvider } from "./src/components/organisms/AuthContext";
 
 const App = () => {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
         <ApolloProvider client={client}>
-          <NavigationContainer>
-            <Root />
-          </NavigationContainer>
+          <AuthProvider>
+            <NavigationContainer>
+              <Root />
+            </NavigationContainer>
+          </AuthProvider>
         </ApolloProvider>
       </ThemeProvider>
     </SafeAreaProvider>

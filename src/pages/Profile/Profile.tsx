@@ -1,29 +1,20 @@
 import React from "react";
 import { TouchableOpacity, ScrollView } from "react-native";
-import { useQuery } from "@apollo/client";
-import { PROFILE } from "../../api/queries";
-import { Box, Button, Card, Text } from "../../components/atoms";
+import { Box, Button, Card, Loading, Text } from "../../components/atoms";
 import { ProfileProps } from "../../navigation/Profile";
-import { Profile as IProfile } from "../../api/types/Profile";
 import { Star } from "../../components/icons";
 import Directions from "./Components/Directions";
 import Payments from "./Components/Payments";
+import { useAuth } from "../../components/organisms/AuthContext";
 
 const Profile = ({ navigation }: ProfileProps) => {
-  const { loading, data } = useQuery<IProfile>(PROFILE);
-  if (!loading && data?.accountCheckLogged?.status === false) {
-    navigation.replace("Login");
-  }
+  const { customer } = useAuth();
   return (
     <ScrollView>
       <Box padding="m">
         <Card padding="l" justifyContent="center" alignItems="center">
-          <Text variant="header">
-            {data?.accountCheckLogged?.customer?.firstName}
-          </Text>
-          <Text paddingVertical="l">
-            {data?.accountCheckLogged?.customer?.email}
-          </Text>
+          <Text variant="header">{customer?.firstName}</Text>
+          <Text paddingVertical="l">{customer?.email}</Text>
           <Box
             flexDirection="row"
             justifyContent="space-evenly"

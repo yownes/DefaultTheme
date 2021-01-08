@@ -45,6 +45,13 @@ const Register = ({ navigation }: RegisterProps) => {
           password: data.password,
         },
       },
+    }).then(({ data, errors }) => {
+      console.log(data);
+      console.error(errors);
+
+      if (data?.accountRegister?.id) {
+        navigation.navigate("Profile");
+      }
     });
   }
   return (
