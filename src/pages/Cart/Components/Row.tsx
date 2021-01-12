@@ -10,6 +10,7 @@ import {
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
+  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -35,12 +36,15 @@ const styles = StyleSheet.create({
   deleteBtn: {},
 });
 
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 const THRESHOLD = 100;
 const { width } = Dimensions.get("window");
 const points = [0, -THRESHOLD, -width];
 
 const Row = ({ product }: RowProps) => {
   const translateX = useSharedValue(0);
+  const deleting = useSharedValue(false);
   const [removeCart] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
     REMOVE_FROM_CART
   );
@@ -58,9 +62,16 @@ const Row = ({ product }: RowProps) => {
   >({
     onStart(_, ctx) {
       ctx.x = translateX.value;
+      deleting.value = false;
     },
-    onActive({ translationX }, ctx) {
+    onActive({ translationX, velocityX }, ctx) {
       translateX.value = clamp(translationX + ctx.x, -width, 0);
+      const pt = snapPoint(translateX.value, velocityX, points);
+      if (pt === -width) {
+        deleting.value = true;
+      } else {
+        deleting.value = false;
+      }
     },
     onEnd({ velocityX }) {
       const pt = snapPoint(translateX.value, velocityX, points);
@@ -75,6 +86,12 @@ const Row = ({ product }: RowProps) => {
     transform: [{ translateX: translateX.value }],
     position: "relative",
   }));
+  const textProps = useAnimatedProps(() => {
+    return {
+      fontWeight: deleting.value ? "bold" : "normal",
+      fontSize: deleting.value ? 16 : 14,
+    };
+  });
   return (
     <Box>
       <TouchableOpacity style={StyleSheet.absoluteFill} onPress={deleteProduct}>
@@ -85,10 +102,10 @@ const Row = ({ product }: RowProps) => {
           justifyContent="center"
           flex={1}
         >
-          <Text>Eliminar</Text>
+          <AnimatedText animatedProps={textProps}>Eliminar</AnimatedText>
         </Box>
       </TouchableOpacity>
-      <PanGestureHandler onGestureEvent={gestureEvent}>
+      <PanGestureHandler onGestureEvent={gestureEvent} activeOffsetX={-20}>
         <Animated.View style={style}>
           <Card padding="s" flexDirection="row" alignItems="center">
             {product.product?.image && (
