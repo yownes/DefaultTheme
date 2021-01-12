@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../api/mutations";
 import { Login as ILogin, LoginVariables } from "../../api/types/Login";
 import { ScrollView } from "react-native-gesture-handler";
+import { useAuth } from "../../components/organisms/AuthContext";
 
 interface LoginState {
   mail: string;
@@ -23,6 +24,7 @@ const Login = ({ navigation }: LoginProps) => {
   const { control, handleSubmit, errors } = useForm<LoginState>({
     defaultValues: intialState,
   });
+  const Auth = useAuth();
   const [login] = useMutation<ILogin, LoginVariables>(LOGIN);
   function onSubmit(data: LoginState) {
     login({
@@ -30,14 +32,13 @@ const Login = ({ navigation }: LoginProps) => {
         email: data.mail,
         password: data.password,
       },
-    })
-      .then(({ data, context }) => {
-        console.log(data?.accountLogin, context);
+    }).then(({ data, context }) => {
+      console.log(data?.accountLogin, context);
+      if (data?.accountLogin?.token && data.accountLogin.customer) {
+        Auth.login(data.accountLogin.customer);
         navigation.replace("Profile");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }
+    });
   }
   return (
     <ScrollView>

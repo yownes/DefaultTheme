@@ -43,7 +43,6 @@ const ProfileStack = createStackNavigator<ProfileStackParamList>();
 
 export default () => {
   const { isAuthenticated } = useAuth();
-  console.log("isAuthenticated", isAuthenticated);
 
   if (isAuthenticated) {
     return (

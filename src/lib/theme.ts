@@ -9,6 +9,7 @@ const palette = {
   greyscale4: "#606060",
   greyscale5: "#dddddd",
   greyscale6: "#262626",
+  transparent: "transparent",
 };
 
 const theme = createTheme({
@@ -23,6 +24,7 @@ const theme = createTheme({
     greyscale3: palette.greyscale3,
     greyscale4: palette.greyscale4,
     greyscale5: palette.greyscale5,
+    transparent: palette.transparent,
   },
   spacing: {
     s: 2,

@@ -24,6 +24,14 @@ export const REGISTER = gql`
   }
 `;
 
+export const LOGOUT = gql`
+  mutation Logout {
+    accountLogout {
+      status
+    }
+  }
+`;
+
 export const ADD_TO_CART = gql`
   mutation AddToCart($id: String, $quantity: Int, $options: [CartOption]) {
     addToCart(id: $id, quantity: $quantity, options: $options) {

@@ -23,7 +23,16 @@ const initialState: AuthContextProps = {
   customer: undefined,
 };
 
-const AuthContext = createContext<AuthContextProps>(initialState);
+interface AuthContextActions {
+  login: (customer: Profile_accountCheckLogged_customer) => void;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextProps & AuthContextActions>({
+  ...initialState,
+  login() {},
+  logout() {},
+});
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -45,5 +54,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [loading, data]);
 
-  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
+  function login(customer: Profile_accountCheckLogged_customer) {
+    setState((state) => ({
+      ...state,
+      isAuthenticated: true,
+      customer,
+    }));
+  }
+
+  function logout() {
+    setState((state) => ({
+      ...state,
+      isAuthenticated: false,
+      customer: null,
+    }));
+  }
+
+  return (
+    <AuthContext.Provider value={{ ...state, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
