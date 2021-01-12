@@ -7,9 +7,10 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { extractTokenFromHeaders, getToken, saveToken } from "./auth";
+import Constants from "expo-constants";
 
 const link = new HttpLink({
-  uri: "http://yownes.localhost/module/yownes/graphql",
+  uri: `${Constants.manifest.extra.apiUrl}/module/yownes/graphql`,
 });
 
 const cache = new InMemoryCache({
@@ -57,7 +58,7 @@ const cookiesLink = new ApolloLink((operation, forward) => {
 });
 
 const client = new ApolloClient({
-  link: cookiesLink.concat(link),
+  link: withToken.concat(cookiesLink.concat(link)),
   cache,
 });
 
