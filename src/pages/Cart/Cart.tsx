@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView } from "react-native";
-import { useQuery } from "@apollo/client";
+import { RefreshControl, ScrollView } from "react-native";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { CART } from "../../api/queries";
 import { Box, Button, Loading } from "../../components/atoms";
 import { CartProps } from "../../navigation/Cart";
@@ -11,16 +11,20 @@ import Row from "./Components/Row";
 import Summary from "./Components/Summary";
 
 const Cart = ({ navigation }: CartProps) => {
-  const { loading, data } = useQuery<ICart>(CART);
+  const { loading, data, refetch, networkStatus } = useQuery<ICart>(CART);
   const isEmpty = (data?.cart?.products?.length ?? 0) === 0;
-  if (loading) {
+  if (loading && networkStatus !== NetworkStatus.refetch) {
     return <Loading />;
   }
   return isEmpty ? (
-    <CartPlaceholder />
+    <CartPlaceholder loading={loading} onRefresh={refetch} />
   ) : (
     <Box padding="m" flex={1} justifyContent="space-between">
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refetch} />
+        }
+      >
         <Box>
           {data?.cart?.products?.map((prod, i) => (
             <Box paddingBottom="m" key={prod?.key}>
