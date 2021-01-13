@@ -14,7 +14,7 @@ import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
 import { Star } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
-import { ProductProps } from "../../navigation/Products";
+import { ProductProps } from "../../navigation/Root";
 
 const { height } = Dimensions.get("screen");
 

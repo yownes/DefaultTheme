@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Box, Loading } from "../../components/atoms";
-import { ProductsProps } from "../../navigation/Products";
+import { ProductsProps } from "../../navigation/Root";
 import { PRODUCTS } from "../../api/queries";
 import {
   Products as IProducts,

@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
+import { ScrollView } from "react-native-gesture-handler";
+
 import { Home as IHome } from "../api/types/Home";
-import { Box, Button, Text, Loading } from "../components/atoms";
+import { Box, Button, Loading } from "../components/atoms";
 import { HOME } from "../api/queries";
 import { HorizontalScrollProducts, HomeSlide } from "../components/molecules";
-import { ScrollView } from "react-native-gesture-handler";
+import { HomeProps } from "../navigation/Home";
 
 const { width } = Dimensions.get("window");
 
@@ -16,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = ({ navigation }: any) => {
+const Home = ({ navigation }: HomeProps) => {
   const { loading, data } = useQuery<IHome>(HOME);
   useEffect(() => {
     navigation.setOptions({
@@ -34,7 +36,7 @@ const Home = ({ navigation }: any) => {
           <HomeSlide key={slide?.id} slide={slide} />
         ))}
       </ScrollView>
-      {data?.specialProducts?.content && (
+      {(data?.specialProducts?.content?.length ?? 0) > 0 && (
         <Box paddingVertical="l">
           <HorizontalScrollProducts
             products={data?.specialProducts?.content}
@@ -42,15 +44,15 @@ const Home = ({ navigation }: any) => {
           />
         </Box>
       )}
-      {data?.latestProducts?.content && (
+      {(data?.latestProducts?.content?.length ?? 0) > 0 && (
         <Box paddingVertical="l">
           <HorizontalScrollProducts
-            products={data.latestProducts.content}
+            products={data?.latestProducts?.content}
             title="Últimos productos"
           />
         </Box>
       )}
-      {data?.bestSells && (
+      {(data?.bestSells?.length ?? 0) > 0 && (
         <Box paddingVertical="l">
           <HorizontalScrollProducts
             products={data?.bestSells}
