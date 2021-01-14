@@ -108,6 +108,9 @@ export const PRODUCT = gql`
       id
       name
       image
+      images {
+        image
+      }
       shortDescription
       description
       price
