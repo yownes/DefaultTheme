@@ -1,8 +1,5 @@
 import React, { useCallback } from "react";
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Box, Card, Tag, Text } from "../../../components/atoms";
-import { Quantity } from "../../../components/molecules";
-import { Cart_cart_products } from "../../../api/types/Cart";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -16,12 +13,16 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
+import { useMutation } from "@apollo/client";
+
+import { Box, Card, Tag, Text } from "../../../components/atoms";
+import { Quantity } from "../../../components/molecules";
+import { Cart_cart_products } from "../../../api/types/Cart";
 import { REMOVE_FROM_CART, UPDATE_CART } from "../../../api/mutations";
 import {
   RemoveFromCart,
   RemoveFromCartVariables,
 } from "../../../api/types/RemoveFromCart";
-import { useMutation } from "@apollo/client";
 import { UpdateCart, UpdateCartVariables } from "../../../api/types/UpdateCart";
 
 interface RowProps {
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  deleteBtn: {},
 });
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -54,7 +54,7 @@ const Row = ({ product }: RowProps) => {
 
   const deleteProduct = useCallback(() => {
     removeCart({ variables: { key: product.key } });
-  }, [product]);
+  }, [product, removeCart]);
 
   const gestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -105,7 +105,10 @@ const Row = ({ product }: RowProps) => {
           <AnimatedText animatedProps={textProps}>Eliminar</AnimatedText>
         </Box>
       </TouchableOpacity>
-      <PanGestureHandler onGestureEvent={gestureEvent} activeOffsetX={-20}>
+      <PanGestureHandler
+        onGestureEvent={gestureEvent}
+        activeOffsetX={[-20, 20]}
+      >
         <Animated.View style={style}>
           <Card padding="s" flexDirection="row" alignItems="center">
             {product.product?.image && (
@@ -143,7 +146,7 @@ const Row = ({ product }: RowProps) => {
                 </Box>
                 <Box alignItems="flex-end">
                   <Quantity
-                    qty={product.quantity!!}
+                    qty={product.quantity!}
                     limit={10}
                     onChange={(qty) => {
                       updateCart({ variables: { key: product.key, qty } });
