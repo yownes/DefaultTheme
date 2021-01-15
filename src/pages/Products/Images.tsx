@@ -1,11 +1,12 @@
 import React from "react";
-import { ScrollView, Image, Dimensions } from "react-native";
+import { Image, Dimensions } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
   useAnimatedGestureHandler,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -18,8 +19,9 @@ import { ImagesProps } from "../../navigation/Root";
 const { width, height } = Dimensions.get("screen");
 
 const Images = ({ route, navigation }: ImagesProps) => {
-  const { product } = route.params;
+  const { product, index } = route.params;
   const isGestureActive = useSharedValue(false);
+  const scrollPosition = useSharedValue(width * index);
   const translation = useVector();
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: () => (isGestureActive.value = true),
@@ -32,7 +34,9 @@ const Images = ({ route, navigation }: ImagesProps) => {
         snapPoint(translationY, velocityY, [0, height]) === height;
 
       if (snapBack) {
-        runOnJS(navigation.goBack)();
+        runOnJS(navigation.navigate)("Product", {
+          index: scrollPosition.value / width,
+        });
       } else {
         isGestureActive.value = false;
         translation.x.value = withSpring(0);
@@ -56,24 +60,39 @@ const Images = ({ route, navigation }: ImagesProps) => {
       ],
     };
   });
+  const onScroll = useAnimatedScrollHandler({
+    onScroll({ contentOffset }) {
+      scrollPosition.value = contentOffset.x;
+    },
+  });
+  const IMAGES: string[] = [
+    product?.image,
+    ...(product?.images?.map((img) => img?.image) ?? []),
+  ]
+    .filter(
+      (str: string | null | undefined) => str !== null && str !== undefined
+    )
+    .map((img) => img as string);
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={style}>
-        <ScrollView horizontal snapToInterval={width} decelerationRate="fast">
-          <SharedElement id={`image.${product.id}`}>
-            <Image
-              source={{ uri: product.image }}
-              style={{ flex: 1, width, height }}
-            />
-          </SharedElement>
-          {product.images.map(({ image }, i) => (
-            <Image
-              key={i}
-              source={{ uri: image }}
-              style={{ flex: 1, width, height }}
-            />
+        <Animated.ScrollView
+          contentOffset={{ x: width * index, y: 0 }}
+          horizontal
+          snapToInterval={width}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
+          decelerationRate="fast"
+        >
+          {IMAGES.map((image, i) => (
+            <SharedElement key={i} id={`image.${i}.${product.id}`}>
+              <Image
+                source={{ uri: image }}
+                style={{ flex: 1, width, height }}
+              />
+            </SharedElement>
           ))}
-        </ScrollView>
+        </Animated.ScrollView>
       </Animated.View>
     </PanGestureHandler>
   );

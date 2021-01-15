@@ -7,6 +7,11 @@
 // GraphQL query operation: Product
 // ====================================================
 
+export interface Product_product_images {
+  __typename: "productImage";
+  image: string | null;
+}
+
 export interface Product_product_attributes {
   __typename: "productAttribute";
   name: string | null;
@@ -31,6 +36,7 @@ export interface Product_product {
   id: string | null;
   name: string | null;
   image: string | null;
+  images: (Product_product_images | null)[] | null;
   shortDescription: string | null;
   description: string | null;
   price: string | null;

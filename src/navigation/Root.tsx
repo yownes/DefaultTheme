@@ -8,7 +8,7 @@ import Product from "../pages/Products/Product";
 import ProductsPage from "../pages/Products/Products";
 import Images from "../pages/Products/Images";
 import { Categories_categoriesList_content_categories } from "../api/types/Categories";
-import { BasicProduct } from "../api/types/BasicProduct";
+import { Product_product } from "../api/types/Product";
 
 import Profile from "./Profile";
 import Home from "./Home";
@@ -17,8 +17,8 @@ import Cart from "./Cart";
 type AppStackParamList = {
   App: undefined;
   Products: { category?: Categories_categoriesList_content_categories };
-  Product: { id: string };
-  Images: { product: BasicProduct };
+  Product: { id: string; index?: number };
+  Images: { product: Product_product; index: number };
 };
 
 export type ProductsProps = StackScreenProps<AppStackParamList, "Products">;
@@ -64,9 +64,9 @@ const App = () => {
           gestureEnabled: false,
           cardStyle: { backgroundColor: "transparent" },
         }}
-        sharedElements={(route) => {
-          const { id } = route.params.product;
-          return [`image.${id}`];
+        sharedElements={(route: ImagesProps["route"]) => {
+          const { index, product } = route.params;
+          return [`image.${index}.${product.id}`];
         }}
       />
     </Stack.Navigator>

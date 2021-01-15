@@ -15,13 +15,15 @@ import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
 import { ProductProps } from "../../navigation/Root";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
 const Product = ({ route, navigation }: ProductProps) => {
   const theme = useTheme();
+  const { index, id } = route.params;
+
   const [opacity, setOpacity] = useState(1);
-  const { loading, data } = useQuery<IProduct, ProductVariables>(PRODUCT, {
-    variables: { id: route.params.id },
+  const { data } = useQuery<IProduct, ProductVariables>(PRODUCT, {
+    variables: { id },
   });
   const [addToCart] = useMutation<AddToCart, AddToCartVariables>(ADD_TO_CART);
   const [qty, setQty] = useState(1);
@@ -31,28 +33,48 @@ const Product = ({ route, navigation }: ProductProps) => {
       setOpacity(1);
     }
   });
+  const IMAGES: string[] = [
+    data?.product?.image,
+    ...(data?.product?.images?.map((img) => img?.image) ?? []),
+  ]
+    .filter(
+      (str: string | null | undefined) => str !== null && str !== undefined
+    )
+    .map((img) => img as string);
   return (
     <ScrollView>
-      <Pressable
-        onPress={() => {
-          if (data?.product) {
-            navigation.navigate("Images", {
-              product: data.product,
-            });
-            setOpacity(0);
-          }
-        }}
+      <ScrollView
+        contentOffset={{ x: width * (index ?? 0), y: 0 }}
+        style={{ opacity }}
+        horizontal
+        snapToInterval={width}
+        decelerationRate="fast"
       >
-        <SharedElement id={`image.${data?.product?.id}`}>
-          <Image
-            source={{ uri: data?.product?.image }}
-            style={{
-              height: height / 2,
-              opacity,
+        {IMAGES.map((image, i) => (
+          <Pressable
+            onPress={() => {
+              if (data?.product) {
+                navigation.navigate("Images", {
+                  product: data.product,
+                  index: i,
+                });
+                setOpacity(0);
+              }
             }}
-          />
-        </SharedElement>
-      </Pressable>
+          >
+            <SharedElement id={`image.${i}.${data?.product?.id}`}>
+              <Image
+                source={{ uri: image }}
+                key={image}
+                style={{
+                  height: height / 2,
+                  width,
+                }}
+              />
+            </SharedElement>
+          </Pressable>
+        ))}
+      </ScrollView>
       <Box padding="l" backgroundColor="white" marginBottom="m">
         <Text paddingBottom="l" variant="header4">
           {data?.product?.manufacturer}
