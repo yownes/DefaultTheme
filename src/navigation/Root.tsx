@@ -4,26 +4,21 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 import { StackScreenProps } from "@react-navigation/stack";
 
 import Categories from "../pages/Categories";
-import Product from "../pages/Products/Product";
 import ProductsPage from "../pages/Products/Products";
-import Images from "../pages/Products/Images";
 import { Categories_categoriesList_content_categories } from "../api/types/Categories";
-import { Product_product } from "../api/types/Product";
 
 import Profile from "./Profile";
 import Home from "./Home";
 import Cart from "./Cart";
+import Product from "./Product";
 
 type AppStackParamList = {
   App: undefined;
   Products: { category?: Categories_categoriesList_content_categories };
-  Product: { id: string; index?: number };
-  Images: { product: Product_product; index: number };
+  Product: undefined;
 };
 
 export type ProductsProps = StackScreenProps<AppStackParamList, "Products">;
-export type ProductProps = StackScreenProps<AppStackParamList, "Product">;
-export type ImagesProps = StackScreenProps<AppStackParamList, "Images">;
 
 const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator<AppStackParamList>();
@@ -41,7 +36,7 @@ const Root = () => {
 
 const App = () => {
   return (
-    <Stack.Navigator mode="modal">
+    <Stack.Navigator>
       <Stack.Screen
         name="App"
         options={{ headerShown: false }}
@@ -54,20 +49,6 @@ const App = () => {
         options={({ route }) => ({
           title: route.params.category?.name ?? "Productos",
         })}
-      />
-      <Stack.Screen
-        name="Images"
-        component={Images}
-        options={{
-          headerShown: false,
-          cardOverlayEnabled: true,
-          gestureEnabled: false,
-          cardStyle: { backgroundColor: "transparent" },
-        }}
-        sharedElements={(route: ImagesProps["route"]) => {
-          const { index, product } = route.params;
-          return [`image.${index}.${product.id}`];
-        }}
       />
     </Stack.Navigator>
   );

@@ -18,7 +18,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { image, name, price, manufacturer, special } = product;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Product", { id: product!!.id!! })}
+      onPress={() =>
+        navigation.navigate("Product", {
+          screen: "Product",
+          params: { id: product!!.id!! },
+        })
+      }
     >
       <Box
         backgroundColor="white"

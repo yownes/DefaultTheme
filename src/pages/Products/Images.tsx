@@ -14,7 +14,7 @@ import Animated, {
 import { snapPoint, useVector } from "react-native-redash";
 import { SharedElement } from "react-navigation-shared-element";
 
-import { ImagesProps } from "../../navigation/Root";
+import { ImagesProps } from "../../navigation/Product";
 
 const { width, height } = Dimensions.get("screen");
 

@@ -13,7 +13,7 @@ import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
 import { Star } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
-import { ProductProps } from "../../navigation/Root";
+import { ProductProps } from "../../navigation/Product";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -52,6 +52,7 @@ const Product = ({ route, navigation }: ProductProps) => {
       >
         {IMAGES.map((image, i) => (
           <Pressable
+            key={i}
             onPress={() => {
               if (data?.product) {
                 navigation.navigate("Images", {
@@ -65,7 +66,6 @@ const Product = ({ route, navigation }: ProductProps) => {
             <SharedElement id={`image.${i}.${data?.product?.id}`}>
               <Image
                 source={{ uri: image }}
-                key={image}
                 style={{
                   height: height / 2,
                   width,
