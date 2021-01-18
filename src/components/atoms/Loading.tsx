@@ -1,5 +1,6 @@
-import React from 'react';
-import Text from './Text';
+import React from "react";
+
+import Text from "./Text";
 
 const Loading = () => {
   return <Text>Loading...</Text>;

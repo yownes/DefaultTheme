@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 import React from "react";
 import Svg, { G, Circle, Path } from "react-native-svg";
+
 import { useTheme } from "../../lib/theme";
 
 function BillingImage() {

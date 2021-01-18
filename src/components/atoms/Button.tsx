@@ -11,8 +11,9 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 
-import Text from "./Text";
 import { Theme } from "../../lib/theme";
+
+import Text from "./Text";
 
 const BaseButton = createBox<
   Theme,
@@ -56,7 +57,7 @@ const Button = ({
         {label}
       </Text>
       {isLoading ? (
-        <ActivityIndicator color={theme.colors[textColorProp!!]} />
+        <ActivityIndicator color={theme.colors[textColorProp!]} />
       ) : null}
     </BaseButton>
   );

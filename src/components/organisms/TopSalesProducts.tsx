@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+
 import { Box, Loading, Text } from "../atoms";
 import { Slider, ProductCard } from "../molecules";
 import { TOP_SALES } from "../../api/queries";

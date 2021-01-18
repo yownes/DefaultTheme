@@ -1,6 +1,9 @@
+/* eslint-disable max-len */
 import React from "react";
 import Svg, { Path } from "react-native-svg";
+
 import { useTheme } from "../../lib/theme";
+
 import { IconProps } from "./types";
 
 function Cart({ size, color }: IconProps) {

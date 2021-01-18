@@ -1,9 +1,8 @@
+/* eslint-disable max-len */
 import React from "react";
-import { Dimensions } from "react-native";
 import Svg, { Circle, Path, Ellipse } from "react-native-svg";
-import { useTheme } from "../../lib/theme";
 
-const { width } = Dimensions.get("window");
+import { useTheme } from "../../lib/theme";
 
 function LoginImage() {
   const theme = useTheme();

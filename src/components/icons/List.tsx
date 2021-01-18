@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 import React from "react";
 import Svg, { Path } from "react-native-svg";
+
 import { Theme, useTheme } from "../../lib/theme";
 
 interface ListProps {

@@ -1,14 +1,16 @@
 import React, { useCallback } from "react";
 import { TouchableOpacity, ScrollView } from "react-native";
-import { Box, Button, Card, Loading, Text } from "../../components/atoms";
+import { useMutation } from "@apollo/client";
+
+import { Box, Button, Card, Text } from "../../components/atoms";
 import { ProfileProps } from "../../navigation/Profile";
 import { Star } from "../../components/icons";
-import Directions from "./Components/Directions";
-import Payments from "./Components/Payments";
 import { useAuth } from "../../components/organisms/AuthContext";
-import { useMutation } from "@apollo/client";
 import { LOGOUT } from "../../api/mutations";
 import { Logout } from "../../api/types/Logout";
+
+import Payments from "./Components/Payments";
+import Directions from "./Components/Directions";
 
 const Profile = ({ navigation }: ProfileProps) => {
   const { customer, logout: authLogout } = useAuth();
@@ -20,7 +22,7 @@ const Profile = ({ navigation }: ProfileProps) => {
         authLogout();
       }
     });
-  }, [navigation, logout, authLogout]);
+  }, [logout, authLogout]);
 
   return (
     <ScrollView>

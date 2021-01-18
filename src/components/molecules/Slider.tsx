@@ -10,6 +10,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+
 import { Box, Dot } from "../atoms";
 
 interface SliderProps {

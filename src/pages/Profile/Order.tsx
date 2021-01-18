@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Text } from '../../components/atoms';
-import { OrderProps } from '../../navigation/Profile';
+import React from "react";
+
+import { Box, Text } from "../../components/atoms";
+import { OrderProps } from "../../navigation/Profile";
 
 const Order = ({ route }: OrderProps) => {
   return (

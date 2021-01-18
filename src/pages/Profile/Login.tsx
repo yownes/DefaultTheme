@@ -1,13 +1,14 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { ScrollView } from "react-native-gesture-handler";
+
 import { Box, Button, Input, Text } from "../../components/atoms";
 import LoginImage from "../../components/images/Login";
 import { LoginProps } from "../../navigation/Profile";
-import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../api/mutations";
 import { Login as ILogin, LoginVariables } from "../../api/types/Login";
-import { ScrollView } from "react-native-gesture-handler";
 import { useAuth } from "../../components/organisms/AuthContext";
 
 interface LoginState {

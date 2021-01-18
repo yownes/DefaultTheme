@@ -3,6 +3,7 @@ import {
   StackScreenProps,
 } from "@react-navigation/stack";
 import React from "react";
+
 import AddDirection from "../pages/Profile/AddDirection";
 import Order from "../pages/Profile/Order";
 import AddPaymentMethod from "../pages/Profile/AddPaymentMethod";
@@ -37,11 +38,14 @@ export type AddPaymentMethodProps = StackScreenProps<
 >;
 export type OrdersProps = StackScreenProps<ProfileStackParamList, "Orders">;
 export type OrderProps = StackScreenProps<ProfileStackParamList, "Order">;
-export type FavouritesProps = StackScreenProps<ProfileStackParamList, "Favourites">;
+export type FavouritesProps = StackScreenProps<
+  ProfileStackParamList,
+  "Favourites"
+>;
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
 
-export default () => {
+const ProfileNavigation = () => {
   const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
@@ -67,3 +71,5 @@ export default () => {
     );
   }
 };
+
+export default ProfileNavigation;

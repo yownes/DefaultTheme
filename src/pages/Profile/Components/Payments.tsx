@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Box, Button, Text } from "../../../components/atoms";
 import { Placeholder } from "../../../components/molecules";
 import { ProfileProps } from "../../../navigation/Profile";

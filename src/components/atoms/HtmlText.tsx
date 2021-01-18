@@ -1,11 +1,9 @@
-import HTML, {
-  IGNORED_TAGS,
-  RendererDictionary,
-} from "react-native-render-html";
+import HTML, { RendererDictionary } from "react-native-render-html";
 import React from "react";
-
 import { ColorProps, TextProps } from "@shopify/restyle";
+
 import { Theme } from "../../lib/theme";
+
 import Text from "./Text";
 
 type HtmlTextProps = ColorProps<Theme> &
@@ -35,7 +33,7 @@ const HtmlText = ({ children, ...rest }: HtmlTextProps) => {
           {children}
         </Text>
       );
-    } 
+    },
   };
   return (
     <HTML

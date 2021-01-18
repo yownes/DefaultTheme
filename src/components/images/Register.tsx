@@ -1,9 +1,8 @@
+/* eslint-disable max-len */
 import React from "react";
-import { Dimensions } from "react-native";
-import Svg, { G, Circle, Path, Ellipse } from "react-native-svg";
-import { useTheme } from "../../lib/theme";
+import Svg, { G, Circle, Path } from "react-native-svg";
 
-const { width } = Dimensions.get("window");
+import { useTheme } from "../../lib/theme";
 
 function RegisterImage() {
   const theme = useTheme();

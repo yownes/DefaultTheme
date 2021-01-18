@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { mix, mixColor } from "react-native-redash";
+
 import { useTheme } from "../../lib/theme";
 
 const size = 20;

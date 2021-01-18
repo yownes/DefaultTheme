@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Image } from "react-native";
+
 import { Box, Text } from "../atoms";
 
 interface PlaceholderProps {

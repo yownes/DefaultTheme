@@ -6,8 +6,9 @@ import {
   Reference,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { extractTokenFromHeaders, getToken, saveToken } from "./auth";
 import Constants from "expo-constants";
+
+import { extractTokenFromHeaders, getToken, saveToken } from "./auth";
 
 const link = new HttpLink({
   uri: `${Constants.manifest.extra.apiUrl}/module/yownes/graphql`,
@@ -41,11 +42,13 @@ const cookiesLink = new ApolloLink((operation, forward) => {
     const ctx = operation.getContext();
 
     const headers = ctx?.response.headers;
-    let token = ctx.token;
+    let { token } = ctx;
 
     if (!token && headers) {
       token = extractTokenFromHeaders(headers);
-      if (token) saveToken(token);
+      if (token) {
+        saveToken(token);
+      }
     }
     operation.setContext(({ headers = {} }) => ({
       headers: {

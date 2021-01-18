@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+
 import { Loading } from "../atoms";
 import { HorizontalScrollProducts } from "../molecules";
 import { TOP_SALES } from "../../api/queries";

@@ -1,6 +1,9 @@
+/* eslint-disable max-len */
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-import { Theme, useTheme } from "../../lib/theme";
+
+import { useTheme } from "../../lib/theme";
+
 import { IconProps } from "./types";
 
 function Grid({ size, color }: IconProps) {

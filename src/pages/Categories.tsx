@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { CATEGORIES } from "../api/queries";
 import { Categories as ICategories } from "../api/types/Categories";
 import { Box, Loading } from "../components/atoms";

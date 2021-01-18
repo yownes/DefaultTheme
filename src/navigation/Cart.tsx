@@ -1,11 +1,12 @@
 import {
   createStackNavigator,
   StackScreenProps,
-} from '@react-navigation/stack';
-import React from 'react';
-import Cart from '../pages/Cart/Cart';
-import Checkout from '../pages/Cart/Checkout';
-import PaymentConfirmed from '../pages/Cart/PaymentConfirmed';
+} from "@react-navigation/stack";
+import React from "react";
+
+import Cart from "../pages/Cart/Cart";
+import Checkout from "../pages/Cart/Checkout";
+import PaymentConfirmed from "../pages/Cart/PaymentConfirmed";
 
 type CartStackParamList = {
   Cart: undefined;
@@ -13,16 +14,16 @@ type CartStackParamList = {
   PaymentConfirmed: undefined;
 };
 
-export type CartProps = StackScreenProps<CartStackParamList, 'Cart'>;
-export type CheckoutProps = StackScreenProps<CartStackParamList, 'Checkout'>;
+export type CartProps = StackScreenProps<CartStackParamList, "Cart">;
+export type CheckoutProps = StackScreenProps<CartStackParamList, "Checkout">;
 export type PaymentConfirmedProps = StackScreenProps<
   CartStackParamList,
-  'PaymentConfirmed'
+  "PaymentConfirmed"
 >;
 
 const CartStack = createStackNavigator<CartStackParamList>();
 
-export default () => {
+const CartNavigation = () => {
   return (
     <CartStack.Navigator>
       <CartStack.Screen name="Cart" component={Cart} />
@@ -31,3 +32,5 @@ export default () => {
     </CartStack.Navigator>
   );
 };
+
+export default CartNavigation;

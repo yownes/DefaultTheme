@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+
 import { ADDRESS_LIST } from "../../../api/queries";
 import { AddressList } from "../../../api/types/AddressList";
 import { Box, Button, Text } from "../../../components/atoms";
@@ -12,7 +13,7 @@ interface DirectionsProps {
 }
 
 const Directions = ({ navigation }: DirectionsProps) => {
-  const { loading, data } = useQuery<AddressList>(ADDRESS_LIST);
+  const { data } = useQuery<AddressList>(ADDRESS_LIST);
   return (
     <Box>
       <Text variant="header3" marginBottom="l">

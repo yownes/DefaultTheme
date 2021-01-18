@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
+
 import { useTheme } from "../../lib/theme";
 
 interface DotProps {

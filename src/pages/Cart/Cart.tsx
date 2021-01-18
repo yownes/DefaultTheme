@@ -1,14 +1,15 @@
 import React from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { NetworkStatus, useQuery } from "@apollo/client";
+
 import { CART } from "../../api/queries";
 import { Box, Button, Loading } from "../../components/atoms";
 import { CartProps } from "../../navigation/Cart";
 import { Cart as ICart } from "../../api/types/Cart";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import CartPlaceholder from "./Components/CartPlaceholder";
-import Row from "./Components/Row";
+
 import Summary from "./Components/Summary";
+import Row from "./Components/Row";
+import CartPlaceholder from "./Components/CartPlaceholder";
 
 const Cart = ({ navigation }: CartProps) => {
   const { loading, data, refetch, networkStatus } = useQuery<ICart>(CART);
@@ -28,7 +29,7 @@ const Cart = ({ navigation }: CartProps) => {
         <Box>
           {data?.cart?.products?.map((prod, i) => (
             <Box paddingBottom="m" key={prod?.key}>
-              <Row product={prod!!} />
+              <Row product={prod!} />
             </Box>
           ))}
           <Summary cart={data?.cart} />

@@ -8,6 +8,7 @@ import {
   SpacingProps,
   VariantProps,
 } from "@shopify/restyle";
+
 import { Theme } from "../../lib/theme";
 
 type Props = SpacingProps<Theme> &

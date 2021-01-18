@@ -1,14 +1,13 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
+import { ScrollView } from "react-native";
+
 import { ABOUT } from "../api/queries";
 import { Box, Card, HtmlText, Text } from "../components/atoms";
 import { About as IAbout } from "../api/types/About";
-import { ScrollView } from "react-native";
 
-interface AboutProps {}
-
-const About = ({}: AboutProps) => {
-  const { loading, data } = useQuery<IAbout>(ABOUT);
+const About = () => {
+  const { data } = useQuery<IAbout>(ABOUT);
   return (
     <ScrollView>
       <Card margin="m" padding="l">

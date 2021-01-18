@@ -1,4 +1,4 @@
-import { useLinkProps, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
@@ -13,6 +13,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+
 import {
   Categories_categoriesList_content,
   Categories_categoriesList_content_categories,
@@ -37,10 +38,6 @@ const styles = StyleSheet.create({
   chevron: {
     position: "absolute",
     right: 20,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
   items: {
     overflow: "hidden",
@@ -129,8 +126,8 @@ const Category = ({ category }: CategoryProps) => {
           {len > 0 && (
             <ListItem item={category} title="~ Ver todos ~" key={"All"} />
           )}
-          {category.categories?.map((cat, i) => (
-            <ListItem item={cat!!} key={cat?.id} />
+          {category.categories?.map((cat) => (
+            <ListItem key={cat?.id} item={cat!!} key={cat?.id} />
           ))}
         </View>
       </Animated.View>

@@ -6,12 +6,12 @@ import React, {
   useEffect,
   useState,
 } from "react";
+
 import { PROFILE } from "../../api/queries";
 import {
   Profile as IProfile,
   Profile_accountCheckLogged_customer,
 } from "../../api/types/Profile";
-import { getToken } from "../../lib/auth";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -30,8 +30,12 @@ interface AuthContextActions {
 
 const AuthContext = createContext<AuthContextProps & AuthContextActions>({
   ...initialState,
-  login() {},
-  logout() {},
+  login() {
+    return;
+  },
+  logout() {
+    return;
+  },
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -46,8 +50,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     if (!loading) {
-      setState((state) => ({
-        ...state,
+      setState((old) => ({
+        ...old,
         isAuthenticated: data?.accountCheckLogged?.status === true,
         customer: data?.accountCheckLogged?.customer,
       }));
@@ -55,16 +59,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [loading, data]);
 
   function login(customer: Profile_accountCheckLogged_customer) {
-    setState((state) => ({
-      ...state,
+    setState((old) => ({
+      ...old,
       isAuthenticated: true,
       customer,
     }));
   }
 
   function logout() {
-    setState((state) => ({
-      ...state,
+    setState((old) => ({
+      ...old,
       isAuthenticated: false,
       customer: null,
     }));

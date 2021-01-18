@@ -1,9 +1,11 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import VerticalProductCard from "./VerticalProductCard";
+
 import { BasicProduct } from "../../api/types/BasicProduct";
 import { useTheme } from "../../lib/theme";
 import { Box, Text } from "../atoms";
+
+import VerticalProductCard from "./VerticalProductCard";
 
 interface HorizontalScrollProductsProps {
   products: BasicProduct[];

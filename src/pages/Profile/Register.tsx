@@ -1,18 +1,16 @@
-import React, { useReducer } from "react";
-import { Dimensions, TouchableOpacity } from "react-native";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { ScrollView } from "react-native-gesture-handler";
+import { useMutation } from "@apollo/client";
+
 import { Box, Button, Input, Text } from "../../components/atoms";
 import { RegisterProps } from "../../navigation/Profile";
-import { useMutation } from "@apollo/client";
 import { REGISTER } from "../../api/mutations";
 import {
   Register as IRegister,
   RegisterVariables,
 } from "../../api/types/Register";
 import RegisterImage from "../../components/images/Register";
-import { ScrollView } from "react-native-gesture-handler";
-
-const { width } = Dimensions.get("window");
 
 interface RegisterState {
   mail: string;
