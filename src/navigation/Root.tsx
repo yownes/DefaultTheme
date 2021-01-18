@@ -16,6 +16,7 @@ import {
   ProfileOutlined,
   Profile as ProfileIcon,
 } from "../components/icons";
+import { useTheme } from "../lib/theme";
 
 import Profile from "./Profile";
 import Home from "./Home";
@@ -34,22 +35,23 @@ const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator<AppStackParamList>();
 
 const Root = () => {
+  const theme = useTheme();
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: "primary",
-        inactiveTintColor: "dark",
+        activeTintColor: theme.colors.primary,
+        inactiveTintColor: theme.colors.dark,
       }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon({ focused, color, size }) {
+          tabBarIcon({ focused, size }) {
             return focused ? (
-              <HomeIcon size={size} color={color} />
+              <HomeIcon size={size} color="primary" />
             ) : (
-              <HomeOutlined size={size} color={color} />
+              <HomeOutlined size={size} color="dark" />
             );
           },
         }}
@@ -58,11 +60,11 @@ const Root = () => {
         name="Categorías"
         component={Categories}
         options={{
-          tabBarIcon({ focused, color, size }) {
+          tabBarIcon({ focused, size }) {
             return focused ? (
-              <CategoriesIcon size={size} color={color} />
+              <CategoriesIcon size={size} color="primary" />
             ) : (
-              <CategoriesOutlined size={size} color={color} />
+              <CategoriesOutlined size={size} color="dark" />
             );
           },
         }}
@@ -71,11 +73,11 @@ const Root = () => {
         name="Carrito"
         component={Cart}
         options={{
-          tabBarIcon({ focused, color, size }) {
+          tabBarIcon({ focused, size }) {
             return focused ? (
-              <CartIcon size={size} color={color} />
+              <CartIcon size={size} color="primary" />
             ) : (
-              <CartOutlined size={size} color={color} />
+              <CartOutlined size={size} color="dark" />
             );
           },
         }}
@@ -84,11 +86,11 @@ const Root = () => {
         name="Perfil"
         component={Profile}
         options={{
-          tabBarIcon({ focused, color, size }) {
+          tabBarIcon({ focused, size }) {
             return focused ? (
-              <ProfileIcon size={size} color={color} />
+              <ProfileIcon size={size} color="primary" />
             ) : (
-              <ProfileOutlined size={size} color={color} />
+              <ProfileOutlined size={size} color="dark" />
             );
           },
         }}
