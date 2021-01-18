@@ -7,7 +7,6 @@ import {
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
-  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -17,6 +16,7 @@ import { useMutation } from "@apollo/client";
 
 import { Box, Card, Tag, Text } from "../../../components/atoms";
 import { Quantity } from "../../../components/molecules";
+import { Trash } from "../../../components/icons";
 import { Cart_cart_products } from "../../../api/types/Cart";
 import { REMOVE_FROM_CART, UPDATE_CART } from "../../../api/mutations";
 import {
@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     height: 100,
   },
 });
-
-const AnimatedText = Animated.createAnimatedComponent(Text);
 
 const THRESHOLD = 100;
 const { width } = Dimensions.get("window");
@@ -86,10 +84,9 @@ const Row = ({ product }: RowProps) => {
     transform: [{ translateX: translateX.value }],
     position: "relative",
   }));
-  const textProps = useAnimatedProps(() => {
+  const iconStyle = useAnimatedStyle(() => {
     return {
-      fontWeight: deleting.value ? "bold" : "normal",
-      fontSize: deleting.value ? 16 : 14,
+      transform: [{ scale: withSpring(deleting.value ? 1.3 : 1) }],
     };
   });
   return (
@@ -102,7 +99,9 @@ const Row = ({ product }: RowProps) => {
           justifyContent="center"
           flex={1}
         >
-          <AnimatedText animatedProps={textProps}>Eliminar</AnimatedText>
+          <Animated.View style={iconStyle}>
+            <Trash />
+          </Animated.View>
         </Box>
       </TouchableOpacity>
       <PanGestureHandler
