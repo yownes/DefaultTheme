@@ -116,6 +116,7 @@ export const PRODUCT = gql`
       price
       special
       stock
+      inWishlist
       manufacturer
       attributes {
         name
@@ -164,6 +165,16 @@ export const PROFILE = gql`
       }
     }
   }
+`;
+
+export const FAVOURITES = gql`
+  query Favourites {
+    wishlist {
+      ...BasicProduct
+      inWishlist
+    }
+  }
+  ${PRODUCT_FRAGMENT}
 `;
 
 export const CART = gql`

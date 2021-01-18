@@ -42,6 +42,7 @@ export interface Product_product {
   price: string | null;
   special: string | null;
   stock: number | null;
+  inWishlist: boolean | null;
   manufacturer: string | null;
   attributes: (Product_product_attributes | null)[] | null;
   options: (Product_product_options | null)[] | null;

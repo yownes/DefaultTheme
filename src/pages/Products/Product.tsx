@@ -1,16 +1,29 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { Reference, useMutation, useQuery } from "@apollo/client";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Dimensions, Image, Pressable, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { add } from "react-native-reanimated";
 import { SharedElement } from "react-navigation-shared-element";
 
-import { ADD_TO_CART } from "../../api/mutations";
+import {
+  ADD_TO_CART,
+  ADD_TO_FAVOURITE,
+  REMOVE_FAVOURITE,
+} from "../../api/mutations";
 import { PRODUCT } from "../../api/queries";
 import { AddToCart, AddToCartVariables } from "../../api/types/AddToCart";
+import {
+  AddToFavourite,
+  AddToFavouriteVariables,
+} from "../../api/types/AddToFavourite";
 import { Product as IProduct, ProductVariables } from "../../api/types/Product";
+import {
+  RemoveFavourite,
+  RemoveFavouriteVariables,
+} from "../../api/types/RemoveFavourite";
 import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
-import { Star } from "../../components/icons";
+import { Favourite, FavouriteOutlined } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
 import { ProductProps } from "../../navigation/Product";
@@ -26,6 +39,50 @@ const Product = ({ route, navigation }: ProductProps) => {
     variables: { id },
   });
   const [addToCart] = useMutation<AddToCart, AddToCartVariables>(ADD_TO_CART);
+  const [addToFavourite] = useMutation<AddToFavourite, AddToFavouriteVariables>(
+    ADD_TO_FAVOURITE,
+    {
+      variables: { id: parseInt(id) },
+      update(cache, { data: addData }) {
+        if (addData?.addToWishlist) {
+          cache.modify({
+            fields: {
+              wishlist(existing: Reference[], { toReference }) {
+                return [...existing, toReference({ ...data?.product })];
+              },
+            },
+          });
+        }
+      },
+    }
+  );
+  const [removeFavourite] = useMutation<
+    RemoveFavourite,
+    RemoveFavouriteVariables
+  >(REMOVE_FAVOURITE, {
+    variables: { id },
+    update(cache, { data: removeData }) {
+      if (removeData?.removeWishlist) {
+        cache.modify({
+          fields: {
+            wishlist(existing: Reference[], { readField }) {
+              return existing.filter(
+                (productRef) => id !== readField("id", productRef)
+              );
+            },
+          },
+        });
+        cache.modify({
+          id: cache.identify({ ...data?.product }),
+          fields: {
+            inWishlist() {
+              return false;
+            },
+          },
+        });
+      }
+    },
+  });
   const [qty, setQty] = useState(1);
   const [options, setOptions] = useState({});
   useFocusEffect(() => {
@@ -89,7 +146,17 @@ const Product = ({ route, navigation }: ProductProps) => {
             onChange={setQty}
             limit={data?.product?.stock ?? 0}
           />
-          <Star color="dark" />
+          <TouchableOpacity
+            onPress={() => {
+              if (data?.product?.inWishlist) {
+                removeFavourite();
+              } else {
+                addToFavourite();
+              }
+            }}
+          >
+            {data?.product?.inWishlist ? <Favourite /> : <FavouriteOutlined />}
+          </TouchableOpacity>
         </Box>
       </Box>
       {(data?.product?.options?.length ?? 0) > 0 && (

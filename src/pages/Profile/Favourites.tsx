@@ -1,20 +1,24 @@
 import React from "react";
+import { FlatList } from "react-native";
+import { useQuery } from "@apollo/client";
 
-import { Box, Button, Text } from "../../components/atoms";
-import { FavouritesProps } from "../../navigation/Profile";
+import { Box } from "../../components/atoms";
+import { FAVOURITES } from "../../api/queries";
+import { Favourites as IFavourites } from "../../api/types/Favourites";
+import { ProductCard } from "../../components/molecules";
 
-const Favourites = ({ navigation }: FavouritesProps) => {
+const Favourites = () => {
+  const { data } = useQuery<IFavourites>(FAVOURITES);
   return (
-    <Box>
-      <Text>Favourites</Text>
-      <Button
-        onPress={() =>
-          navigation.navigate("Product", {
-            screen: "Product",
-            params: { id: "ProductId" },
-          })
-        }
-        label="Go to Product"
+    <Box flex={1} paddingHorizontal="l" paddingTop="m">
+      <FlatList
+        data={data?.wishlist}
+        keyExtractor={(item) => item?.id}
+        renderItem={({ item }) => (
+          <Box marginBottom="m" key={item?.id}>
+            <ProductCard product={item} />
+          </Box>
+        )}
       />
     </Box>
   );

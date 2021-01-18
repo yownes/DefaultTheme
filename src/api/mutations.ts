@@ -40,6 +40,24 @@ export const ADD_TO_CART = gql`
   }
 `;
 
+export const ADD_TO_FAVOURITE = gql`
+  mutation AddToFavourite($id: Int) {
+    addToWishlist(id: $id) {
+      id
+      inWishlist
+    }
+  }
+`;
+
+export const REMOVE_FAVOURITE = gql`
+  mutation RemoveFavourite($id: String) {
+    removeWishlist(id: $id) {
+      id
+      inWishlist
+    }
+  }
+`;
+
 export const REMOVE_FROM_CART = gql`
   mutation RemoveFromCart($key: String) {
     removeCart(key: $key) {
