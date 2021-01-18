@@ -1,13 +1,5 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Box, Loading } from "../../components/atoms";
-import { ProductsProps } from "../../navigation/Root";
-import { PRODUCTS } from "../../api/queries";
-import {
-  Products as IProducts,
-  ProductsVariables,
-} from "../../api/types/Products";
-import { ProductCard, VerticalProductCard } from "../../components/molecules";
 import { FlatList } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -16,36 +8,42 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import Filters, { BAR_HEIGHT } from "./Components/Filters";
+
+import { Box, Loading } from "../../components/atoms";
+import { ProductsProps } from "../../navigation/Root";
+import { PRODUCTS } from "../../api/queries";
+import {
+  Products as IProducts,
+  ProductsVariables,
+  Products_productsList_content,
+} from "../../api/types/Products";
+import { ProductCard, VerticalProductCard } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
+
+import Filters, { BAR_HEIGHT } from "./Components/Filters";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const Products = ({ navigation, route }: ProductsProps) => {
+const Products = ({ route }: ProductsProps) => {
   const category = route.params?.category;
   const theme = useTheme();
   const transY = useSharedValue(0);
-  const last = useSharedValue(0);
   const [isList, setIsList] = useState(true);
   const { loading, data } = useQuery<IProducts, ProductsVariables>(PRODUCTS, {
     variables: { category: category?.id },
   });
-  const onScroll = useAnimatedScrollHandler<{ y?: number }>({
-    onScroll({ contentOffset }, { y }) {
-      transY.value = contentOffset.y - last.value;
-      // Fix for iOS scroll top, which ends drag after 0
-      if (contentOffset.y === 0) {
-        last.value = 0;
-      }
+  const onScroll = useAnimatedScrollHandler<{ y: number }>({
+    onBeginDrag({ contentOffset }, ctx) {
+      ctx.y = contentOffset.y;
     },
-    onEndDrag({ contentOffset }, { y }) {
-      last.value = contentOffset.y;
+    onScroll({ contentOffset }, { y }) {
+      transY.value = contentOffset.y - y;
     },
   });
   const filterStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       transY.value,
-      [0, BAR_HEIGHT],
+      [-BAR_HEIGHT, BAR_HEIGHT],
       [0, -BAR_HEIGHT],
       Extrapolate.CLAMP
     );
@@ -77,16 +75,16 @@ const Products = ({ navigation, route }: ProductsProps) => {
         onScroll={onScroll}
         key={isList ? "list" : "grid"}
         scrollEventThrottle={32}
-        renderItem={({ item: product }) => (
+        renderItem={({ item }: { item: Products_productsList_content }) => (
           <Box paddingBottom="m">
             {isList ? (
-              <ProductCard product={product!!} />
+              <ProductCard product={item} />
             ) : (
-              <VerticalProductCard product={product!!} />
+              <VerticalProductCard product={item} />
             )}
           </Box>
         )}
-      ></AnimatedFlatList>
+      />
     </>
   );
 };
