@@ -42,7 +42,7 @@ const Product = ({ route, navigation }: ProductProps) => {
   const [addToFavourite] = useMutation<AddToFavourite, AddToFavouriteVariables>(
     ADD_TO_FAVOURITE,
     {
-      variables: { id: parseInt(id) },
+      variables: { id: parseInt(id, 10) },
       update(cache, { data: addData }) {
         if (addData?.addToWishlist) {
           cache.modify({
