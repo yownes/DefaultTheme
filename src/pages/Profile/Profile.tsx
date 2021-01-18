@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 
 import { Box, Button, Card, Text } from "../../components/atoms";
 import { ProfileProps } from "../../navigation/Profile";
-import { Star } from "../../components/icons";
+import { FavouriteOutlined, Shipment } from "../../components/icons";
 import { useAuth } from "../../components/organisms/AuthContext";
 import { LOGOUT } from "../../api/mutations";
 import { Logout } from "../../api/types/Logout";
@@ -41,7 +41,7 @@ const Profile = ({ navigation }: ProfileProps) => {
               }}
             >
               <Box alignItems="center">
-                <Star color="dark" />
+                <FavouriteOutlined color="dark" />
                 <Text>Favoritos</Text>
               </Box>
             </TouchableOpacity>
@@ -51,7 +51,7 @@ const Profile = ({ navigation }: ProfileProps) => {
               }}
             >
               <Box alignItems="center">
-                <Star color="dark" />
+                <Shipment color="dark" />
                 <Text>Pedidos</Text>
               </Box>
             </TouchableOpacity>
