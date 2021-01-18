@@ -18,9 +18,87 @@ interface SliderProps {
   viewHeight: number;
 }
 
+interface AnimatedDotProps {
+  actual: Animated.SharedValue<number>;
+  index: number;
+}
+interface AnimatedViewProps {
+  actual: Animated.SharedValue<number>;
+  index: number;
+  translationX: Animated.SharedValue<number>;
+  view: ReactNode;
+}
+
 const { width } = Dimensions.get("window");
 
 const THRESHOLD = 30;
+
+const AnimatedDot = ({ actual, index }: AnimatedDotProps) => {
+  const selected = useDerivedValue(() => actual.value === index);
+  return (
+    <Box padding="m">
+      <Dot selected={selected} />
+    </Box>
+  );
+};
+
+const AnimatedView = ({
+  translationX,
+  actual,
+  index,
+  view,
+}: AnimatedViewProps) => {
+  const style = useAnimatedStyle(() => {
+    const isActual = actual.value === index;
+    const theNext =
+      translationX.value > 0 ? -1 : translationX.value < 0 ? 1 : 0;
+    const isNext = actual.value + theNext === index;
+
+    if (isActual) {
+      const multiplier = 1;
+      const translateX = interpolate(
+        translationX.value,
+        [-width, 0, width],
+        [-multiplier * width * 1.5, 0, multiplier * width * 1.5]
+      );
+      const rotate = interpolate(
+        translationX.value,
+        [-width, 0, width],
+        [-10, 0, 10]
+      );
+      const scale = interpolate(
+        translationX.value,
+        [-width, 0, width],
+        [0.8, 1, 0.8]
+      );
+      const opacity = interpolate(
+        translationX.value,
+        [-width / 2, 0, width / 2],
+        [0.4, 1, 0.4],
+        Extrapolate.CLAMP
+      );
+      return {
+        position: "absolute",
+        opacity,
+        transform: [{ translateX }, { rotate: `${rotate}deg` }, { scale }],
+      };
+    } else {
+      const opacityValue = interpolate(
+        translationX.value,
+        [-width / 2, 0, width / 2],
+        [0.5, 0, 0.5],
+        Extrapolate.CLAMP
+      );
+      return {
+        position: "absolute",
+        opacity: isNext ? opacityValue : 0,
+        zIndex: isActual ? 2 : 1,
+        transform: [{ translateX: 0 }],
+      };
+    }
+  });
+  return <Animated.View style={style}>{view}</Animated.View>;
+};
 
 const Slider = ({ views, viewHeight }: SliderProps) => {
   const idx = useSharedValue(0);
@@ -61,75 +139,23 @@ const Slider = ({ views, viewHeight }: SliderProps) => {
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View>
         <Box alignItems="center">
-          {views.map((view, i) => {
-            const style = useAnimatedStyle(() => {
-              const isActual = idx.value === i;
-              const theNext =
-                translationX.value > 0 ? -1 : translationX.value < 0 ? 1 : 0;
-              const isNext = idx.value + theNext === i;
-
-              if (isActual) {
-                const multiplier = 1;
-                const translateX = interpolate(
-                  translationX.value,
-                  [-width, 0, width],
-                  [-multiplier * width * 1.5, 0, multiplier * width * 1.5]
-                );
-                const rotate = interpolate(
-                  translationX.value,
-                  [-width, 0, width],
-                  [-10, 0, 10]
-                );
-                const scale = interpolate(
-                  translationX.value,
-                  [-width, 0, width],
-                  [0.8, 1, 0.8]
-                );
-                const opacity = interpolate(
-                  translationX.value,
-                  [-width / 2, 0, width / 2],
-                  [0.4, 1, 0.4],
-                  Extrapolate.CLAMP
-                );
-                return {
-                  position: "absolute",
-                  opacity,
-                  transform: [
-                    { translateX },
-                    { rotate: `${rotate}deg` },
-                    { scale },
-                  ],
-                };
-              } else {
-                const opacityValue = interpolate(
-                  translationX.value,
-                  [-width / 2, 0, width / 2],
-                  [0.5, 0, 0.5],
-                  Extrapolate.CLAMP
-                );
-                return {
-                  position: "absolute",
-                  opacity: isNext ? opacityValue : 0,
-                  zIndex: isActual ? 2 : 1,
-                  transform: [{ translateX: 0 }],
-                };
-              }
-            });
-            return (
-              <Animated.View key={i} style={style}>
-                {view}
-              </Animated.View>
-            );
-          })}
-          <Box flexDirection="row" justifyContent="space-evenly">
-            {views.map((_, i) => {
-              const selected = useDerivedValue(() => idx.value === i);
-              return (
-                <Box padding="m" key={i} style={{ marginTop: viewHeight }}>
-                  <Dot selected={selected} />
-                </Box>
-              );
-            })}
+          {views.map((view, i) => (
+            <AnimatedView
+              key={i}
+              view={view}
+              actual={idx}
+              index={i}
+              translationX={translationX}
+            />
+          ))}
+          <Box
+            flexDirection="row"
+            justifyContent="space-evenly"
+            style={{ marginTop: viewHeight }}
+          >
+            {views.map((_, i) => (
+              <AnimatedDot index={i} actual={idx} key={i} />
+            ))}
           </Box>
         </Box>
       </Animated.View>
