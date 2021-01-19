@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { StackScreenProps } from "@react-navigation/stack";
 
-import Categories from "../pages/Categories";
+import Categories from "../pages/Categories/Categories";
 import ProductsPage from "../pages/Products/Products";
 import { Categories_categoriesList_content_categories } from "../api/types/Categories";
 import {

@@ -6,4 +6,5 @@ export { default as Slider } from "./Slider";
 export { default as Placeholder } from "./Placeholder";
 export { default as ProductCard } from "./ProductCard";
 export { default as Quantity } from "./Quantity";
+export { default as SearchHeader } from "./SearchHeader";
 export { default as VerticalProductCard } from "./VerticalProductCard";
