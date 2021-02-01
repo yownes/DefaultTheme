@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
+import React, { useMemo, useRef, useState } from "react";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { FlatList } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -8,6 +8,11 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
 
 import { Box, Loading } from "../../components/atoms";
 import { ProductsProps } from "../../navigation/Root";
@@ -21,6 +26,7 @@ import { ProductCard, VerticalProductCard } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
 
 import Filters, { BAR_HEIGHT } from "./Components/Filters";
+import Facet from "./Components/Facet";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -29,8 +35,14 @@ const Products = ({ route }: ProductsProps) => {
   const theme = useTheme();
   const transY = useSharedValue(0);
   const [isList, setIsList] = useState(true);
-  const { loading, data } = useQuery<IProducts, ProductsVariables>(PRODUCTS, {
-    variables: { category: category?.id },
+  const [filter, setFilter] = useState<string>("");
+  const snapPoints = useMemo(() => ["30%", "70%"], []);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const { loading, data, networkStatus } = useQuery<
+    IProducts,
+    ProductsVariables
+  >(PRODUCTS, {
+    variables: { category: category?.id, filter },
   });
   const onScroll = useAnimatedScrollHandler<{ y: number }>({
     onBeginDrag({ contentOffset }, ctx) {
@@ -43,7 +55,7 @@ const Products = ({ route }: ProductsProps) => {
   const filterStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       transY.value,
-      [-BAR_HEIGHT, BAR_HEIGHT],
+      [0, BAR_HEIGHT],
       [0, -BAR_HEIGHT],
       Extrapolate.CLAMP
     );
@@ -56,18 +68,23 @@ const Products = ({ route }: ProductsProps) => {
       transform: [{ translateY }],
     };
   });
-  if (loading) {
+  if (loading && networkStatus !== NetworkStatus.setVariables) {
     return <Loading />;
   }
   return (
-    <>
+    <BottomSheetModalProvider>
       <Animated.View style={filterStyle}>
-        <Filters list={isList} onListChange={setIsList} />
+        <Filters
+          list={isList}
+          onListChange={setIsList}
+          onFiltersPress={() => {
+            bottomSheetRef.current?.present();
+          }}
+        />
       </Animated.View>
       <AnimatedFlatList
         contentContainerStyle={{
-          marginTop: BAR_HEIGHT,
-          paddingTop: theme.spacing.m,
+          paddingTop: BAR_HEIGHT + theme.spacing.m,
           paddingHorizontal: theme.spacing.l,
         }}
         numColumns={isList ? 1 : 2}
@@ -85,7 +102,24 @@ const Products = ({ route }: ProductsProps) => {
           </Box>
         )}
       />
-    </>
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        backdropComponent={BottomSheetBackdrop}
+      >
+        <Box padding="m">
+          {data?.productsList?.facets?.map((facet) => (
+            <Facet
+              selected={filter}
+              onSelect={(value) => setFilter(value)}
+              key={facet?.label}
+              facet={facet}
+            />
+          ))}
+        </Box>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 };
 

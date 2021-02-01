@@ -17,11 +17,29 @@ export interface Products_productsList_content {
   manufacturer: string | null;
 }
 
+export interface Products_productsList_facets_filters {
+  __typename: "FacetFilter";
+  label: string | null;
+  type: string | null;
+  value: string | null;
+  active: boolean | null;
+}
+
+export interface Products_productsList_facets {
+  __typename: "Facet";
+  label: string | null;
+  type: string | null;
+  multipleSelectionAllowed: boolean | null;
+  widgetType: string | null;
+  filters: (Products_productsList_facets_filters | null)[] | null;
+}
+
 export interface Products_productsList {
   __typename: "ProductResult";
   last: boolean | null;
   totalPages: number | null;
   content: (Products_productsList_content | null)[] | null;
+  facets: (Products_productsList_facets | null)[] | null;
 }
 
 export interface Products {
@@ -32,4 +50,5 @@ export interface ProductsVariables {
   category?: string | null;
   page?: number | null;
   search?: string | null;
+  filter?: string | null;
 }

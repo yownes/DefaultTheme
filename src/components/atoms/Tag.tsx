@@ -5,11 +5,16 @@ import Text from "./Text";
 
 interface TagProps {
   children: ReactNode;
+  light?: boolean;
 }
 
-const Tag = ({ children }: TagProps) => {
+const Tag = ({ children, light }: TagProps) => {
   return (
-    <Box backgroundColor="primary" paddingVertical="s" paddingHorizontal="m">
+    <Box
+      backgroundColor={light ? "greyscale3" : "primary"}
+      paddingVertical="s"
+      paddingHorizontal="m"
+    >
       <Text variant="buttonLabel" color="white">
         {children}
       </Text>

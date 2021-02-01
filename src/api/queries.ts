@@ -90,12 +90,34 @@ export const TOP_SALES = gql`
 `;
 
 export const PRODUCTS = gql`
-  query Products($category: String, $page: Int, $search: String) {
-    productsList(category_id: $category, page: $page, search: $search) {
+  query Products(
+    $category: String
+    $page: Int
+    $search: String
+    $filter: String
+  ) {
+    productsList(
+      category_id: $category
+      page: $page
+      search: $search
+      filter: $filter
+    ) {
       last
       totalPages
       content {
         ...BasicProduct
+      }
+      facets {
+        label
+        type
+        multipleSelectionAllowed
+        widgetType
+        filters {
+          label
+          type
+          value
+          active
+        }
       }
     }
   }
