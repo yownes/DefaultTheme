@@ -95,12 +95,16 @@ export const PRODUCTS = gql`
     $page: Int
     $search: String
     $filter: String
+    $sort: String
+    $order: String
   ) {
     productsList(
       category_id: $category
       page: $page
       search: $search
       filter: $filter
+      sort: $sort
+      order: $order
     ) {
       last
       totalPages
@@ -118,6 +122,12 @@ export const PRODUCTS = gql`
           value
           active
         }
+      }
+      sortOrders {
+        entity
+        label
+        field
+        direction
       }
     }
   }

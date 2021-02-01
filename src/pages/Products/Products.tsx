@@ -27,6 +27,7 @@ import { useTheme } from "../../lib/theme";
 
 import Filters, { BAR_HEIGHT } from "./Components/Filters";
 import Facet from "./Components/Facet";
+import Order from "./Components/Order";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -35,14 +36,27 @@ const Products = ({ route }: ProductsProps) => {
   const theme = useTheme();
   const transY = useSharedValue(0);
   const [isList, setIsList] = useState(true);
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState("");
+  const [order, setOrder] = useState<{ sort?: string; order?: string }>({
+    sort: undefined,
+    order: undefined,
+  });
   const snapPoints = useMemo(() => ["30%", "70%"], []);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const bottomSheetSortRef = useRef<BottomSheetModal>(null);
+  const variables = {
+    category: category?.id,
+    filter,
+    sort: order.sort,
+    order: order.order,
+  };
+  console.log(variables);
+
   const { loading, data, networkStatus } = useQuery<
     IProducts,
     ProductsVariables
   >(PRODUCTS, {
-    variables: { category: category?.id, filter },
+    variables,
   });
   const onScroll = useAnimatedScrollHandler<{ y: number }>({
     onBeginDrag({ contentOffset }, ctx) {
@@ -79,6 +93,9 @@ const Products = ({ route }: ProductsProps) => {
           onListChange={setIsList}
           onFiltersPress={() => {
             bottomSheetRef.current?.present();
+          }}
+          onSortPress={() => {
+            bottomSheetSortRef.current?.present();
           }}
         />
       </Animated.View>
@@ -117,6 +134,24 @@ const Products = ({ route }: ProductsProps) => {
               facet={facet}
             />
           ))}
+        </Box>
+      </BottomSheetModal>
+      <BottomSheetModal
+        ref={bottomSheetSortRef}
+        index={0}
+        snapPoints={snapPoints}
+        backdropComponent={BottomSheetBackdrop}
+      >
+        <Box padding="m">
+          <Order
+            sortOrders={data?.productsList?.sortOrders}
+            onOrderSelected={(sort, order) => {
+              setOrder({
+                order,
+                sort,
+              });
+            }}
+          />
         </Box>
       </BottomSheetModal>
     </BottomSheetModalProvider>

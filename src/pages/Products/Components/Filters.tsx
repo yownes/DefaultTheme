@@ -1,4 +1,3 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -9,11 +8,17 @@ interface FiltersProps {
   list: boolean;
   onListChange: (value: boolean) => void;
   onFiltersPress: () => void;
+  onSortPress: () => void;
 }
 
 export const BAR_HEIGHT = 44;
 
-const Filters = ({ list, onListChange, onFiltersPress }: FiltersProps) => {
+const Filters = ({
+  list,
+  onListChange,
+  onFiltersPress,
+  onSortPress,
+}: FiltersProps) => {
   return (
     <Box
       padding="m"
@@ -23,8 +28,8 @@ const Filters = ({ list, onListChange, onFiltersPress }: FiltersProps) => {
       flexDirection="row"
     >
       <Box flex={1}>
-        <TouchableOpacity onPress={() => onListChange(!list)}>
-          <Text>Filters</Text>
+        <TouchableOpacity onPress={onSortPress}>
+          <Text>Ordenar</Text>
         </TouchableOpacity>
       </Box>
       <Box flex={1} alignItems="center">
@@ -38,7 +43,7 @@ const Filters = ({ list, onListChange, onFiltersPress }: FiltersProps) => {
       </Box>
       <Box flex={1} alignItems="flex-end">
         <TouchableOpacity onPress={onFiltersPress}>
-          <Text>More filters</Text>
+          <Text>Filtrar</Text>
         </TouchableOpacity>
       </Box>
     </Box>

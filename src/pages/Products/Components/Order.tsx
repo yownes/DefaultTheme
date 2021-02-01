@@ -1,12 +1,32 @@
-import React from 'react';
-import { Box, Text } from '../../../components/atoms';
+import React from "react";
+import { TouchableOpacity } from "react-native";
 
-interface OrderProps {}
+import { Products_productsList_sortOrders } from "../../../api/types/Products";
+import { Box, Text } from "../../../components/atoms";
 
-const Order = ({}: OrderProps) => {
+interface OrderProps {
+  sortOrders: Products_productsList_sortOrders[] | null;
+  onOrderSelected: (sort: string, order: string) => void;
+}
+
+const Order = ({ sortOrders, onOrderSelected }: OrderProps) => {
   return (
     <Box>
-      <Text>Order</Text>
+      <Text variant="header2">Ordenar por</Text>
+      <Box>
+        {sortOrders?.map((order) => (
+          <TouchableOpacity
+            key={order.label}
+            onPress={() => {
+              onOrderSelected(order.field, order.direction);
+            }}
+          >
+            <Box paddingVertical="m">
+              <Text>{order.label}</Text>
+            </Box>
+          </TouchableOpacity>
+        ))}
+      </Box>
     </Box>
   );
 };

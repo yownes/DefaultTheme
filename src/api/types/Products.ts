@@ -34,12 +34,21 @@ export interface Products_productsList_facets {
   filters: (Products_productsList_facets_filters | null)[] | null;
 }
 
+export interface Products_productsList_sortOrders {
+  __typename: "SortOrder";
+  entity: string | null;
+  label: string | null;
+  field: string | null;
+  direction: string | null;
+}
+
 export interface Products_productsList {
   __typename: "ProductResult";
   last: boolean | null;
   totalPages: number | null;
   content: (Products_productsList_content | null)[] | null;
   facets: (Products_productsList_facets | null)[] | null;
+  sortOrders: (Products_productsList_sortOrders | null)[] | null;
 }
 
 export interface Products {
@@ -51,4 +60,6 @@ export interface ProductsVariables {
   page?: number | null;
   search?: string | null;
   filter?: string | null;
+  sort?: string | null;
+  order?: string | null;
 }
