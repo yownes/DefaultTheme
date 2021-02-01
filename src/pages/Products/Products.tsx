@@ -50,8 +50,6 @@ const Products = ({ route }: ProductsProps) => {
     sort: order.sort,
     order: order.order,
   };
-  console.log(variables);
-
   const { loading, data, networkStatus } = useQuery<
     IProducts,
     ProductsVariables
