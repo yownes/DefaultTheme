@@ -4,7 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Box, Button, Input, Text } from "../../components/atoms";
+import { Box, Button, Text } from "../../components/atoms";
+import { InputWithErrors } from "../../components/molecules";
 import LoginImage from "../../components/images/Login";
 import { LoginProps } from "../../navigation/Profile";
 import { LOGIN } from "../../api/mutations";
@@ -26,20 +27,23 @@ const Login = ({ navigation }: LoginProps) => {
     defaultValues: intialState,
   });
   const Auth = useAuth();
-  const [login] = useMutation<ILogin, LoginVariables>(LOGIN);
-  function onSubmit(data: LoginState) {
+  const [login, { error, loading }] = useMutation<ILogin, LoginVariables>(
+    LOGIN
+  );
+  function onSubmit(loginState: LoginState) {
     login({
       variables: {
-        email: data.mail,
-        password: data.password,
+        email: loginState.mail,
+        password: loginState.password,
       },
-    }).then(({ data, context }) => {
-      console.log(data?.accountLogin, context);
-      if (data?.accountLogin?.token && data.accountLogin.customer) {
-        Auth.login(data.accountLogin.customer);
-        navigation.replace("Profile");
-      }
-    });
+    })
+      .then(({ data }) => {
+        if (data?.accountLogin?.customer) {
+          Auth.login(data.accountLogin.customer);
+          navigation.replace("Profile");
+        }
+      })
+      .catch(() => null);
   }
   return (
     <ScrollView>
@@ -49,35 +53,38 @@ const Login = ({ navigation }: LoginProps) => {
           <Text variant="header3" textAlign="center" paddingBottom="xl">
             Inicio sesión
           </Text>
+          {error && <Text color="danger">{error.message}</Text>}
           <Box paddingBottom="l">
             <Controller
               control={control}
               name="mail"
               render={({ onChange, onBlur, value }) => (
-                <Input
+                <InputWithErrors
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
                   keyboardType="email-address"
                   placeholder="Email"
+                  error={errors.mail?.message}
                 />
               )}
-              rules={{ required: true }}
+              rules={{ required: "Este campo es obligatorio" }}
             />
           </Box>
           <Controller
             control={control}
             name="password"
             render={({ onChange, onBlur, value }) => (
-              <Input
+              <InputWithErrors
                 secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
                 placeholder="Contraseña"
+                error={errors.password?.message}
               />
             )}
-            rules={{ required: true }}
+            rules={{ required: "Este campo es obligatorio" }}
           />
           <TouchableOpacity style={{ paddingVertical: 10 }} onPress={() => {}}>
             <Text variant="small" textAlign="right">
@@ -88,11 +95,13 @@ const Login = ({ navigation }: LoginProps) => {
             marginTop="l"
             label="Iniciar sesión"
             onPress={handleSubmit(onSubmit)}
+            disabled={loading}
           />
           <Button
             marginTop="l"
             backgroundColor="background"
             color="dark"
+            disabled={loading}
             label="Registrarme"
             onPress={() => {
               navigation.navigate("Register");

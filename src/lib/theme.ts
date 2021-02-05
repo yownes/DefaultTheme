@@ -3,6 +3,7 @@ import { createTheme, useTheme as useRestyleTheme } from "@shopify/restyle";
 const palette = {
   green: "#00e39c",
   black: "black",
+  danger: "#ff0000",
   greyscale1: "#ffffff",
   greyscale2: "#ededed",
   greyscale3: "#9b9b9b",
@@ -15,6 +16,7 @@ const palette = {
 const theme = createTheme({
   colors: {
     primary: palette.green,
+    danger: palette.danger,
     dark: palette.greyscale6,
     background: palette.greyscale2,
     black: palette.black,
