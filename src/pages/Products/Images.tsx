@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -15,6 +15,8 @@ import { snapPoint, useVector } from "react-native-redash";
 import { SharedElement } from "react-navigation-shared-element";
 
 import { ImagesProps } from "../../navigation/Product";
+
+import ZoomImage from "./Components/ZoomImage";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -86,10 +88,7 @@ const Images = ({ route, navigation }: ImagesProps) => {
         >
           {IMAGES.map((image, i) => (
             <SharedElement key={i} id={`image.${i}.${product.id}`}>
-              <Image
-                source={{ uri: image }}
-                style={{ flex: 1, width, height }}
-              />
+              <ZoomImage image={image} />
             </SharedElement>
           ))}
         </Animated.ScrollView>
