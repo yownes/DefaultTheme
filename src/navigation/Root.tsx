@@ -107,7 +107,11 @@ const App = () => {
         options={{ headerShown: false }}
         component={Root}
       />
-      <Stack.Screen name="Product" component={Product} />
+      <Stack.Screen
+        name="Product"
+        options={{ headerShown: false }}
+        component={Product}
+      />
       <Stack.Screen
         name="Products"
         component={ProductsPage}

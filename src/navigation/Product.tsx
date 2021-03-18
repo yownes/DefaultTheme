@@ -17,7 +17,7 @@ export type ProductProps = StackScreenProps<AppStackParamList, "Product">;
 export type ImagesProps = StackScreenProps<AppStackParamList, "Images">;
 
 const ProductNavigator = () => (
-  <ProductStack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
+  <ProductStack.Navigator mode="modal">
     <ProductStack.Screen name="Product" component={Product} />
     <ProductStack.Screen
       name="Images"
