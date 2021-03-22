@@ -3,7 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import { ScrollView } from "react-native-gesture-handler";
 import { useMutation } from "@apollo/client";
 
-import { Box, Button, Input, Text } from "../../components/atoms";
+import { Box, Button, Text } from "../../components/atoms";
+import { InputWithErrors } from "../../components/molecules";
 import { RegisterProps } from "../../navigation/Profile";
 import { REGISTER } from "../../api/mutations";
 import {
@@ -32,7 +33,9 @@ const Register = ({ navigation }: RegisterProps) => {
   const { control, handleSubmit, errors } = useForm<RegisterState>({
     defaultValues: intialState,
   });
-  const [register] = useMutation<IRegister, RegisterVariables>(REGISTER);
+  const [register, { error }] = useMutation<IRegister, RegisterVariables>(
+    REGISTER
+  );
   function onSubmit(data: RegisterState) {
     register({
       variables: {
@@ -60,19 +63,21 @@ const Register = ({ navigation }: RegisterProps) => {
           <Text variant="header3" paddingBottom="xl">
             Registro
           </Text>
+          {error && <Text color="danger">{error.message}</Text>}
           <Box paddingBottom="l">
             <Controller
               control={control}
               name="firstName"
               render={({ onChange, onBlur, value }) => (
-                <Input
+                <InputWithErrors
+                  error={errors.firstName?.message}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
                   placeholder="Nombre"
                 />
               )}
-              rules={{ required: true }}
+              rules={{ required: "Este campo es obligatorio" }}
             />
           </Box>
           <Box paddingBottom="l">
@@ -80,14 +85,15 @@ const Register = ({ navigation }: RegisterProps) => {
               control={control}
               name="lastName"
               render={({ onChange, onBlur, value }) => (
-                <Input
+                <InputWithErrors
+                  error={errors.lastName?.message}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
                   placeholder="Apellidos"
                 />
               )}
-              rules={{ required: true }}
+              rules={{ required: "Este campo es obligatorio" }}
             />
           </Box>
           <Box paddingBottom="l">
@@ -95,7 +101,8 @@ const Register = ({ navigation }: RegisterProps) => {
               control={control}
               name="mail"
               render={({ onChange, onBlur, value }) => (
-                <Input
+                <InputWithErrors
+                  error={errors.mail?.message}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -103,7 +110,7 @@ const Register = ({ navigation }: RegisterProps) => {
                   placeholder="Email"
                 />
               )}
-              rules={{ required: true }}
+              rules={{ required: "Este campo es obligatorio" }}
             />
           </Box>
           <Box paddingBottom="l">
@@ -111,7 +118,8 @@ const Register = ({ navigation }: RegisterProps) => {
               control={control}
               name="password"
               render={({ onChange, onBlur, value }) => (
-                <Input
+                <InputWithErrors
+                  error={errors.password?.message}
                   secureTextEntry
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -119,14 +127,21 @@ const Register = ({ navigation }: RegisterProps) => {
                   placeholder="Contraseña"
                 />
               )}
-              rules={{ required: true }}
+              rules={{
+                required: "Este campo es obligatorio",
+                minLength: {
+                  value: 8,
+                  message: "La contraseña debe tener al menos 8 caracteres",
+                },
+              }}
             />
           </Box>
           <Controller
             control={control}
             name="confirmPassword"
             render={({ onChange, onBlur, value }) => (
-              <Input
+              <InputWithErrors
+                error={errors.confirmPassword?.message}
                 secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -134,7 +149,7 @@ const Register = ({ navigation }: RegisterProps) => {
                 placeholder="Confirmar contraseña"
               />
             )}
-            rules={{ required: true }}
+            rules={{ required: "Este campo es obligatorio" }}
           />
           <Button
             marginTop="l"
