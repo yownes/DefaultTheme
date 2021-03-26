@@ -107,3 +107,26 @@ export const UPDATE_CART = gql`
     }
   }
 `;
+
+export const ADD_ADDRESS = gql`
+  mutation AddAddress($address: AccountAddressInput) {
+    accountAddAddress(address: $address) {
+      id
+      firstName
+      lastName
+      company
+      address1
+      address2
+      zone {
+        id
+        name
+      }
+      country {
+        id
+        name
+      }
+      city
+      zipcode
+    }
+  }
+`;

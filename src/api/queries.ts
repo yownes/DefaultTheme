@@ -256,3 +256,25 @@ export const ADDRESS_LIST = gql`
     }
   }
 `;
+
+export const COUNTRIES_LIST = gql`
+  query CountriesList {
+    countriesList {
+      content {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const ZONES_LIST = gql`
+  query ZonesList($countryId: String) {
+    zonesList(country_id: $countryId, size: -1) {
+      content {
+        id
+        name
+      }
+    }
+  }
+`;

@@ -1,3 +1,4 @@
+export { default as AddDirection } from "./AddDirection/index";
 export { default as InterestProducts } from "./InterestProducts";
 export { default as PaymentSelect } from "./PaymentSelect";
 export { default as ShippingSelect } from "./ShippingSelect";

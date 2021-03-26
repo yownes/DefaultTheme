@@ -7,6 +7,18 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface AccountAddressInput {
+  firstName?: string | null;
+  lastName?: string | null;
+  company?: string | null;
+  address1?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  countryId?: string | null;
+  zoneId?: string | null;
+  zipcode?: string | null;
+}
+
 export interface CartOption {
   id?: string | null;
   value?: string | null;
