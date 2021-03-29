@@ -21,6 +21,7 @@ interface SelectProps {
   placeholder: string;
   defaultValue?: string;
   onChange: (value?: string | null) => void;
+  formatSelectedValue?: (value?: string | null) => string;
 }
 
 interface SelectItemProps {
@@ -43,6 +44,7 @@ const Select = ({
   placeholder,
   onChange,
   defaultValue,
+  formatSelectedValue = (value) => value || "",
 }: SelectProps) => {
   const modalRef = useRef<BottomSheetModal>(null);
   const [selected, setSelected] = useState<string | null>(defaultValue || null);
@@ -58,7 +60,10 @@ const Select = ({
           modalRef.current?.present();
         }}
       >
-        <Input value={selected || placeholder} pointerEvents="none" />
+        <Input
+          value={selected ? formatSelectedValue(selected) : placeholder}
+          pointerEvents="none"
+        />
       </TouchableOpacity>
       <BottomSheetModal
         index={0}

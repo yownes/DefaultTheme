@@ -17,6 +17,9 @@ const ListCountries = ({ onSelect, defaultValue }: ListCountriesProps) => {
       placeholder="Selecciona el país"
       defaultValue={defaultValue}
       onChange={onSelect}
+      formatSelectedValue={(value) =>
+        data?.countriesList?.content?.find((c) => c?.id === value)?.name || ""
+      }
     >
       {data?.countriesList?.content?.map((country) => (
         <SelectItem key={country?.id} id={country?.id} title={country?.name} />

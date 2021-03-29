@@ -20,6 +20,9 @@ const ListZones = ({ countryId, onSelect, defaultValue }: ListZonesProps) => {
       placeholder="Selecciona la provincia"
       defaultValue={defaultValue}
       onChange={onSelect}
+      formatSelectedValue={(value) =>
+        data?.zonesList?.content?.find((c) => c?.id === value)?.name || ""
+      }
     >
       {data?.zonesList?.content?.map((zone) => (
         <SelectItem key={zone?.id} id={zone?.id} title={zone?.name} />
