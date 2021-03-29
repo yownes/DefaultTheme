@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 
 import { Box, Text, Switch } from "../../atoms";
 import { AccountAddressInput } from "../../../api/types/globalTypes";
@@ -23,11 +24,17 @@ const initialState: AccountAddressInput = {
 
 const AddDirection = ({ address }: AddDirectionProps) => {
   const [isDefault, setIsDefault] = useState(true);
+  const navigation = useNavigation();
   const { control, handleSubmit, errors, watch } = useForm<AccountAddressInput>(
     {
       defaultValues: address || initialState,
     }
   );
+  useEffect(() => {
+    navigation.setOptions({
+      title: address ? "Editar Dirección" : "Añadir Dirección",
+    });
+  }, [address, navigation]);
   const countryId = watch("countryId");
   return (
     <SelectProvider>
