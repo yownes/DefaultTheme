@@ -7,6 +7,7 @@ import { Box, Button, Text } from "../../../components/atoms";
 import { ProfileProps } from "../../../navigation/Profile";
 import { Address, Placeholder, Slider } from "../../../components/molecules";
 import ShippingImage from "../../../components/images/Shipping";
+import { TouchableOpacity } from "react-native";
 
 interface DirectionsProps {
   navigation: ProfileProps["navigation"];
@@ -22,9 +23,15 @@ const Directions = ({ navigation }: DirectionsProps) => {
       {data?.accountAddressList && data.accountAddressList.length > 0 ? (
         <Slider
           views={data.accountAddressList.map((address) => (
-            <Address key={address?.id} address={address!!} />
+            <TouchableOpacity
+              key={address?.id}
+              onPress={() => {
+                navigation.navigate("AddDirection", { address });
+              }}
+            >
+              <Address address={address!!} />
+            </TouchableOpacity>
           ))}
-          viewHeight={250}
         />
       ) : (
         <Placeholder

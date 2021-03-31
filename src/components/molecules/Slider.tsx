@@ -1,10 +1,13 @@
-import React, { ReactNode } from "react";
-import { Dimensions } from "react-native";
+import React, { ReactNode, useEffect } from "react";
+import { Dimensions, View } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
+  measure,
+  runOnUI,
   useAnimatedGestureHandler,
+  useAnimatedRef,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -15,7 +18,6 @@ import { Box, Dot } from "../atoms";
 
 interface SliderProps {
   views: ReactNode[];
-  viewHeight: number;
 }
 
 interface AnimatedDotProps {
@@ -27,6 +29,7 @@ interface AnimatedViewProps {
   index: number;
   translationX: Animated.SharedValue<number>;
   view: ReactNode;
+  onMeasurement: (d: number) => void;
 }
 
 const { width } = Dimensions.get("window");
@@ -47,7 +50,17 @@ const AnimatedView = ({
   actual,
   index,
   view,
+  onMeasurement,
 }: AnimatedViewProps) => {
+  const ref = useAnimatedRef<Animated.View>();
+  useEffect(() => {
+    runOnUI(() => {
+      "worklet";
+      const measurement = measure(ref);
+      console.log(measurement);
+      onMeasurement(measurement.height);
+    })();
+  }, [onMeasurement, ref]);
   const style = useAnimatedStyle(() => {
     const isActual = actual.value === index;
     const theNext =
@@ -97,13 +110,18 @@ const AnimatedView = ({
       };
     }
   });
-  return <Animated.View style={style}>{view}</Animated.View>;
+  return (
+    <Animated.View style={style} ref={ref}>
+      {view}
+    </Animated.View>
+  );
 };
 
-const Slider = ({ views, viewHeight }: SliderProps) => {
+const Slider = ({ views }: SliderProps) => {
   const idx = useSharedValue(0);
   const translationX = useSharedValue(0);
   const total = views.length - 1;
+  const size = useSharedValue(0);
   const onGestureEvent = useAnimatedGestureHandler({
     onStart() {
       translationX.value = 0;
@@ -135,6 +153,17 @@ const Slider = ({ views, viewHeight }: SliderProps) => {
       }
     },
   });
+  const handleSizeChange = (newSize: number) => {
+    "worklet";
+    if (newSize > size.value) {
+      size.value = newSize;
+    }
+  };
+  const style = useAnimatedStyle(() => ({
+    marginTop: size.value,
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+  }));
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View>
@@ -145,18 +174,15 @@ const Slider = ({ views, viewHeight }: SliderProps) => {
               view={view}
               actual={idx}
               index={i}
+              onMeasurement={handleSizeChange}
               translationX={translationX}
             />
           ))}
-          <Box
-            flexDirection="row"
-            justifyContent="space-evenly"
-            style={{ marginTop: viewHeight }}
-          >
+          <Animated.View style={style}>
             {views.map((_, i) => (
               <AnimatedDot index={i} actual={idx} key={i} />
             ))}
-          </Box>
+          </Animated.View>
         </Box>
       </Animated.View>
     </PanGestureHandler>

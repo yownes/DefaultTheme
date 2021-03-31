@@ -17,7 +17,6 @@ const TopSalesProducts = () => {
         Los productos más vendidos
       </Text>
       <Slider
-        viewHeight={CARD_HEIGHT}
         views={
           data.bestSells?.map((product) => (
             <ProductCard key={product?.id} product={product!!} />
