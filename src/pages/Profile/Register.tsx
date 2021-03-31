@@ -47,9 +47,6 @@ const Register = ({ navigation }: RegisterProps) => {
         },
       },
     }).then(({ data, errors }) => {
-      console.log(data);
-      console.error(errors);
-
       if (data?.accountRegister?.id) {
         navigation.navigate("Profile");
       }

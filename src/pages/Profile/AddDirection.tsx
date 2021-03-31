@@ -4,7 +4,6 @@ import { AddDirectionProps } from "../../navigation/Profile";
 import { AddDirection as AddDirectionComponent } from "../../components/organisms";
 
 const AddDirection = ({ route }: AddDirectionProps) => {
-  console.log(route);
   let address;
   if (route?.params?.address?.id) {
     address = {
