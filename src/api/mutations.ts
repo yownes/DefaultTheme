@@ -130,3 +130,26 @@ export const ADD_ADDRESS = gql`
     }
   }
 `;
+
+export const EDIT_ADDRESS = gql`
+  mutation EditAddress($id: String, $address: AccountAddressInput) {
+    accountEditAddress(id: $id, address: $address) {
+      id
+      firstName
+      lastName
+      company
+      address1
+      address2
+      zone {
+        id
+        name
+      }
+      country {
+        id
+        name
+      }
+      city
+      zipcode
+    }
+  }
+`;

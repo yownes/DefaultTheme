@@ -6,7 +6,7 @@ import { ZonesList } from "../../../api/types/ZonesList";
 import { Select, SelectItem } from "../../molecules";
 
 interface ListZonesProps {
-  countryId: string;
+  countryId?: string | null;
   onSelect: (country?: string | null) => void;
   defaultValue?: string;
 }

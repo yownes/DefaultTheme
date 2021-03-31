@@ -21,11 +21,11 @@ const Address = ({ address }: AddressProps) => {
         <Text color="greyscale4" marginBottom="l">
           {address.firstName} {address.lastName}
         </Text>
-        <Text color="greyscale4" marginBottom="l">
+        <Text color="greyscale4" marginBottom="m">
           {address.address1}
         </Text>
         {address.address2 && (
-          <Text color="greyscale4" marginBottom="l">
+          <Text color="greyscale4" marginBottom="m">
             {address.address2}
           </Text>
         )}
