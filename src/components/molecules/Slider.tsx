@@ -53,14 +53,18 @@ const AnimatedView = ({
   onMeasurement,
 }: AnimatedViewProps) => {
   const ref = useAnimatedRef<Animated.View>();
+  const height = useSharedValue(0);
   useEffect(() => {
-    runOnUI(() => {
-      "worklet";
-      const measurement = measure(ref);
-      console.log(measurement);
-      onMeasurement(measurement.height);
-    })();
-  }, [onMeasurement, ref]);
+    setTimeout(() => {
+      runOnUI(() => {
+        "worklet";
+        const measurement = measure(ref);
+
+        height.value = measurement.height;
+        onMeasurement(measurement.height);
+      })();
+    }, 5);
+  }, [height, onMeasurement, ref]);
   const style = useAnimatedStyle(() => {
     const isActual = actual.value === index;
     const theNext =
