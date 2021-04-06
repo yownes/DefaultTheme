@@ -13,13 +13,13 @@ import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Profile/Register";
 import Favourites from "../pages/Profile/Favourites";
 import { useAuth } from "../components/organisms/AuthContext";
-import { AddressList_accountAddressList } from "../api/types/AddressList";
+import { AddressFragment } from "../api/types/AddressFragment";
 
 type ProfileStackParamList = {
   Profile: undefined;
   Login: undefined;
   Register: undefined;
-  AddDirection: { address?: AddressList_accountAddressList };
+  AddDirection: { address?: AddressFragment };
   AddPaymentMethod: undefined;
   Orders: undefined;
   Order: { id: string };

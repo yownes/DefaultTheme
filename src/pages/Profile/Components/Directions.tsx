@@ -1,20 +1,17 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/client";
 
 import { ADDRESS_LIST } from "../../../api/queries";
 import { AddressList } from "../../../api/types/AddressList";
 import { Box, Button, Text } from "../../../components/atoms";
-import { ProfileProps } from "../../../navigation/Profile";
 import { Address, Placeholder, Slider } from "../../../components/molecules";
 import ShippingImage from "../../../components/images/Shipping";
-import { TouchableOpacity } from "react-native";
 
-interface DirectionsProps {
-  navigation: ProfileProps["navigation"];
-}
-
-const Directions = ({ navigation }: DirectionsProps) => {
+const Directions = () => {
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
+  const navigation = useNavigation();
   return (
     <Box>
       <Text variant="header3" marginBottom="l">
@@ -26,10 +23,12 @@ const Directions = ({ navigation }: DirectionsProps) => {
             <TouchableOpacity
               key={address?.id}
               onPress={() => {
-                navigation.navigate("AddDirection", { address });
+                if (address) {
+                  navigation.navigate("AddDirection", { address });
+                }
               }}
             >
-              <Address address={address!!} />
+              {address && <Address address={address} />}
             </TouchableOpacity>
           ))}
         />

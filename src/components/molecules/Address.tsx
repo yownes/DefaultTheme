@@ -1,11 +1,11 @@
 import React from "react";
 
-import { AddressList_accountAddressList } from "../../api/types/AddressList";
+import { AddressFragment } from "../../api/types/AddressFragment";
 import { Box, Text } from "../atoms";
 import { Stamp } from "../icons";
 
 interface AddressProps {
-  address: AddressList_accountAddressList;
+  address: AddressFragment;
 }
 
 const Address = ({ address }: AddressProps) => {
@@ -15,6 +15,7 @@ const Address = ({ address }: AddressProps) => {
       backgroundColor="greyscale2"
       padding="m"
       flexDirection="row"
+      flex={1}
     >
       <Stamp color="greyscale4" size={30} />
       <Box marginLeft="m">
@@ -24,7 +25,7 @@ const Address = ({ address }: AddressProps) => {
         <Text color="greyscale4" marginBottom="m">
           {address.address1}
         </Text>
-        {address.address2 && (
+        {Boolean(address.address2) && (
           <Text color="greyscale4" marginBottom="m">
             {address.address2}
           </Text>

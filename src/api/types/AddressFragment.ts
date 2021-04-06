@@ -3,25 +3,23 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AccountAddressInput } from "./globalTypes";
-
 // ====================================================
-// GraphQL mutation operation: EditAddress
+// GraphQL fragment: AddressFragment
 // ====================================================
 
-export interface EditAddress_accountEditAddress_zone {
+export interface AddressFragment_zone {
   __typename: "Zone";
   id: string | null;
   name: string | null;
 }
 
-export interface EditAddress_accountEditAddress_country {
+export interface AddressFragment_country {
   __typename: "Country";
   id: string | null;
   name: string | null;
 }
 
-export interface EditAddress_accountEditAddress {
+export interface AddressFragment {
   __typename: "AccountAddress";
   id: string | null;
   firstName: string | null;
@@ -29,17 +27,8 @@ export interface EditAddress_accountEditAddress {
   company: string | null;
   address1: string | null;
   address2: string | null;
-  zone: EditAddress_accountEditAddress_zone | null;
-  country: EditAddress_accountEditAddress_country | null;
+  zone: AddressFragment_zone | null;
+  country: AddressFragment_country | null;
   zipcode: string | null;
   city: string | null;
-}
-
-export interface EditAddress {
-  accountEditAddress: EditAddress_accountEditAddress | null;
-}
-
-export interface EditAddressVariables {
-  id?: string | null;
-  address?: AccountAddressInput | null;
 }

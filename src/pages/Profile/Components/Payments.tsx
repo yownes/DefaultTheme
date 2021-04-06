@@ -1,15 +1,12 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { Box, Button, Text } from "../../../components/atoms";
 import { Placeholder } from "../../../components/molecules";
-import { ProfileProps } from "../../../navigation/Profile";
 import BillingImage from "../../../components/images/Billing";
 
-interface PaymentsProps {
-  navigation: ProfileProps["navigation"];
-}
-
-const Payments = ({ navigation }: PaymentsProps) => {
+const Payments = () => {
+  const navigation = useNavigation();
   return (
     <Box>
       <Text variant="header3" marginBottom="l">

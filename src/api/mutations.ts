@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+import { ADDRESS_FRAGMENT } from "./queries";
+
 export const LOGIN = gql`
   mutation Login($email: String, $password: String) {
     accountLogin(email: $email, password: $password) {
@@ -111,45 +113,26 @@ export const UPDATE_CART = gql`
 export const ADD_ADDRESS = gql`
   mutation AddAddress($address: AccountAddressInput) {
     accountAddAddress(address: $address) {
-      id
-      firstName
-      lastName
-      company
-      address1
-      address2
-      zone {
-        id
-        name
-      }
-      country {
-        id
-        name
-      }
-      city
-      zipcode
+      ...AddressFragment
     }
   }
+  ${ADDRESS_FRAGMENT}
 `;
 
 export const EDIT_ADDRESS = gql`
   mutation EditAddress($id: String, $address: AccountAddressInput) {
     accountEditAddress(id: $id, address: $address) {
-      id
-      firstName
-      lastName
-      company
-      address1
-      address2
-      zone {
-        id
-        name
-      }
-      country {
-        id
-        name
-      }
-      city
-      zipcode
+      ...AddressFragment
     }
   }
+  ${ADDRESS_FRAGMENT}
+`;
+
+export const DELETE_ADDRESS = gql`
+  mutation DeleteAddress($id: String) {
+    accountRemoveAddress(id: $id) {
+      ...AddressFragment
+    }
+  }
+  ${ADDRESS_FRAGMENT}
 `;

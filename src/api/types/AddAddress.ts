@@ -31,8 +31,8 @@ export interface AddAddress_accountAddAddress {
   address2: string | null;
   zone: AddAddress_accountAddAddress_zone | null;
   country: AddAddress_accountAddAddress_country | null;
-  city: string | null;
   zipcode: string | null;
+  city: string | null;
 }
 
 export interface AddAddress {

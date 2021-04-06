@@ -58,10 +58,10 @@ const Profile = ({ navigation }: ProfileProps) => {
           </Box>
         </Card>
         <Card padding="l" marginVertical="m">
-          <Directions navigation={navigation} />
+          <Directions />
         </Card>
         <Card padding="l">
-          <Payments navigation={navigation} />
+          <Payments />
         </Card>
         <Button
           label="Desconectarse"

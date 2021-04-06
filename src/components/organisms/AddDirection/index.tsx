@@ -1,18 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button } from "react-native";
+import { Button as NativeButton } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { Reference, useMutation } from "@apollo/client";
 
-import { Box, Text, Switch } from "../../atoms";
-import { InputWithErrors, SelectProvider } from "../../molecules";
+import { Box, Text, Switch, Button } from "../../atoms";
+import { Confirm, InputWithErrors, SelectProvider } from "../../molecules";
 import { AccountAddressInput } from "../../../api/types/globalTypes";
-import { ADD_ADDRESS, EDIT_ADDRESS } from "../../../api/mutations";
+import {
+  ADD_ADDRESS,
+  EDIT_ADDRESS,
+  DELETE_ADDRESS,
+} from "../../../api/mutations";
 import { AddAddress, AddAddressVariables } from "../../../api/types/AddAddress";
 import {
   EditAddress,
   EditAddressVariables,
 } from "../../../api/types/EditAddress";
+import {
+  DeleteAddress,
+  DeleteAddressVariables,
+} from "../../../api/types/DeleteAddress";
 
 import ListZones from "./ListZones";
 import ListCountries from "./ListCountries";
@@ -39,19 +47,28 @@ const AddDirection = ({ address }: AddDirectionProps) => {
     ADD_ADDRESS,
     {
       update(cache, { data }) {
+        console.log("received", data?.accountAddAddress);
+
         if (data?.accountAddAddress?.id) {
           cache.modify({
             fields: {
               accountAddressList(existing: Reference[], { toReference }) {
-                return [
-                  ...existing,
-                  toReference({ ...data.accountAddAddress }),
-                ];
+                console.log("exisiting", existing);
+                const addressRef = toReference({ ...data.accountAddAddress });
+                console.log("addressRef", addressRef);
+
+                return [...existing, addressRef];
               },
             },
           });
           navigation.goBack();
         }
+      },
+      onError(error) {
+        console.error(error);
+      },
+      onCompleted(data) {
+        console.log("onCompleted", data);
       },
     }
   );
@@ -60,6 +77,16 @@ const AddDirection = ({ address }: AddDirectionProps) => {
     {
       onCompleted({ accountEditAddress }) {
         if (accountEditAddress?.id) {
+          navigation.goBack();
+        }
+      },
+    }
+  );
+  const [deleteAddress] = useMutation<DeleteAddress, DeleteAddressVariables>(
+    DELETE_ADDRESS,
+    {
+      onCompleted({ accountRemoveAddress }) {
+        if (accountRemoveAddress) {
           navigation.goBack();
         }
       },
@@ -75,6 +102,8 @@ const AddDirection = ({ address }: AddDirectionProps) => {
       if (address) {
         editAddress({ variables: { id: address.id, address: data } });
       } else {
+        console.log("addAddress", data);
+
         addAddress({
           variables: {
             address: data,
@@ -88,7 +117,7 @@ const AddDirection = ({ address }: AddDirectionProps) => {
     navigation.setOptions({
       title: address ? "Editar Dirección" : "Añadir Dirección",
       headerRight: () => (
-        <Button
+        <NativeButton
           onPress={handleSubmit(onSubmit)}
           title={address ? "Editar" : "Añadir"}
         />
@@ -98,7 +127,7 @@ const AddDirection = ({ address }: AddDirectionProps) => {
   const countryId = watch("countryId");
   return (
     <SelectProvider>
-      <Box padding="m">
+      <Box padding="m" backgroundColor="greyscale5" flex={1}>
         <Box marginBottom="m">
           <Controller
             control={control}
@@ -238,6 +267,26 @@ const AddDirection = ({ address }: AddDirectionProps) => {
             <Switch value={isDefault} onChange={setIsDefault} />
           </Box>
         </Box>
+        {address?.id && (
+          <Box flex={1} justifyContent="flex-end">
+            <Confirm
+              title="¿Realmete deseas eliminar esta dirección?"
+              onConfirm={() => {
+                deleteAddress({
+                  variables: {
+                    id: address.id,
+                  },
+                });
+              }}
+            >
+              <Button
+                label="Eliminar"
+                backgroundColor="transparent"
+                color="danger"
+              />
+            </Confirm>
+          </Box>
+        )}
       </Box>
     </SelectProvider>
   );

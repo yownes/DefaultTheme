@@ -234,27 +234,34 @@ export const CART = gql`
   }
 `;
 
+export const ADDRESS_FRAGMENT = gql`
+  fragment AddressFragment on AccountAddress {
+    id
+    firstName
+    lastName
+    company
+    address1
+    address2
+    zone {
+      id
+      name
+    }
+    country {
+      id
+      name
+    }
+    zipcode
+    city
+  }
+`;
+
 export const ADDRESS_LIST = gql`
   query AddressList {
     accountAddressList {
-      id
-      firstName
-      lastName
-      company
-      address1
-      address2
-      zone {
-        id
-        name
-      }
-      country {
-        id
-        name
-      }
-      zipcode
-      city
+      ...AddressFragment
     }
   }
+  ${ADDRESS_FRAGMENT}
 `;
 
 export const COUNTRIES_LIST = gql`
