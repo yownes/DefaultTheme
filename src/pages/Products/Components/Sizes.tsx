@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Text } from '../../../components/atoms';
+import React from "react";
+
+import { Box, Text } from "../../../components/atoms";
 
 interface SizesProps {}
 

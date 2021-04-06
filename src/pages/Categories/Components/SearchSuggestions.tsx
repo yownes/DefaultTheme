@@ -15,7 +15,7 @@ const SearchSuggestions = ({ products }: SearchSuggestionsProps) => {
     <Card flex={1} variant="elevated">
       <FlatList
         data={products}
-        keyExtractor={(item) => item.id!}
+        keyExtractor={(item, idx) => item.id ?? idx.toString()}
         renderItem={({ item }) => (
           <Box paddingBottom="m">
             <ProductSuggestion product={item} />

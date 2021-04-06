@@ -11,7 +11,6 @@ const About = () => {
   return (
     <ScrollView>
       <Card margin="m" padding="l">
-        <Text>{data?.page?.description}</Text>
         <HtmlText>{data?.page?.description}</HtmlText>
         <Box marginTop="xl" alignItems="center">
           <Text>{data?.contact?.telephone}</Text>

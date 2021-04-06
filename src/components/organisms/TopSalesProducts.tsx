@@ -5,7 +5,6 @@ import { Box, Loading, Text } from "../atoms";
 import { Slider, ProductCard } from "../molecules";
 import { TOP_SALES } from "../../api/queries";
 import { TopSales } from "../../api/types/TopSales";
-import { CARD_HEIGHT } from "../molecules/ProductCard";
 
 const TopSalesProducts = () => {
   const { loading, data } = useQuery<TopSales>(TOP_SALES);
@@ -18,9 +17,10 @@ const TopSalesProducts = () => {
       </Text>
       <Slider
         views={
-          data.bestSells?.map((product) => (
-            <ProductCard key={product?.id} product={product!!} />
-          )) ?? []
+          data.bestSells?.map(
+            (product) =>
+              product && <ProductCard key={product?.id} product={product} />
+          ) ?? []
         }
       />
     </Box>

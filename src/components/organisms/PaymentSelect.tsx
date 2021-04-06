@@ -8,14 +8,12 @@ import { Box, Card, Text } from "../atoms";
 import { CreditCard, Placeholder } from "../molecules";
 import BillingImage from "../images/Billing";
 
-interface ShippingSelectProps {}
-
-const ShippingSelect = ({}: ShippingSelectProps) => {
+const ShippingSelect = () => {
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
   return (
     <Card padding="l">
       <Text marginBottom="l">Método de pago</Text>
-      {data?.accountAddressList?.length > 0 ? (
+      {(data?.accountAddressList?.length ?? 0) > 0 ? (
         <CreditCard name="Jesus Gallego Irles" last4="2589" expiry="12/22" />
       ) : (
         <Placeholder

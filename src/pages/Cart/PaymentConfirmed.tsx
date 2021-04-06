@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Text } from '../../components/atoms';
-import { PaymentConfirmedProps } from '../../navigation/Cart';
+import React from "react";
+
+import { Box, Text } from "../../components/atoms";
+import { PaymentConfirmedProps } from "../../navigation/Cart";
 
 const PaymentConfirmed = ({}: PaymentConfirmedProps) => {
   return (

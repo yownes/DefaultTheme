@@ -19,12 +19,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { image, name, price, manufacturer, special } = product;
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Product", {
-          screen: "Product",
-          params: { id: product!!.id!! },
-        })
-      }
+      onPress={() => {
+        if (product.id) {
+          navigation.navigate("Product", {
+            screen: "Product",
+            params: { id: product.id },
+          });
+        }
+      }}
     >
       <Box
         backgroundColor="white"
@@ -35,13 +37,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
         marginRight="m"
       >
         <Box>
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: "100%",
-              height: CARD_HEIGHT / 2,
-            }}
-          />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{
+                width: "100%",
+                height: CARD_HEIGHT / 2,
+              }}
+            />
+          )}
         </Box>
         <Box padding="m">
           <Text variant="header3">{manufacturer}</Text>

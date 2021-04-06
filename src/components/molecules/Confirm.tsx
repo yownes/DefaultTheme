@@ -16,7 +16,7 @@ const Confirm = ({ children, title, onConfirm, onReject }: ConfirmProps) => {
   const ref = useRef<BottomSheetModal>(null);
   return (
     <>
-      {React.Children.map(children, (child, i) => {
+      {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
           onPress() {
             ref.current?.present();

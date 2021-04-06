@@ -126,9 +126,9 @@ const Category = ({ category }: CategoryProps) => {
           {len > 0 && (
             <ListItem item={category} title="~ Ver todos ~" key={"All"} />
           )}
-          {category.categories?.map((cat) => (
-            <ListItem key={cat?.id} item={cat!!} key={cat?.id} />
-          ))}
+          {category.categories?.map(
+            (cat) => cat && <ListItem key={cat?.id} item={cat} />
+          )}
         </View>
       </Animated.View>
     </>

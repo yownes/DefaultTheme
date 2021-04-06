@@ -37,7 +37,7 @@ const Products = ({ route }: ProductsProps) => {
   const transY = useSharedValue(0);
   const [isList, setIsList] = useState(true);
   const [filter, setFilter] = useState("");
-  const [order, setOrder] = useState<{ sort?: string; order?: string }>({
+  const [orderState, setOrder] = useState<{ sort?: string; order?: string }>({
     sort: undefined,
     order: undefined,
   });
@@ -47,8 +47,8 @@ const Products = ({ route }: ProductsProps) => {
   const variables = {
     category: category?.id,
     filter,
-    sort: order.sort,
-    order: order.order,
+    sort: orderState.sort,
+    order: orderState.order,
   };
   const { loading, data, networkStatus } = useQuery<
     IProducts,
@@ -126,7 +126,6 @@ const Products = ({ route }: ProductsProps) => {
         <Box padding="m">
           {data?.productsList?.facets?.map((facet) => (
             <Facet
-              selected={filter}
               onSelect={(value) => setFilter(value)}
               key={facet?.label}
               facet={facet}

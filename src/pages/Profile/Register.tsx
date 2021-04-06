@@ -36,17 +36,17 @@ const Register = ({ navigation }: RegisterProps) => {
   const [register, { error }] = useMutation<IRegister, RegisterVariables>(
     REGISTER
   );
-  function onSubmit(data: RegisterState) {
+  function onSubmit(state: RegisterState) {
     register({
       variables: {
         customer: {
-          email: data.mail,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          password: data.password,
+          email: state.mail,
+          firstName: state.firstName,
+          lastName: state.lastName,
+          password: state.password,
         },
       },
-    }).then(({ data, errors }) => {
+    }).then(({ data }) => {
       if (data?.accountRegister?.id) {
         navigation.navigate("Profile");
       }

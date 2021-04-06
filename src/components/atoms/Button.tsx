@@ -57,7 +57,9 @@ const Button = ({
         {label}
       </Text>
       {isLoading ? (
-        <ActivityIndicator color={theme.colors[textColorProp!]} />
+        <ActivityIndicator
+          color={textColorProp ? theme.colors[textColorProp] : undefined}
+        />
       ) : null}
     </BaseButton>
   );

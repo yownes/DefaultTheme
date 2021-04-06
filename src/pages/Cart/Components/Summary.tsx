@@ -4,10 +4,11 @@ import { Cart_cart } from "../../../api/types/Cart";
 import { Box, Card, Text } from "../../../components/atoms";
 
 interface SummaryProps {
-  cart: Cart_cart;
+  cart?: Cart_cart;
 }
 
 const Summary = ({ cart }: SummaryProps) => {
+  if (!cart) return null;
   return (
     <Card padding="l">
       <Text variant="header3" paddingBottom="m">

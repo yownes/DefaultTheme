@@ -86,7 +86,13 @@ const Login = ({ navigation }: LoginProps) => {
             )}
             rules={{ required: "Este campo es obligatorio" }}
           />
-          <TouchableOpacity style={{ paddingVertical: 10 }} onPress={() => {}}>
+          <TouchableOpacity
+            style={{ paddingVertical: 10 }}
+            onPress={() => {
+              // TODO: ForgotPassword screen
+              return;
+            }}
+          >
             <Text variant="small" textAlign="right">
               ¿Has olvidado la contraseña?
             </Text>

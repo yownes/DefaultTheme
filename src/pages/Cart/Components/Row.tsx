@@ -145,7 +145,7 @@ const Row = ({ product }: RowProps) => {
                 </Box>
                 <Box alignItems="flex-end">
                   <Quantity
-                    qty={product.quantity!}
+                    qty={product.quantity ?? 0}
                     limit={10}
                     onChange={(qty) => {
                       updateCart({ variables: { key: product.key, qty } });

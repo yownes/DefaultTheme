@@ -6,11 +6,10 @@ import { Products_productsList_facets } from "../../../api/types/Products";
 
 interface FacetProps {
   facet: Products_productsList_facets | null;
-  selected: string;
   onSelect: (value: string) => void;
 }
 
-const Facet = ({ facet, selected, onSelect }: FacetProps) => {
+const Facet = ({ facet, onSelect }: FacetProps) => {
   if (!facet) {
     return null;
   }
@@ -21,10 +20,14 @@ const Facet = ({ facet, selected, onSelect }: FacetProps) => {
         {facet?.filters?.map((filter) => (
           <TouchableOpacity
             key={filter?.label}
-            onPress={() => onSelect(filter?.value)}
+            onPress={() => {
+              if (filter?.value) {
+                onSelect(filter.value);
+              }
+            }}
           >
             <Box padding="m">
-              <Tag light={filter?.active}>{filter?.label}</Tag>
+              <Tag light={filter?.active ?? undefined}>{filter?.label}</Tag>
             </Box>
           </TouchableOpacity>
         ))}

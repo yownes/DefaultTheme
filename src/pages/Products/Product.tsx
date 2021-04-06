@@ -3,7 +3,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Dimensions, Image, Pressable, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { add } from "react-native-reanimated";
 import { SharedElement } from "react-navigation-shared-element";
 
 import {
@@ -178,12 +177,15 @@ const Product = ({ route, navigation }: ProductProps) => {
                 {option?.values?.map((value) => (
                   <TouchableOpacity
                     key={value?.id}
-                    onPress={() =>
-                      setOptions((attrs) => ({
-                        ...attrs,
-                        [option.name]: value.id,
-                      }))
-                    }
+                    onPress={() => {
+                      const { name } = option;
+                      if (name) {
+                        setOptions((attrs) => ({
+                          ...attrs,
+                          [name]: value?.id,
+                        }));
+                      }
+                    }}
                   >
                     <Box
                       marginRight="l"
@@ -211,12 +213,20 @@ const Product = ({ route, navigation }: ProductProps) => {
         <HtmlText color="greyscale4">{data?.product?.description}</HtmlText>
       </Box>
       <Box padding="l" paddingTop="m" flexDirection="row">
-        <Button label="Tallas" onPress={() => {}} flex={1} marginRight="l" />
+        <Button
+          label="Tallas"
+          onPress={() => {
+            // TODO: Sizes screen sizes
+            return;
+          }}
+          flex={1}
+          marginRight="l"
+        />
         <Button
           label="Añadir a la cesta"
           onPress={() => {
-            const opts = Object.entries(options).map(([id, value]) => ({
-              id,
+            const opts = Object.entries(options).map(([optionId, value]) => ({
+              id: optionId,
               value: value as string,
             }));
 

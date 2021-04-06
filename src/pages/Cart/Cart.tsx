@@ -51,12 +51,12 @@ const Cart = ({ navigation }: CartProps) => {
         }
       >
         <Box>
-          {data?.cart?.products?.map((prod, i) => (
+          {data?.cart?.products?.map((prod) => (
             <Box paddingBottom="m" key={prod?.key}>
-              <Row product={prod!} />
+              {prod && <Row product={prod} />}
             </Box>
           ))}
-          <Summary cart={data?.cart} />
+          <Summary cart={data?.cart ?? undefined} />
         </Box>
       </ScrollView>
       <Button

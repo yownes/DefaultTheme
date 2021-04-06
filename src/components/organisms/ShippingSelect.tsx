@@ -8,14 +8,12 @@ import { Box, Card, Text } from "../atoms";
 import { Address, Placeholder } from "../molecules";
 import ShippingImage from "../images/Shipping";
 
-interface ShippingSelectProps {}
-
-const ShippingSelect = ({}: ShippingSelectProps) => {
+const ShippingSelect = () => {
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
   return (
     <Card padding="l">
       <Text marginBottom="l">Dirección de envío</Text>
-      {data?.accountAddressList?.length > 0 ? (
+      {(data?.accountAddressList?.length ?? 0) > 0 ? (
         <Address address={data.accountAddressList[0]} />
       ) : (
         <Placeholder

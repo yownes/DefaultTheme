@@ -32,9 +32,10 @@ const Categories = () => {
       <Box>
         <ScrollView>
           <Box>
-            {data?.categoriesList?.content?.map((category) => (
-              <Category key={category?.id} category={category!} />
-            ))}
+            {data?.categoriesList?.content?.map(
+              (category) =>
+                category && <Category key={category?.id} category={category} />
+            )}
           </Box>
           <Box padding="l" marginTop="xl">
             <TopSalesProducts />
