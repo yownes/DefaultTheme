@@ -12,7 +12,11 @@ import {
   EDIT_ADDRESS,
   DELETE_ADDRESS,
 } from "../../../api/mutations";
-import { AddAddress, AddAddressVariables } from "../../../api/types/AddAddress";
+import {
+  AddAddress,
+  AddAddressVariables,
+  AddAddress_accountAddAddress,
+} from "../../../api/types/AddAddress";
 import {
   EditAddress,
   EditAddressVariables,
@@ -27,6 +31,7 @@ import ListCountries from "./ListCountries";
 
 interface AddDirectionProps {
   address?: AccountAddressInput & { id: string };
+  onSuccess?: (address?: AddAddress_accountAddAddress) => void;
 }
 
 const initialState: AccountAddressInput = {
@@ -40,28 +45,24 @@ const initialState: AccountAddressInput = {
   zipcode: "",
 };
 
-const AddDirection = ({ address }: AddDirectionProps) => {
+const AddDirection = ({ address, onSuccess }: AddDirectionProps) => {
   const [isDefault, setIsDefault] = useState(true);
   const navigation = useNavigation();
   const [addAddress] = useMutation<AddAddress, AddAddressVariables>(
     ADD_ADDRESS,
     {
       update(cache, { data }) {
-        console.log("received", data?.accountAddAddress);
-
         if (data?.accountAddAddress?.id) {
           cache.modify({
             fields: {
               accountAddressList(existing: Reference[], { toReference }) {
-                console.log("exisiting", existing);
                 const addressRef = toReference({ ...data.accountAddAddress });
-                console.log("addressRef", addressRef);
 
                 return [...existing, addressRef];
               },
             },
           });
-          navigation.goBack();
+          onSuccess?.(data.accountAddAddress);
         }
       },
       onError(error) {
@@ -77,7 +78,7 @@ const AddDirection = ({ address }: AddDirectionProps) => {
     {
       onCompleted({ accountEditAddress }) {
         if (accountEditAddress?.id) {
-          navigation.goBack();
+          onSuccess?.(accountEditAddress);
         }
       },
     }
@@ -87,7 +88,7 @@ const AddDirection = ({ address }: AddDirectionProps) => {
     {
       onCompleted({ accountRemoveAddress }) {
         if (accountRemoveAddress) {
-          navigation.goBack();
+          onSuccess?.();
         }
       },
     }
@@ -127,7 +128,7 @@ const AddDirection = ({ address }: AddDirectionProps) => {
   const countryId = watch("countryId");
   return (
     <SelectProvider>
-      <Box padding="m" backgroundColor="greyscale5" flex={1}>
+      <Box padding="m" flex={1}>
         <Box marginBottom="m">
           <Controller
             control={control}

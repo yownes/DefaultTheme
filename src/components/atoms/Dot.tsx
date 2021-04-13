@@ -8,7 +8,7 @@ interface DotProps {
   selected: Animated.SharedValue<boolean>;
 }
 
-const DOT_SIZE = 5;
+const DOT_SIZE = 6;
 
 const styles = StyleSheet.create({
   dot: {

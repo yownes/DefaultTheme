@@ -15,7 +15,6 @@ const Address = ({ address }: AddressProps) => {
       backgroundColor="greyscale2"
       padding="m"
       flexDirection="row"
-      flex={1}
     >
       <Stamp color="greyscale4" size={30} />
       <Box marginLeft="m">

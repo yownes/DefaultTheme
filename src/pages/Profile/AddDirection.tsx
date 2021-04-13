@@ -3,7 +3,7 @@ import React from "react";
 import { AddDirectionProps } from "../../navigation/Profile";
 import { AddDirection as AddDirectionComponent } from "../../components/organisms";
 
-const AddDirection = ({ route }: AddDirectionProps) => {
+const AddDirection = ({ route, navigation }: AddDirectionProps) => {
   let address;
   if (route?.params?.address?.id) {
     address = {
@@ -13,7 +13,14 @@ const AddDirection = ({ route }: AddDirectionProps) => {
       id: route.params.address.id,
     };
   }
-  return <AddDirectionComponent address={address} />;
+  return (
+    <AddDirectionComponent
+      address={address}
+      onSuccess={() => {
+        navigation.goBack();
+      }}
+    />
+  );
 };
 
 export default AddDirection;

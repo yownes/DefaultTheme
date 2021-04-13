@@ -8,9 +8,9 @@ import { FavouriteOutlined, Shipment } from "../../components/icons";
 import { useAuth } from "../../components/organisms/AuthContext";
 import { LOGOUT } from "../../api/mutations";
 import { Logout } from "../../api/types/Logout";
+import Directions from "../../components/organisms/Directions";
 
 import Payments from "./Components/Payments";
-import Directions from "./Components/Directions";
 
 const Profile = ({ navigation }: ProfileProps) => {
   const { customer, logout: authLogout } = useAuth();
@@ -58,7 +58,11 @@ const Profile = ({ navigation }: ProfileProps) => {
           </Box>
         </Card>
         <Card padding="l" marginVertical="m">
-          <Directions />
+          <Directions
+            onSelect={(address) => {
+              navigation.navigate("AddDirection", { address });
+            }}
+          />
         </Card>
         <Card padding="l">
           <Payments />

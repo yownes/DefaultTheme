@@ -8,7 +8,7 @@ import { Box, Card, Text } from "../atoms";
 import { CreditCard, Placeholder } from "../molecules";
 import BillingImage from "../images/Billing";
 
-const ShippingSelect = () => {
+const PaymentSelect = () => {
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
   return (
     <Card padding="l">
@@ -30,4 +30,4 @@ const ShippingSelect = () => {
   );
 };
 
-export default ShippingSelect;
+export default PaymentSelect;

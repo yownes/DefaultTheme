@@ -15,14 +15,12 @@ const TopSalesProducts = () => {
       <Text variant="header3" paddingBottom="m">
         Los productos más vendidos
       </Text>
-      <Slider
-        views={
-          data.bestSells?.map(
-            (product) =>
-              product && <ProductCard key={product?.id} product={product} />
-          ) ?? []
-        }
-      />
+      <Slider>
+        {data.bestSells?.map(
+          (product) =>
+            product && <ProductCard key={product?.id} product={product} />
+        ) ?? []}
+      </Slider>
     </Box>
   );
 };
