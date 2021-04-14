@@ -65,12 +65,6 @@ const AddDirection = ({ address, onSuccess }: AddDirectionProps) => {
           onSuccess?.(data.accountAddAddress);
         }
       },
-      onError(error) {
-        console.error(error);
-      },
-      onCompleted(data) {
-        console.log("onCompleted", data);
-      },
     }
   );
   const [editAddress] = useMutation<EditAddress, EditAddressVariables>(
@@ -91,6 +85,20 @@ const AddDirection = ({ address, onSuccess }: AddDirectionProps) => {
           onSuccess?.();
         }
       },
+      update(cache, { data }) {
+        if (data?.accountRemoveAddress) {
+          cache.modify({
+            fields: {
+              accountAddressList(existing: Reference[], { toReference }) {
+                const all = data.accountRemoveAddress?.map((a) =>
+                  toReference({ ...a })
+                );
+                return all;
+              },
+            },
+          });
+        }
+      },
     }
   );
   const { control, handleSubmit, errors, watch } = useForm<AccountAddressInput>(
@@ -103,8 +111,6 @@ const AddDirection = ({ address, onSuccess }: AddDirectionProps) => {
       if (address) {
         editAddress({ variables: { id: address.id, address: data } });
       } else {
-        console.log("addAddress", data);
-
         addAddress({
           variables: {
             address: data,
