@@ -1,15 +1,6 @@
 import { gql } from "@apollo/client";
 
-const PRODUCT_FRAGMENT = gql`
-  fragment BasicProduct on Product {
-    id
-    name
-    price
-    special
-    image
-    manufacturer
-  }
-`;
+import { ADDRESS_FRAGMENT, PRODUCT_FRAGMENT } from "./fragments";
 
 export const HOME = gql`
   query Home {
@@ -231,27 +222,6 @@ export const CART = gql`
         }
       }
     }
-  }
-`;
-
-export const ADDRESS_FRAGMENT = gql`
-  fragment AddressFragment on AccountAddress {
-    id
-    firstName
-    lastName
-    company
-    address1
-    address2
-    zone {
-      id
-      name
-    }
-    country {
-      id
-      name
-    }
-    zipcode
-    city
   }
 `;
 

@@ -17,7 +17,7 @@ const Payments = () => {
         text="Aún no tienes ningún método de pago añadido, crea uno para poder comprar"
       />
       <Button
-        onPress={() => navigation.navigate("AddDirection")}
+        onPress={() => navigation.navigate("AddPaymentMethod")}
         marginTop="l"
         label="Add Direction"
       />
