@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { ADDRESS_FRAGMENT } from "./fragments";
+import { ADDRESS_FRAGMENT, PAYMENT_METHOD_FRAGMENT } from "./fragments";
 
 export const LOGIN = gql`
   mutation Login($email: String, $password: String) {
@@ -138,28 +138,28 @@ export const DELETE_ADDRESS = gql`
 `;
 
 export const ADD_PAYMENT_METHOD = gql`
-  mutation AddPaymentMethod($paymentMethod: AccountAddressInput) {
-    accountAddAddress(paymentMethod: $paymentMethod) {
-      ...AddressFragment
+  mutation AddPaymentMethod($paymentMethod: String) {
+    accountAddPaymentMethod(paymentMethod: $paymentMethod) {
+      ...PaymentMethodFragment
     }
   }
-  ${ADDRESS_FRAGMENT}
+  ${PAYMENT_METHOD_FRAGMENT}
 `;
 
 export const EDIT_PAYMENT_PAYMENT_METHOD = gql`
-  mutation EditPaymentMethod($id: String, $paymentMethod: AccountAddressInput) {
+  mutation EditPaymentMethod($id: String, $paymentMethod: String) {
     accountEditPaymentMethod(id: $id, paymentMethod: $paymentMethod) {
-      ...AddressFragment
+      ...PaymentMethodFragment
     }
   }
-  ${ADDRESS_FRAGMENT}
+  ${PAYMENT_METHOD_FRAGMENT}
 `;
 
 export const DELETE_PAYMENT_PAYMENT_METHOD = gql`
   mutation DeletePaymentMethod($id: String) {
     accountRemovePaymentMethod(id: $id) {
-      ...AddressFragment
+      ...PaymentMethodFragment
     }
   }
-  ${ADDRESS_FRAGMENT}
+  ${PAYMENT_METHOD_FRAGMENT}
 `;

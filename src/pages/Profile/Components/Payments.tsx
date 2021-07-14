@@ -19,7 +19,7 @@ const Payments = () => {
       <Button
         onPress={() => navigation.navigate("AddPaymentMethod")}
         marginTop="l"
-        label="Add Direction"
+        label="Add Payment Method"
       />
     </Box>
   );

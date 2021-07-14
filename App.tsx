@@ -4,6 +4,8 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemeProvider } from "@shopify/restyle";
 import { ApolloProvider } from "@apollo/client";
+import Constants from "expo-constants";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 import Root from "./src/navigation/Root";
 import theme from "./src/lib/theme";
@@ -16,9 +18,13 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <ApolloProvider client={client}>
           <AuthProvider>
-            <NavigationContainer>
-              <Root />
-            </NavigationContainer>
+            <StripeProvider
+              publishableKey={Constants.manifest?.extra?.stripeKey}
+            >
+              <NavigationContainer>
+                <Root />
+              </NavigationContainer>
+            </StripeProvider>
           </AuthProvider>
         </ApolloProvider>
       </ThemeProvider>

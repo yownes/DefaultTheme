@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-export default {
+const config = {
   name: "expo-animated2",
   slug: "expo-animated2",
   version: "1.0.0",
@@ -32,5 +32,8 @@ export default {
   },
   extra: {
     apiUrl: process.env.SERVER_URL,
+    stripeKey: process.env.STRIPE_KEY,
   },
 };
+
+export default config;
