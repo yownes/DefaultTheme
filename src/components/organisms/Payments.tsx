@@ -2,14 +2,20 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/client";
+import { SharedElement } from "react-navigation-shared-element";
 
-import { Box, Button, Text } from "../../../components/atoms";
-import { CreditCard, Placeholder, Slider } from "../../../components/molecules";
-import BillingImage from "../../../components/images/Billing";
-import { PAYMENT_METHOD_LIST } from "../../../api/queries";
-import { PaymentMethodList } from "../../../api/types/PaymentMethodList";
+import { Box, Button, Text } from "../atoms";
+import { CreditCard, Placeholder, Slider } from "../molecules";
+import BillingImage from "../images/Billing";
+import { PAYMENT_METHOD_LIST } from "../../api/queries";
+import { PaymentMethodList } from "../../api/types/PaymentMethodList";
+import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
 
-const Payments = () => {
+interface PaymentsProps {
+  onSelect: (paymentMethod: PaymentMethodFragment) => void;
+}
+
+const Payments = ({ onSelect }: PaymentsProps) => {
   const { data } = useQuery<PaymentMethodList>(PAYMENT_METHOD_LIST);
   const navigation = useNavigation();
   return (
@@ -21,8 +27,19 @@ const Payments = () => {
       data.accountPaymentMethodList.length > 0 ? (
         <Slider>
           {data?.accountPaymentMethodList.map((method) => (
-            <TouchableOpacity key={method?.id}>
-              {method && <CreditCard data={method} />}
+            <TouchableOpacity
+              key={method?.id}
+              onPress={() => {
+                if (method) {
+                  onSelect(method);
+                }
+              }}
+            >
+              {method && (
+                <SharedElement id={`card.${method.id}`}>
+                  <CreditCard data={method} />
+                </SharedElement>
+              )}
             </TouchableOpacity>
           ))}
         </Slider>

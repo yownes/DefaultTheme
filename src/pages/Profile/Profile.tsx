@@ -9,8 +9,7 @@ import { useAuth } from "../../components/organisms/AuthContext";
 import { LOGOUT } from "../../api/mutations";
 import { Logout } from "../../api/types/Logout";
 import Directions from "../../components/organisms/Directions";
-
-import Payments from "./Components/Payments";
+import Payments from "../../components/organisms/Payments";
 
 const Profile = ({ navigation }: ProfileProps) => {
   const { customer, logout: authLogout } = useAuth();
@@ -65,7 +64,13 @@ const Profile = ({ navigation }: ProfileProps) => {
           />
         </Card>
         <Card padding="l">
-          <Payments />
+          <Payments
+            onSelect={(paymentMethod) => {
+              navigation.navigate("PaymentMethod", {
+                pm: paymentMethod,
+              });
+            }}
+          />
         </Card>
         <Button
           label="Desconectarse"

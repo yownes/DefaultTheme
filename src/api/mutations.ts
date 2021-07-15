@@ -146,7 +146,7 @@ export const ADD_PAYMENT_METHOD = gql`
   ${PAYMENT_METHOD_FRAGMENT}
 `;
 
-export const EDIT_PAYMENT_PAYMENT_METHOD = gql`
+export const EDIT_PAYMENT_METHOD = gql`
   mutation EditPaymentMethod($id: String, $paymentMethod: String) {
     accountEditPaymentMethod(id: $id, paymentMethod: $paymentMethod) {
       ...PaymentMethodFragment
@@ -155,7 +155,7 @@ export const EDIT_PAYMENT_PAYMENT_METHOD = gql`
   ${PAYMENT_METHOD_FRAGMENT}
 `;
 
-export const DELETE_PAYMENT_PAYMENT_METHOD = gql`
+export const DELETE_PAYMENT_METHOD = gql`
   mutation DeletePaymentMethod($id: String) {
     accountRemovePaymentMethod(id: $id) {
       ...PaymentMethodFragment
