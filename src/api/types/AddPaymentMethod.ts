@@ -10,6 +10,11 @@
 export interface AddPaymentMethod_accountAddPaymentMethod {
   __typename: "AccountPaymentMethod";
   id: string | null;
+  name: string | null;
+  last4: string | null;
+  brand: string | null;
+  expMonth: number | null;
+  expYear: number | null;
 }
 
 export interface AddPaymentMethod {

@@ -10,6 +10,11 @@
 export interface DeletePaymentMethod_accountRemovePaymentMethod {
   __typename: "AccountPaymentMethod";
   id: string | null;
+  name: string | null;
+  last4: string | null;
+  brand: string | null;
+  expMonth: number | null;
+  expYear: number | null;
 }
 
 export interface DeletePaymentMethod {

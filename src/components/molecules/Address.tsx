@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AddressFragment } from "../../api/types/AddressFragment";
-import { Box, Text } from "../atoms";
+import { Box, Card, Text } from "../atoms";
 import { Stamp } from "../icons";
 
 interface AddressProps {
@@ -10,8 +10,8 @@ interface AddressProps {
 
 const Address = ({ address }: AddressProps) => {
   return (
-    <Box
-      borderRadius={5}
+    <Card
+      variant="elevated"
       backgroundColor="greyscale2"
       padding="m"
       flexDirection="row"
@@ -24,14 +24,12 @@ const Address = ({ address }: AddressProps) => {
         <Text color="greyscale4" marginBottom="m">
           {address.address1}
         </Text>
-        {Boolean(address.address2) && (
-          <Text color="greyscale4" marginBottom="m">
-            {address.address2}
-          </Text>
-        )}
+        <Text color="greyscale4" marginBottom="m" style={{ minHeight: 17 }}>
+          {address.address2}
+        </Text>
         <Text color="greyscale4">{address.city}</Text>
       </Box>
-    </Box>
+    </Card>
   );
 };
 

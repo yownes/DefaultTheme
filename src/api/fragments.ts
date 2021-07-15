@@ -35,5 +35,10 @@ export const ADDRESS_FRAGMENT = gql`
 export const PAYMENT_METHOD_FRAGMENT = gql`
   fragment PaymentMethodFragment on AccountPaymentMethod {
     id
+    name
+    last4
+    brand
+    expMonth
+    expYear
   }
 `;

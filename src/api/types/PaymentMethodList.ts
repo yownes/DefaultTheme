@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: PaymentMethodFragment
+// GraphQL query operation: PaymentMethodList
 // ====================================================
 
-export interface PaymentMethodFragment {
+export interface PaymentMethodList_accountPaymentMethodList {
   __typename: "AccountPaymentMethod";
   id: string | null;
   name: string | null;
@@ -15,4 +15,8 @@ export interface PaymentMethodFragment {
   brand: string | null;
   expMonth: number | null;
   expYear: number | null;
+}
+
+export interface PaymentMethodList {
+  accountPaymentMethodList: (PaymentMethodList_accountPaymentMethodList | null)[] | null;
 }

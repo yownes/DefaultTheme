@@ -1,6 +1,10 @@
 import { gql } from "@apollo/client";
 
-import { ADDRESS_FRAGMENT, PRODUCT_FRAGMENT } from "./fragments";
+import {
+  ADDRESS_FRAGMENT,
+  PRODUCT_FRAGMENT,
+  PAYMENT_METHOD_FRAGMENT,
+} from "./fragments";
 
 export const HOME = gql`
   query Home {
@@ -232,6 +236,15 @@ export const ADDRESS_LIST = gql`
     }
   }
   ${ADDRESS_FRAGMENT}
+`;
+
+export const PAYMENT_METHOD_LIST = gql`
+  query PaymentMethodList {
+    accountPaymentMethodList {
+      ...PaymentMethodFragment
+    }
+  }
+  ${PAYMENT_METHOD_FRAGMENT}
 `;
 
 export const COUNTRIES_LIST = gql`

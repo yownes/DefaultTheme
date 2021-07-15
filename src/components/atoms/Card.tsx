@@ -5,14 +5,17 @@ import {
   LayoutProps,
   spacing,
   layout,
+  backgroundColor,
   SpacingProps,
   VariantProps,
+  BackgroundColorProps,
 } from "@shopify/restyle";
 
 import { Theme } from "../../lib/theme";
 
 type Props = SpacingProps<Theme> &
   LayoutProps<Theme> &
+  BackgroundColorProps<Theme> &
   VariantProps<Theme, "cardVariants"> & {
     children: ReactNode;
   };
@@ -20,6 +23,7 @@ type Props = SpacingProps<Theme> &
 const Card = createRestyleComponent<Props, Theme>([
   spacing,
   layout,
+  backgroundColor,
   createVariant({ themeKey: "cardVariants" }),
 ]);
 

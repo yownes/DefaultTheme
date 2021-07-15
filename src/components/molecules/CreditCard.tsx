@@ -1,24 +1,23 @@
 import React from "react";
 
-import { Box, Text } from "../atoms";
+import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
+import { Box, Card, Text } from "../atoms";
 
 interface CreditCardProps {
-  name: string;
-  last4: string;
-  expiry: string;
+  data: PaymentMethodFragment;
 }
 
-const CreditCard = ({ name, last4, expiry }: CreditCardProps) => {
+const CreditCard = ({ data }: CreditCardProps) => {
   return (
-    <Box borderRadius={15} backgroundColor="primary" padding="l">
+    <Card variant="elevated" backgroundColor="primary" padding="l">
       <Text
         variant="header"
         marginTop="xl"
         marginBottom="m"
-      >{`**** **** **** ${last4}`}</Text>
-      <Text variant="header4">{name}</Text>
-      <Text>{`EXP: ${expiry}`}</Text>
-    </Box>
+      >{`****  ****  ****  ${data.last4}`}</Text>
+      <Text variant="header4">{data.name}</Text>
+      <Text>{`EXP: ${data.expMonth}/${data.expYear}`}</Text>
+    </Card>
   );
 };
 

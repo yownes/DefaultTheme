@@ -94,6 +94,7 @@ const theme = createTheme({
       shadowOffset: { width: 0, height: 5 },
       shadowRadius: 15,
       elevation: 5,
+      borderRadius: 10,
     },
   },
 });
