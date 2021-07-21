@@ -44,7 +44,7 @@ const PaymentSelect = () => {
         </Box>
       </Card>
       <BottomSheetModal
-        snapPoints={[300]}
+        snapPoints={["70%"]}
         ref={ref}
         backdropComponent={BottomSheetBackdrop}
       >

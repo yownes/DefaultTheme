@@ -18,7 +18,11 @@ import {
   CreatePaymentIntent,
   CreatePaymentIntentVariables,
 } from "../../api/types/CreatePaymentIntent";
-import { CREATE_PAYMENT_INTENT } from "../../api/mutations";
+import {
+  ConfirmOrder,
+  ConfirmOrderVariables,
+} from "../../api/types/ConfirmOrder";
+import { CONFIRM_ORDER, CREATE_PAYMENT_INTENT } from "../../api/mutations";
 import {
   CheckoutProvider,
   useCheckout,
@@ -34,6 +38,10 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
     CreatePaymentIntent,
     CreatePaymentIntentVariables
   >(CREATE_PAYMENT_INTENT);
+  const [confirmOrder, { loading: loadingOrder }] = useMutation<
+    ConfirmOrder,
+    ConfirmOrderVariables
+  >(CONFIRM_ORDER);
 
   const {
     presentApplePay,
@@ -63,29 +71,34 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
     },
   });
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (paymentMethod?.id) {
-      createPaymentIntent({
+      const { data: dataIntent } = await createPaymentIntent({
         variables: { paymentMethod: paymentMethod.id },
-      }).then(({ data }) => {
-        if (data?.createPaymentIntent?.clientSecret) {
-          confirmPayment(data?.createPaymentIntent?.clientSecret, {
+      });
+      if (dataIntent?.createPaymentIntent?.clientSecret) {
+        const confirmation = await confirmPayment(
+          dataIntent?.createPaymentIntent?.clientSecret,
+          {
             paymentMethodId: paymentMethod.id,
             type: "Card",
-          })
-            .then((confirmation) => {
-              if (
-                confirmation.paymentIntent?.status ===
-                PaymentIntents.Status.Succeeded
-              ) {
-                navigation.replace("PaymentConfirmed");
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          }
+        );
+
+        if (
+          confirmation.paymentIntent?.status === PaymentIntents.Status.Succeeded
+        ) {
+          const { data: dataOrder } = await confirmOrder({
+            variables: {
+              paymentAddress: address?.id,
+              shippingAddress: address?.id,
+            },
+          });
+          if (dataOrder?.confirmOrder?.order?.id) {
+            navigation.replace("PaymentConfirmed");
+          }
         }
-      });
+      }
     }
   };
 
@@ -124,8 +137,8 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
           )}
           <Button
             marginTop="m"
-            isLoading={loading || loadingConfirm}
-            disabled={loading || loadingConfirm}
+            isLoading={loading || loadingConfirm || loadingOrder}
+            disabled={loading || loadingConfirm || loadingOrder}
             onPress={handlePayment}
             label="Confirmar Compra"
           />

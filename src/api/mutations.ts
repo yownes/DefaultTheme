@@ -162,3 +162,16 @@ export const CREATE_PAYMENT_INTENT = gql`
     }
   }
 `;
+
+export const CONFIRM_ORDER = gql`
+  mutation ConfirmOrder($paymentAddress: String, $shippingAddress: String) {
+    confirmOrder(
+      paymentAddress: $paymentAddress
+      shippingAddress: $shippingAddress
+    ) {
+      order {
+        id
+      }
+    }
+  }
+`;
