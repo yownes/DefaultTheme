@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { TouchableOpacity } from "react-native";
 import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
@@ -10,17 +10,23 @@ import { Address, Placeholder } from "../molecules";
 import ShippingImage from "../images/Shipping";
 
 import Directions from "./Directions";
+import { useCheckout } from "./CheckoutContext";
 
 const ShippingSelect = () => {
   const ref = useRef<BottomSheetModal>(null);
-  const [selected, setSelected] = useState(0);
+  const { setAddress, address } = useCheckout();
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
+  useEffect(() => {
+    if ((data?.accountAddressList?.length ?? 0) > 0) {
+      setAddress?.(data?.accountAddressList[0]);
+    }
+  }, [data, setAddress]);
   return (
     <>
       <Card padding="l">
         <Text marginBottom="l">Dirección de envío</Text>
-        {(data?.accountAddressList?.length ?? 0) > 0 ? (
-          <Address address={data?.accountAddressList?.[selected]} />
+        {address ? (
+          <Address address={address} />
         ) : (
           <Placeholder
             View={<ShippingImage />}
@@ -48,11 +54,11 @@ const ShippingSelect = () => {
         <Box padding="l">
           <Directions
             onSelect={(address) => {
-              const idx = data?.accountAddressList?.findIndex(
-                (a) => a.id === address.id
+              const idx = data?.accountAddressList?.find(
+                (a) => a?.id === address.id
               );
-              if (idx !== undefined && idx > 0) {
-                setSelected(idx);
+              if (idx) {
+                setAddress?.(idx);
                 ref.current?.close();
               }
             }}

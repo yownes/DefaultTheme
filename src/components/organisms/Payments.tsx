@@ -52,7 +52,7 @@ const Payments = ({ onSelect }: PaymentsProps) => {
       <Button
         onPress={() => navigation.navigate("AddPaymentMethod")}
         marginTop="l"
-        label="Add Payment Method"
+        label="Añadir nuevo"
       />
     </Box>
   );

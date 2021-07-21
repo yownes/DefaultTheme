@@ -20,6 +20,7 @@ const App = () => {
           <AuthProvider>
             <StripeProvider
               publishableKey={Constants.manifest?.extra?.stripeKey}
+              merchantIdentifier="merchant.com.yownes.test"
             >
               <NavigationContainer>
                 <Root />

@@ -49,7 +49,7 @@ const Directions = ({ onSelect }: DirectionsProps) => {
       <Button
         onPress={() => navigation.navigate("AddDirection")}
         marginTop="l"
-        label="Add Direction"
+        label="Añadir nueva"
       />
     </Box>
   );

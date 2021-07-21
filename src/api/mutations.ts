@@ -146,15 +146,6 @@ export const ADD_PAYMENT_METHOD = gql`
   ${PAYMENT_METHOD_FRAGMENT}
 `;
 
-export const EDIT_PAYMENT_METHOD = gql`
-  mutation EditPaymentMethod($id: String, $paymentMethod: String) {
-    accountEditPaymentMethod(id: $id, paymentMethod: $paymentMethod) {
-      ...PaymentMethodFragment
-    }
-  }
-  ${PAYMENT_METHOD_FRAGMENT}
-`;
-
 export const DELETE_PAYMENT_METHOD = gql`
   mutation DeletePaymentMethod($id: String) {
     accountRemovePaymentMethod(id: $id) {
@@ -162,4 +153,12 @@ export const DELETE_PAYMENT_METHOD = gql`
     }
   }
   ${PAYMENT_METHOD_FRAGMENT}
+`;
+
+export const CREATE_PAYMENT_INTENT = gql`
+  mutation CreatePaymentIntent($paymentMethod: String) {
+    createPaymentIntent(paymentMethod: $paymentMethod) {
+      clientSecret
+    }
+  }
 `;
