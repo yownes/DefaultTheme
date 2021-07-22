@@ -41,7 +41,19 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
   const [confirmOrder, { loading: loadingOrder }] = useMutation<
     ConfirmOrder,
     ConfirmOrderVariables
-  >(CONFIRM_ORDER);
+  >(CONFIRM_ORDER, {
+    update(cache, { data: updateData }) {
+      if (updateData?.confirmOrder?.order?.id) {
+        cache.modify({
+          fields: {
+            cart() {
+              return [];
+            },
+          },
+        });
+      }
+    },
+  });
 
   const {
     presentApplePay,

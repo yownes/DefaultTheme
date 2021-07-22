@@ -1,12 +1,21 @@
 import React from "react";
 
-import { Box, Text } from "../../components/atoms";
+import { Box, Button } from "../../components/atoms";
+import { Success } from "../../components/images";
+import { Placeholder } from "../../components/molecules";
 import { PaymentConfirmedProps } from "../../navigation/Cart";
 
-const PaymentConfirmed = ({}: PaymentConfirmedProps) => {
+const PaymentConfirmed = ({ navigation }: PaymentConfirmedProps) => {
   return (
-    <Box>
-      <Text>PaymentConfirmed</Text>
+    <Box padding="m">
+      <Placeholder View={<Success />} text="Pago realizado con éxito" />
+      <Button
+        margin="l"
+        label="Volver al inicio"
+        onPress={() => {
+          navigation.reset({ routes: [{ name: "Home" }] });
+        }}
+      />
     </Box>
   );
 };
