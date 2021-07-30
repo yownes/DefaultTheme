@@ -5,6 +5,7 @@ export { default as CreditCard } from "./CreditCard";
 export { default as HomeSlide } from "./HomeSlide";
 export { default as HorizontalScrollProducts } from "./HorizontalScrollProducts";
 export { default as InputWithErrors } from "./InputWithErrors";
+export { default as Order } from "./Order";
 export {
   default as Select,
   Item as SelectItem,

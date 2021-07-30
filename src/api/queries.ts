@@ -247,6 +247,67 @@ export const PAYMENT_METHOD_LIST = gql`
   ${PAYMENT_METHOD_FRAGMENT}
 `;
 
+export const ORDERS = gql`
+  query Orders {
+    orders {
+      id
+      reference
+      date
+      state
+      total
+    }
+  }
+`;
+
+export const ORDER = gql`
+  query Order($id: String) {
+    order(id: $id) {
+      id
+      reference
+      date
+      state
+      total
+      shippingAddress {
+        ...AddressFragment
+      }
+      paymentAddress {
+        ...AddressFragment
+      }
+      shippingMethod {
+        id
+        name
+      }
+      products {
+        key
+        quantity
+        total
+        option {
+          name
+          value
+          type
+        }
+        product {
+          id
+          name
+          image
+          price
+        }
+      }
+      subtotals {
+        label
+        value
+      }
+    }
+  }
+  ${ADDRESS_FRAGMENT}
+`;
+
+/**
+ *
+ * GLOBALS
+ *
+ */
+
 export const COUNTRIES_LIST = gql`
   query CountriesList {
     countriesList {
