@@ -42,3 +42,40 @@ export const PAYMENT_METHOD_FRAGMENT = gql`
     expYear
   }
 `;
+
+export const CART_FRAGMENT = gql`
+  fragment CartFragment on Cart {
+    id
+    total
+    subtotals {
+      products {
+        label
+        value
+      }
+      discounts {
+        label
+        value
+      }
+      shipping {
+        label
+        value
+      }
+    }
+    products {
+      key
+      quantity
+      total
+      option {
+        name
+        value
+        type
+      }
+      product {
+        id
+        name
+        image
+        price
+      }
+    }
+  }
+`;

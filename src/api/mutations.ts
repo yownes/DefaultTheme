@@ -1,6 +1,10 @@
 import { gql } from "@apollo/client";
 
-import { ADDRESS_FRAGMENT, PAYMENT_METHOD_FRAGMENT } from "./fragments";
+import {
+  ADDRESS_FRAGMENT,
+  CART_FRAGMENT,
+  PAYMENT_METHOD_FRAGMENT,
+} from "./fragments";
 
 export const LOGIN = gql`
   mutation Login($email: String, $password: String) {
@@ -63,51 +67,19 @@ export const REMOVE_FAVOURITE = gql`
 export const REMOVE_FROM_CART = gql`
   mutation RemoveFromCart($key: String) {
     removeCart(key: $key) {
-      id
-      total
-      products {
-        key
-        quantity
-        total
-        option {
-          name
-          value
-          type
-        }
-        product {
-          id
-          name
-          image
-          price
-        }
-      }
+      ...CartFragment
     }
   }
+  ${CART_FRAGMENT}
 `;
 
 export const UPDATE_CART = gql`
   mutation UpdateCart($key: String, $qty: Int) {
     updateCart(key: $key, quantity: $qty) {
-      id
-      total
-      products {
-        key
-        quantity
-        total
-        option {
-          name
-          value
-          type
-        }
-        product {
-          id
-          name
-          image
-          price
-        }
-      }
+      ...CartFragment
     }
   }
+  ${CART_FRAGMENT}
 `;
 
 export const ADD_ADDRESS = gql`
@@ -174,4 +146,16 @@ export const CONFIRM_ORDER = gql`
       }
     }
   }
+`;
+
+export const ADD_DISCOUNT = gql`
+  mutation AddDiscount($code: String) {
+    addDiscount(code: $code) {
+      cart {
+        ...CartFragment
+      }
+      errors
+    }
+  }
+  ${CART_FRAGMENT}
 `;

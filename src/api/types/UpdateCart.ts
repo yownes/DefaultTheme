@@ -7,6 +7,31 @@
 // GraphQL mutation operation: UpdateCart
 // ====================================================
 
+export interface UpdateCart_updateCart_subtotals_products {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface UpdateCart_updateCart_subtotals_discounts {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface UpdateCart_updateCart_subtotals_shipping {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface UpdateCart_updateCart_subtotals {
+  __typename: "CartSubtotals";
+  products: UpdateCart_updateCart_subtotals_products | null;
+  discounts: UpdateCart_updateCart_subtotals_discounts | null;
+  shipping: UpdateCart_updateCart_subtotals_shipping | null;
+}
+
 export interface UpdateCart_updateCart_products_option {
   __typename: "CartProductOption";
   name: string | null;
@@ -35,6 +60,7 @@ export interface UpdateCart_updateCart {
   __typename: "Cart";
   id: string | null;
   total: string | null;
+  subtotals: UpdateCart_updateCart_subtotals | null;
   products: (UpdateCart_updateCart_products | null)[] | null;
 }
 
