@@ -7,6 +7,31 @@
 // GraphQL query operation: Cart
 // ====================================================
 
+export interface Cart_cart_subtotals_products {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface Cart_cart_subtotals_discounts {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface Cart_cart_subtotals_shipping {
+  __typename: "Line";
+  label: string | null;
+  value: string | null;
+}
+
+export interface Cart_cart_subtotals {
+  __typename: "CartSubtotals";
+  products: Cart_cart_subtotals_products | null;
+  discounts: Cart_cart_subtotals_discounts | null;
+  shipping: Cart_cart_subtotals_shipping | null;
+}
+
 export interface Cart_cart_products_option {
   __typename: "CartProductOption";
   name: string | null;
@@ -35,6 +60,7 @@ export interface Cart_cart {
   __typename: "Cart";
   id: string | null;
   total: string | null;
+  subtotals: Cart_cart_subtotals | null;
   products: (Cart_cart_products | null)[] | null;
 }
 

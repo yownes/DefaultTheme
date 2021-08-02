@@ -209,6 +209,20 @@ export const CART = gql`
     cart {
       id
       total
+      subtotals {
+        products {
+          label
+          value
+        }
+        discounts {
+          label
+          value
+        }
+        shipping {
+          label
+          value
+        }
+      }
       products {
         key
         quantity
