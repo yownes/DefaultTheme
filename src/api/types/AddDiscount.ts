@@ -62,6 +62,7 @@ export interface AddDiscount_addDiscount_cart {
   total: string | null;
   subtotals: AddDiscount_addDiscount_cart_subtotals | null;
   products: (AddDiscount_addDiscount_cart_products | null)[] | null;
+  deliveryOption: string | null;
 }
 
 export interface AddDiscount_addDiscount {

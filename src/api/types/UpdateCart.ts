@@ -62,6 +62,7 @@ export interface UpdateCart_updateCart {
   total: string | null;
   subtotals: UpdateCart_updateCart_subtotals | null;
   products: (UpdateCart_updateCart_products | null)[] | null;
+  deliveryOption: string | null;
 }
 
 export interface UpdateCart {

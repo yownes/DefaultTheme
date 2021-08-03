@@ -62,6 +62,7 @@ export interface Cart_cart {
   total: string | null;
   subtotals: Cart_cart_subtotals | null;
   products: (Cart_cart_products | null)[] | null;
+  deliveryOption: string | null;
 }
 
 export interface Cart {

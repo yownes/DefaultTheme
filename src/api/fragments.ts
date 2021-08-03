@@ -77,5 +77,6 @@ export const CART_FRAGMENT = gql`
         price
       }
     }
+    deliveryOption
   }
 `;

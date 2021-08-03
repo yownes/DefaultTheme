@@ -6,6 +6,7 @@ export { default as Dot } from "./Dot";
 export { default as HtmlText } from "./HtmlText";
 export { default as Input } from "./Input";
 export { default as Loading } from "./Loading";
+export { default as RadioButton } from "./RadioButton";
 export { default as Switch } from "./Switch";
 export { default as Tag } from "./Tag";
 export { default as Text } from "./Text";

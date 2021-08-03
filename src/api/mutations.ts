@@ -159,3 +159,12 @@ export const ADD_DISCOUNT = gql`
   }
   ${CART_FRAGMENT}
 `;
+
+export const SET_DELIVERY_OPTION = gql`
+  mutation SetDeliveryOption($option: String) {
+    setDeliveryOption(option: $option) {
+      ...CartFragment
+    }
+  }
+  ${CART_FRAGMENT}
+`;

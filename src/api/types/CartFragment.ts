@@ -62,4 +62,5 @@ export interface CartFragment {
   total: string | null;
   subtotals: CartFragment_subtotals | null;
   products: (CartFragment_products | null)[] | null;
+  deliveryOption: string | null;
 }

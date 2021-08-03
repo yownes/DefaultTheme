@@ -62,6 +62,7 @@ export interface RemoveFromCart_removeCart {
   total: string | null;
   subtotals: RemoveFromCart_removeCart_subtotals | null;
   products: (RemoveFromCart_removeCart_products | null)[] | null;
+  deliveryOption: string | null;
 }
 
 export interface RemoveFromCart {

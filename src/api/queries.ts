@@ -4,6 +4,7 @@ import {
   ADDRESS_FRAGMENT,
   PRODUCT_FRAGMENT,
   PAYMENT_METHOD_FRAGMENT,
+  CART_FRAGMENT,
 } from "./fragments";
 
 export const HOME = gql`
@@ -207,40 +208,10 @@ export const FAVOURITES = gql`
 export const CART = gql`
   query Cart {
     cart {
-      id
-      total
-      subtotals {
-        products {
-          label
-          value
-        }
-        discounts {
-          label
-          value
-        }
-        shipping {
-          label
-          value
-        }
-      }
-      products {
-        key
-        quantity
-        total
-        option {
-          name
-          value
-          type
-        }
-        product {
-          id
-          name
-          image
-          price
-        }
-      }
+      ...CartFragment
     }
   }
+  ${CART_FRAGMENT}
 `;
 
 export const ADDRESS_LIST = gql`
@@ -340,6 +311,18 @@ export const ZONES_LIST = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const CARRIER_LIST = gql`
+  query CarrierList {
+    carrierList {
+      id
+      reference
+      name
+      delay
+      price
     }
   }
 `;
