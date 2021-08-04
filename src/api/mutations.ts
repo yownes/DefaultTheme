@@ -160,6 +160,15 @@ export const ADD_DISCOUNT = gql`
   ${CART_FRAGMENT}
 `;
 
+export const REMOVE_DISCOUNT = gql`
+  mutation RemoveDiscount($id: String) {
+    removeDiscount(id: $id) {
+      ...CartFragment
+    }
+  }
+  ${CART_FRAGMENT}
+`;
+
 export const SET_DELIVERY_OPTION = gql`
   mutation SetDeliveryOption($option: String) {
     setDeliveryOption(option: $option) {

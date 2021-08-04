@@ -56,12 +56,27 @@ export interface SetDeliveryOption_setDeliveryOption_products {
   product: SetDeliveryOption_setDeliveryOption_products_product | null;
 }
 
+export interface SetDeliveryOption_setDeliveryOption_vouchers_added {
+  __typename: "Voucher";
+  id: string | null;
+  name: string | null;
+  code: string | null;
+  reduction: string | null;
+}
+
+export interface SetDeliveryOption_setDeliveryOption_vouchers {
+  __typename: "Vouchers";
+  allowed: boolean | null;
+  added: (SetDeliveryOption_setDeliveryOption_vouchers_added | null)[] | null;
+}
+
 export interface SetDeliveryOption_setDeliveryOption {
   __typename: "Cart";
   id: string | null;
   total: string | null;
   subtotals: SetDeliveryOption_setDeliveryOption_subtotals | null;
   products: (SetDeliveryOption_setDeliveryOption_products | null)[] | null;
+  vouchers: SetDeliveryOption_setDeliveryOption_vouchers | null;
   deliveryOption: string | null;
 }
 

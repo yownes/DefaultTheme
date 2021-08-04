@@ -1,6 +1,13 @@
+import { useMutation } from "@apollo/client";
 import React from "react";
+import { TouchableOpacity } from "react-native";
 
+import { REMOVE_DISCOUNT } from "../../../api/mutations";
 import { Cart_cart } from "../../../api/types/Cart";
+import {
+  RemoveDiscount,
+  RemoveDiscountVariables,
+} from "../../../api/types/RemoveDiscount";
 import { Box, Card, Text } from "../../../components/atoms";
 
 interface SummaryProps {
@@ -8,6 +15,9 @@ interface SummaryProps {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
+  const [removeDiscount] = useMutation<RemoveDiscount, RemoveDiscountVariables>(
+    REMOVE_DISCOUNT
+  );
   if (!cart) return null;
   return (
     <Card padding="l">
@@ -52,6 +62,43 @@ const Summary = ({ cart }: SummaryProps) => {
         <Text variant="header3">Total</Text>
         <Text variant="header3">{cart.total}</Text>
       </Box>
+
+      {cart.vouchers?.allowed && Boolean(cart.vouchers?.added?.length) && (
+        <Box
+          marginTop="l"
+          paddingTop="l"
+          borderTopWidth={1}
+          borderColor="greyscale5"
+        >
+          {cart.vouchers?.added?.map((voucher, i) => (
+            <Box
+              key={voucher?.id}
+              justifyContent="space-between"
+              flexDirection="row"
+              marginBottom={i === cart.vouchers?.added?.length - 1 ? "s" : "m"}
+            >
+              <Box flexDirection="row">
+                <Text>{voucher?.name}</Text>
+                {voucher?.code && <Text> - {voucher.code}</Text>}
+              </Box>
+              <Box>
+                <Text>{voucher?.reduction}</Text>
+                {voucher?.code && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      removeDiscount({ variables: { id: voucher.id } });
+                    }}
+                  >
+                    <Text color="danger" paddingVertical="s">
+                      Eliminar
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Card>
   );
 };

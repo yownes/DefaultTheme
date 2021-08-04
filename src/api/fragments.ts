@@ -77,6 +77,15 @@ export const CART_FRAGMENT = gql`
         price
       }
     }
+    vouchers {
+      allowed
+      added {
+        id
+        name
+        code
+        reduction
+      }
+    }
     deliveryOption
   }
 `;

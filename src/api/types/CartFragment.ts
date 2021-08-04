@@ -56,11 +56,26 @@ export interface CartFragment_products {
   product: CartFragment_products_product | null;
 }
 
+export interface CartFragment_vouchers_added {
+  __typename: "Voucher";
+  id: string | null;
+  name: string | null;
+  code: string | null;
+  reduction: string | null;
+}
+
+export interface CartFragment_vouchers {
+  __typename: "Vouchers";
+  allowed: boolean | null;
+  added: (CartFragment_vouchers_added | null)[] | null;
+}
+
 export interface CartFragment {
   __typename: "Cart";
   id: string | null;
   total: string | null;
   subtotals: CartFragment_subtotals | null;
   products: (CartFragment_products | null)[] | null;
+  vouchers: CartFragment_vouchers | null;
   deliveryOption: string | null;
 }

@@ -73,7 +73,7 @@ const Cart = ({ navigation }: CartProps) => {
           <Summary cart={data?.cart ?? undefined} />
           <Card marginTop="m" padding="m">
             <Input
-              placeholder="Código de descuento"
+              placeholder="Código promocional"
               value={code}
               onChangeText={setCode}
             />
@@ -83,7 +83,9 @@ const Cart = ({ navigation }: CartProps) => {
               </Text>
             ))}
             <Button
-              label="Aplicar descuento"
+              label="Aplicar código promocional"
+              backgroundColor="greyscale5"
+              color="dark"
               marginTop="m"
               isLoading={dataLoading}
               disabled={dataLoading}

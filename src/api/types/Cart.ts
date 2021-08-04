@@ -56,12 +56,27 @@ export interface Cart_cart_products {
   product: Cart_cart_products_product | null;
 }
 
+export interface Cart_cart_vouchers_added {
+  __typename: "Voucher";
+  id: string | null;
+  name: string | null;
+  code: string | null;
+  reduction: string | null;
+}
+
+export interface Cart_cart_vouchers {
+  __typename: "Vouchers";
+  allowed: boolean | null;
+  added: (Cart_cart_vouchers_added | null)[] | null;
+}
+
 export interface Cart_cart {
   __typename: "Cart";
   id: string | null;
   total: string | null;
   subtotals: Cart_cart_subtotals | null;
   products: (Cart_cart_products | null)[] | null;
+  vouchers: Cart_cart_vouchers | null;
   deliveryOption: string | null;
 }
 
