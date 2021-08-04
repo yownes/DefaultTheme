@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   ApplePayButton,
@@ -9,9 +9,13 @@ import {
   useConfirmPayment,
 } from "@stripe/stripe-react-native";
 
-import { CARRIER_LIST, CART } from "../../api/queries";
-import { Box, Button, Card, RadioButton, Text } from "../../components/atoms";
-import { PaymentSelect, ShippingSelect } from "../../components/organisms";
+import { CART } from "../../api/queries";
+import { Box, Button } from "../../components/atoms";
+import {
+  DeliverySelect,
+  PaymentSelect,
+  ShippingSelect,
+} from "../../components/organisms";
 import { CheckoutProps } from "../../navigation/Cart";
 import { Cart as ICart } from "../../api/types/Cart";
 import {
@@ -22,30 +26,17 @@ import {
   ConfirmOrder,
   ConfirmOrderVariables,
 } from "../../api/types/ConfirmOrder";
-import {
-  CONFIRM_ORDER,
-  CREATE_PAYMENT_INTENT,
-  SET_DELIVERY_OPTION,
-} from "../../api/mutations";
+import { CONFIRM_ORDER, CREATE_PAYMENT_INTENT } from "../../api/mutations";
 import {
   CheckoutProvider,
   useCheckout,
 } from "../../components/organisms/CheckoutContext";
-import { CarrierList } from "../../api/types/CarrierList";
-import {
-  SetDeliveryOption,
-  SetDeliveryOptionVariables,
-} from "../../api/types/SetDeliveryOption";
 
 import Summary from "./Components/Summary";
 
 const CheckoutContent = ({ navigation }: CheckoutProps) => {
   const { data } = useQuery<ICart>(CART);
-  const { data: dataCarriers } = useQuery<CarrierList>(CARRIER_LIST);
-  const [setDeliveryOption] = useMutation<
-    SetDeliveryOption,
-    SetDeliveryOptionVariables
-  >(SET_DELIVERY_OPTION);
+
   const { paymentMethod, address } = useCheckout();
   const { confirmPayment, loading: loadingConfirm } = useConfirmPayment();
   const [createPaymentIntent, { loading }] = useMutation<
@@ -133,34 +124,11 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
       <ScrollView>
         <Box padding="m">
           {data?.cart && <Summary cart={data.cart} />}
-          <Card padding="m" marginTop="m">
-            {dataCarriers?.carrierList?.map((carrier) => (
-              <TouchableOpacity
-                key={carrier?.id}
-                onPress={() => {
-                  if (carrier?.reference) {
-                    setDeliveryOption({
-                      variables: { option: carrier.reference },
-                    });
-                    // setActive(!active);
-                  }
-                }}
-              >
-                <Box flexDirection="row" alignItems="center">
-                  <RadioButton
-                    active={data?.cart?.deliveryOption === carrier?.reference}
-                  />
-                  <Box flex={1} padding="m">
-                    <Text variant="header3">{carrier?.name}</Text>
-                    <Box flexDirection="row" justifyContent="space-between">
-                      <Text>{carrier?.delay}</Text>
-                      <Text>{carrier?.price}</Text>
-                    </Box>
-                  </Box>
-                </Box>
-              </TouchableOpacity>
-            ))}
-          </Card>
+          {data?.cart?.deliveryOption && (
+            <Box marginTop="m">
+              <DeliverySelect selected={data?.cart?.deliveryOption} />
+            </Box>
+          )}
           <Box marginTop="m">
             <ShippingSelect />
           </Box>
