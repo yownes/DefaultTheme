@@ -1,13 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React from "react";
+import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import {
-  ApplePayButton,
-  PaymentIntents,
-  useApplePay,
-  useConfirmPayment,
-} from "@stripe/stripe-react-native";
+import { PaymentIntents, useConfirmPayment } from "@stripe/stripe-react-native";
 
 import { CART } from "../../api/queries";
 import { Box, Button } from "../../components/atoms";
@@ -36,8 +31,8 @@ import Summary from "./Components/Summary";
 
 const CheckoutContent = ({ navigation }: CheckoutProps) => {
   const { data } = useQuery<ICart>(CART);
-
-  const { paymentMethod, address } = useCheckout();
+  const scrollView = useRef<ScrollView>();
+  const { paymentMethod, address, paymentAddress } = useCheckout();
   const { confirmPayment, loading: loadingConfirm } = useConfirmPayment();
   const [createPaymentIntent, { loading }] = useMutation<
     CreatePaymentIntent,
@@ -60,33 +55,7 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
     },
   });
 
-  const {
-    presentApplePay,
-    confirmApplePayPayment,
-    isApplePaySupported,
-  } = useApplePay({
-    onShippingMethodSelected: (shippingMethod, handler) => {
-      console.log("shippingMethod", shippingMethod);
-      // Update cart summary based on selected shipping method.
-      // const updatedCart = [
-      //   cart[0],
-      //   { label: shippingMethod.label, amount: shippingMethod.amount },
-      //   {
-      //     label: "Total",
-      //     amount: (
-      //       parseFloat(cart[0].amount) + parseFloat(shippingMethod.amount)
-      //     ).toFixed(2),
-      //   },
-      // ];
-      //setCart(updatedCart);
-      //handler(updatedCart);
-    },
-    onShippingContactSelected: (shippingContact, handler) => {
-      console.log("shippingContact", shippingContact);
-      // Make modifications to cart here e.g. adding tax.
-      //handler(cart);
-    },
-  });
+  console.log({ paymentMethod });
 
   const handlePayment = async () => {
     if (paymentMethod?.id) {
@@ -107,7 +76,7 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
         ) {
           const { data: dataOrder } = await confirmOrder({
             variables: {
-              paymentAddress: address?.id,
+              paymentAddress: paymentAddress ? paymentAddress?.id : address?.id,
               shippingAddress: address?.id,
             },
           });
@@ -121,7 +90,7 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
 
   return (
     <BottomSheetModalProvider>
-      <ScrollView>
+      <ScrollView ref={scrollView}>
         <Box padding="m">
           {data?.cart && <Summary cart={data.cart} />}
           {data?.cart?.deliveryOption && (
@@ -133,37 +102,17 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
             <ShippingSelect />
           </Box>
           <Box marginTop="m">
-            <PaymentSelect />
+            <PaymentSelect scrollView={scrollView} />
           </Box>
-          {isApplePaySupported && (
-            <ApplePayButton
-              type="plain"
-              buttonStyle="black"
-              borderRadius={4}
-              style={{
-                width: "100%",
-                height: 40,
-                marginTop: 10,
-                alignSelf: "center",
-              }}
-              onPress={async () => {
-                const { error, paymentMethod } = await presentApplePay({
-                  cartItems: [{ amount: "12.00", label: "Producto" }],
-                  country: "ES",
-                  currency: "EUR",
-                });
-                console.log(error, paymentMethod);
-                // confirmApplePayPayment()
-              }}
+          {paymentMethod && (
+            <Button
+              marginTop="m"
+              isLoading={loading || loadingConfirm || loadingOrder}
+              disabled={loading || loadingConfirm || loadingOrder}
+              onPress={handlePayment}
+              label="Confirmar Compra"
             />
           )}
-          <Button
-            marginTop="m"
-            isLoading={loading || loadingConfirm || loadingOrder}
-            disabled={loading || loadingConfirm || loadingOrder}
-            onPress={handlePayment}
-            label="Confirmar Compra"
-          />
         </Box>
       </ScrollView>
     </BottomSheetModalProvider>

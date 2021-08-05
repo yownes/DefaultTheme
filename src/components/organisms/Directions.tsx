@@ -13,17 +13,18 @@ import { Address, Placeholder, Slider } from "../molecules";
 import ShippingImage from "../images/Shipping";
 
 interface DirectionsProps {
+  title?: string;
   onSelect: (address: AddressList_accountAddressList) => void;
 }
 
-const Directions = ({ onSelect }: DirectionsProps) => {
+const Directions = ({ title, onSelect }: DirectionsProps) => {
   const { data } = useQuery<AddressList>(ADDRESS_LIST);
   const navigation = useNavigation();
 
   return (
     <Box>
       <Text variant="header3" marginBottom="l">
-        Dirección de envío
+        {title || "Dirección de envío"}
       </Text>
       {data?.accountAddressList && data.accountAddressList.length > 0 ? (
         <Slider>
