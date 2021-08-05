@@ -1,68 +1,96 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { TouchableOpacity } from "react-native";
-import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { ScrollView } from "react-native";
+import { ApplePayButton, useApplePay } from "@stripe/stripe-react-native";
 
-import { Box, Card, Text } from "../atoms";
-import { CreditCard, Placeholder } from "../molecules";
+import { Button, Card, Text } from "../atoms";
 import { PAYMENT_METHOD_LIST } from "../../api/queries";
 import { PaymentMethodList } from "../../api/types/PaymentMethodList";
-import BillingImage from "../images/Billing";
 
-import Payments from "./Payments";
-import { useCheckout } from "./CheckoutContext";
+import CardSelect from "./CardSelect";
 
-const PaymentSelect = () => {
+interface PaymentSelectProps {
+  scrollView: React.MutableRefObject<ScrollView | undefined>;
+}
+
+const PaymentSelect = ({ scrollView }: PaymentSelectProps) => {
+  const [method, setMethod] = useState(false);
   const { data } = useQuery<PaymentMethodList>(PAYMENT_METHOD_LIST);
-  const ref = useRef<BottomSheetModal>(null);
-  const { setPaymentMethod, paymentMethod } = useCheckout();
+  const {
+    presentApplePay,
+    confirmApplePayPayment,
+    isApplePaySupported,
+  } = useApplePay({
+    onShippingMethodSelected: (shippingMethod, handler) => {
+      console.log("shippingMethod", shippingMethod);
+      // Update cart summary based on selected shipping method.
+      // const updatedCart = [
+      //   cart[0],
+      //   { label: shippingMethod.label, amount: shippingMethod.amount },
+      //   {
+      //     label: "Total",
+      //     amount: (
+      //       parseFloat(cart[0].amount) + parseFloat(shippingMethod.amount)
+      //     ).toFixed(2),
+      //   },
+      // ];
+      //setCart(updatedCart);
+      //handler(updatedCart);
+    },
+    onShippingContactSelected: (shippingContact, handler) => {
+      console.log("shippingContact", shippingContact);
+      // Make modifications to cart here e.g. adding tax.
+      //handler(cart);
+    },
+  });
   useEffect(() => {
-    if ((data?.accountPaymentMethodList?.length ?? 0) > 0) {
-      setPaymentMethod?.(data.accountPaymentMethodList[0]);
+    if (method) {
+      setTimeout(() => {
+        scrollView.current?.scrollToEnd();
+        // a(time - interval, interval, cadence);
+      }, 50);
     }
-  }, [data, setPaymentMethod]);
+  }, [method, scrollView]);
+
   return (
-    <>
-      <Card padding="l">
-        <Text marginBottom="l">Método de pago</Text>
-        {paymentMethod ? (
-          <CreditCard data={paymentMethod} />
-        ) : (
-          <Placeholder
-            View={<BillingImage />}
-            text="Aún no tienes ningún método de pago añadido, crea uno para poder comprar"
-          />
-        )}
-        <Box justifyContent="space-around" flexDirection="row" marginTop="l">
-          <TouchableOpacity
+    <Card padding="l">
+      <Text marginBottom="l">Método de pago</Text>
+      {method ? (
+        <CardSelect
+          cards={data?.accountPaymentMethodList}
+          onCancel={() => setMethod(false)}
+        />
+      ) : (
+        <>
+          <Button
+            label="Tarjeta"
             onPress={() => {
-              ref.current?.present();
-            }}
-          >
-            <Text>Cambiar</Text>
-          </TouchableOpacity>
-        </Box>
-      </Card>
-      <BottomSheetModal
-        snapPoints={["70%"]}
-        ref={ref}
-        backdropComponent={BottomSheetBackdrop}
-      >
-        <Box padding="l">
-          <Payments
-            onSelect={(pm) => {
-              const idx = data?.accountPaymentMethodList?.find(
-                (a) => a?.id === pm.id
-              );
-              if (idx) {
-                setPaymentMethod?.(idx);
-                ref.current?.close();
-              }
+              setMethod(true);
             }}
           />
-        </Box>
-      </BottomSheetModal>
-    </>
+          <ApplePayButton
+            type="plain"
+            buttonStyle="black"
+            borderRadius={4}
+            style={{
+              width: "100%",
+              height: 40,
+              marginTop: 10,
+              alignSelf: "center",
+            }}
+            onPress={async () => {
+              const { error, paymentMethod } = await presentApplePay({
+                cartItems: [{ amount: "12.00", label: "Producto" }],
+                country: "ES",
+                currency: "EUR",
+              });
+              console.log(error, paymentMethod);
+              // confirmApplePayPayment()
+            }}
+          />
+        </>
+      )}
+    </Card>
   );
 };
 

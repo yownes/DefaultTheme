@@ -1,15 +1,22 @@
 import React from "react";
 
 import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
-import { Box, Card, Text } from "../atoms";
+import { Card, Text } from "../atoms";
 
 interface CreditCardProps {
   data: PaymentMethodFragment;
 }
 
+export const CREDIT_CARD_HEIGHT = 150;
+
 const CreditCard = ({ data }: CreditCardProps) => {
   return (
-    <Card variant="elevated" backgroundColor="primary" padding="l">
+    <Card
+      variant="elevated"
+      backgroundColor="primary"
+      padding="l"
+      height={CREDIT_CARD_HEIGHT}
+    >
       <Text
         variant="header"
         marginTop="xl"
