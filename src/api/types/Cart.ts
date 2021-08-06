@@ -7,6 +7,13 @@
 // GraphQL query operation: Cart
 // ====================================================
 
+export interface Cart_cart_total {
+  __typename: "CartTotal";
+  amount: number | null;
+  value: string | null;
+  label: string | null;
+}
+
 export interface Cart_cart_subtotals_products {
   __typename: "Line";
   label: string | null;
@@ -73,7 +80,7 @@ export interface Cart_cart_vouchers {
 export interface Cart_cart {
   __typename: "Cart";
   id: string | null;
-  total: string | null;
+  total: Cart_cart_total | null;
   subtotals: Cart_cart_subtotals | null;
   products: (Cart_cart_products | null)[] | null;
   vouchers: Cart_cart_vouchers | null;

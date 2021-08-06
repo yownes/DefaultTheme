@@ -101,7 +101,7 @@ const Cart = ({ navigation }: CartProps) => {
       <Button
         onPress={toCheckout}
         margin="l"
-        label={`Confirmar compra (${data?.cart?.total})`}
+        label={`Confirmar compra (${data?.cart?.total?.value})`}
       />
     </Box>
   );

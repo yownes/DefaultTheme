@@ -7,6 +7,13 @@
 // GraphQL mutation operation: UpdateCart
 // ====================================================
 
+export interface UpdateCart_updateCart_total {
+  __typename: "CartTotal";
+  amount: number | null;
+  value: string | null;
+  label: string | null;
+}
+
 export interface UpdateCart_updateCart_subtotals_products {
   __typename: "Line";
   label: string | null;
@@ -73,7 +80,7 @@ export interface UpdateCart_updateCart_vouchers {
 export interface UpdateCart_updateCart {
   __typename: "Cart";
   id: string | null;
-  total: string | null;
+  total: UpdateCart_updateCart_total | null;
   subtotals: UpdateCart_updateCart_subtotals | null;
   products: (UpdateCart_updateCart_products | null)[] | null;
   vouchers: UpdateCart_updateCart_vouchers | null;

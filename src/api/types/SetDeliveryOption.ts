@@ -7,6 +7,13 @@
 // GraphQL mutation operation: SetDeliveryOption
 // ====================================================
 
+export interface SetDeliveryOption_setDeliveryOption_total {
+  __typename: "CartTotal";
+  amount: number | null;
+  value: string | null;
+  label: string | null;
+}
+
 export interface SetDeliveryOption_setDeliveryOption_subtotals_products {
   __typename: "Line";
   label: string | null;
@@ -73,7 +80,7 @@ export interface SetDeliveryOption_setDeliveryOption_vouchers {
 export interface SetDeliveryOption_setDeliveryOption {
   __typename: "Cart";
   id: string | null;
-  total: string | null;
+  total: SetDeliveryOption_setDeliveryOption_total | null;
   subtotals: SetDeliveryOption_setDeliveryOption_subtotals | null;
   products: (SetDeliveryOption_setDeliveryOption_products | null)[] | null;
   vouchers: SetDeliveryOption_setDeliveryOption_vouchers | null;

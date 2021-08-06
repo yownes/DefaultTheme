@@ -7,6 +7,13 @@
 // GraphQL mutation operation: AddDiscount
 // ====================================================
 
+export interface AddDiscount_addDiscount_cart_total {
+  __typename: "CartTotal";
+  amount: number | null;
+  value: string | null;
+  label: string | null;
+}
+
 export interface AddDiscount_addDiscount_cart_subtotals_products {
   __typename: "Line";
   label: string | null;
@@ -73,7 +80,7 @@ export interface AddDiscount_addDiscount_cart_vouchers {
 export interface AddDiscount_addDiscount_cart {
   __typename: "Cart";
   id: string | null;
-  total: string | null;
+  total: AddDiscount_addDiscount_cart_total | null;
   subtotals: AddDiscount_addDiscount_cart_subtotals | null;
   products: (AddDiscount_addDiscount_cart_products | null)[] | null;
   vouchers: AddDiscount_addDiscount_cart_vouchers | null;

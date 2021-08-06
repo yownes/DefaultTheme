@@ -7,6 +7,13 @@
 // GraphQL fragment: CartFragment
 // ====================================================
 
+export interface CartFragment_total {
+  __typename: "CartTotal";
+  amount: number | null;
+  value: string | null;
+  label: string | null;
+}
+
 export interface CartFragment_subtotals_products {
   __typename: "Line";
   label: string | null;
@@ -73,7 +80,7 @@ export interface CartFragment_vouchers {
 export interface CartFragment {
   __typename: "Cart";
   id: string | null;
-  total: string | null;
+  total: CartFragment_total | null;
   subtotals: CartFragment_subtotals | null;
   products: (CartFragment_products | null)[] | null;
   vouchers: CartFragment_vouchers | null;

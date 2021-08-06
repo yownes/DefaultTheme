@@ -46,7 +46,11 @@ export const PAYMENT_METHOD_FRAGMENT = gql`
 export const CART_FRAGMENT = gql`
   fragment CartFragment on Cart {
     id
-    total
+    total {
+      amount
+      value
+      label
+    }
     subtotals {
       products {
         label

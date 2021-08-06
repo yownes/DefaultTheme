@@ -1,10 +1,9 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PaymentIntents, useConfirmPayment } from "@stripe/stripe-react-native";
 
-import { CART } from "../../api/queries";
 import { Box, Button } from "../../components/atoms";
 import {
   DeliverySelect,
@@ -12,7 +11,6 @@ import {
   ShippingSelect,
 } from "../../components/organisms";
 import { CheckoutProps } from "../../navigation/Cart";
-import { Cart as ICart } from "../../api/types/Cart";
 import {
   CreatePaymentIntent,
   CreatePaymentIntentVariables,
@@ -30,9 +28,8 @@ import {
 import Summary from "./Components/Summary";
 
 const CheckoutContent = ({ navigation }: CheckoutProps) => {
-  const { data } = useQuery<ICart>(CART);
   const scrollView = useRef<ScrollView>();
-  const { paymentMethod, address, paymentAddress } = useCheckout();
+  const { paymentMethod, address, paymentAddress, cart } = useCheckout();
   const { confirmPayment, loading: loadingConfirm } = useConfirmPayment();
   const [createPaymentIntent, { loading }] = useMutation<
     CreatePaymentIntent,
@@ -55,7 +52,17 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
     },
   });
 
-  console.log({ paymentMethod });
+  const finishCheckout = async () => {
+    const { data: dataOrder } = await confirmOrder({
+      variables: {
+        paymentAddress: paymentAddress ? paymentAddress?.id : address?.id,
+        shippingAddress: address?.id,
+      },
+    });
+    if (dataOrder?.confirmOrder?.order?.id) {
+      navigation.replace("PaymentConfirmed");
+    }
+  };
 
   const handlePayment = async () => {
     if (paymentMethod?.id) {
@@ -74,15 +81,7 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
         if (
           confirmation.paymentIntent?.status === PaymentIntents.Status.Succeeded
         ) {
-          const { data: dataOrder } = await confirmOrder({
-            variables: {
-              paymentAddress: paymentAddress ? paymentAddress?.id : address?.id,
-              shippingAddress: address?.id,
-            },
-          });
-          if (dataOrder?.confirmOrder?.order?.id) {
-            navigation.replace("PaymentConfirmed");
-          }
+          finishCheckout();
         }
       }
     }
@@ -92,17 +91,21 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
     <BottomSheetModalProvider>
       <ScrollView ref={scrollView}>
         <Box padding="m">
-          {data?.cart && <Summary cart={data.cart} />}
-          {data?.cart?.deliveryOption && (
+          {cart && <Summary cart={cart} />}
+          {cart?.deliveryOption && (
             <Box marginTop="m">
-              <DeliverySelect selected={data?.cart?.deliveryOption} />
+              <DeliverySelect selected={cart?.deliveryOption} />
             </Box>
           )}
           <Box marginTop="m">
             <ShippingSelect />
           </Box>
           <Box marginTop="m">
-            <PaymentSelect scrollView={scrollView} />
+            <PaymentSelect
+              scrollView={scrollView}
+              createPaymentIntent={createPaymentIntent}
+              finishCheckout={finishCheckout}
+            />
           </Box>
           {paymentMethod && (
             <Button

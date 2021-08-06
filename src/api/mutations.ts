@@ -41,9 +41,10 @@ export const LOGOUT = gql`
 export const ADD_TO_CART = gql`
   mutation AddToCart($id: String, $quantity: Int, $options: [CartOption]) {
     addToCart(id: $id, quantity: $quantity, options: $options) {
-      total
+      ...CartFragment
     }
   }
+  ${CART_FRAGMENT}
 `;
 
 export const ADD_TO_FAVOURITE = gql`

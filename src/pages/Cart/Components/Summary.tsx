@@ -59,8 +59,8 @@ const Summary = ({ cart }: SummaryProps) => {
         </Box>
       )}
       <Box flexDirection="row" justifyContent="space-between">
-        <Text variant="header3">Total</Text>
-        <Text variant="header3">{cart.total}</Text>
+        <Text variant="header3">{cart.total?.label}</Text>
+        <Text variant="header3">{cart.total?.value}</Text>
       </Box>
 
       {cart.vouchers?.allowed && Boolean(cart.vouchers?.added?.length) && (
