@@ -23,7 +23,7 @@ const Favourites = () => {
     <Box flex={1} paddingHorizontal="l" paddingTop="m">
       <FlatList
         data={data?.wishlist}
-        keyExtractor={(item) => item?.id}
+        keyExtractor={(item) => String(item?.id)}
         ListEmptyComponent={<FavouritesPlaceholder />}
         renderItem={({ item }) => (
           <Box marginBottom="m" key={item?.id}>
