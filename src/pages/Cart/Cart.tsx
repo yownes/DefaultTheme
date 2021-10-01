@@ -1,10 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { RefreshControl, ScrollView, Alert } from "react-native";
-import { NetworkStatus, useMutation, useQuery } from "@apollo/client";
+import { NetworkStatus } from "@apollo/client";
+import { useAddDiscount, useGetCart } from "@yownes/api";
 
-import { CART } from "../../api/queries";
-import { ADD_DISCOUNT } from "../../api/mutations";
-import { AddDiscount, AddDiscountVariables } from "../../api/types/AddDiscount";
 import {
   Box,
   Button,
@@ -14,7 +12,6 @@ import {
   Text,
 } from "../../components/atoms";
 import { CartProps } from "../../navigation/Cart";
-import { Cart as ICart } from "../../api/types/Cart";
 import { useAuth } from "../../components/organisms/AuthContext";
 
 import Summary from "./Components/Summary";
@@ -22,12 +19,12 @@ import Row from "./Components/Row";
 import CartPlaceholder from "./Components/CartPlaceholder";
 
 const Cart = ({ navigation }: CartProps) => {
-  const { loading, data, refetch, networkStatus } = useQuery<ICart>(CART);
+  const { loading, data, refetch, networkStatus } = useGetCart();
   const [code, setCode] = useState<string>();
   const [
     addDiscount,
     { data: dataDiscount, loading: dataLoading },
-  ] = useMutation<AddDiscount, AddDiscountVariables>(ADD_DISCOUNT);
+  ] = useAddDiscount();
   const { isAuthenticated } = useAuth();
   const isEmpty = (data?.cart?.products?.length ?? 0) === 0;
 

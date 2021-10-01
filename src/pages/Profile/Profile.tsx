@@ -1,19 +1,17 @@
 import React, { useCallback } from "react";
 import { TouchableOpacity, ScrollView } from "react-native";
-import { useMutation } from "@apollo/client";
+import { useLogout } from "@yownes/api";
 
 import { Box, Button, Card, Text } from "../../components/atoms";
 import { ProfileProps } from "../../navigation/Profile";
 import { FavouriteOutlined, Shipment } from "../../components/icons";
 import { useAuth } from "../../components/organisms/AuthContext";
-import { LOGOUT } from "../../api/mutations";
-import { Logout } from "../../api/types/Logout";
 import Directions from "../../components/organisms/Directions";
 import Payments from "../../components/organisms/Payments";
 
 const Profile = ({ navigation }: ProfileProps) => {
   const { customer, logout: authLogout } = useAuth();
-  const [logout] = useMutation<Logout>(LOGOUT);
+  const [logout] = useLogout();
 
   const handleLogout = useCallback(() => {
     logout().then(({ data }) => {

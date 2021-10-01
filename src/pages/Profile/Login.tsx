@@ -1,15 +1,13 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { useMutation } from "@apollo/client";
 import { ScrollView } from "react-native-gesture-handler";
+import { useLogin } from "@yownes/api";
 
 import { Box, Button, Text } from "../../components/atoms";
 import { InputWithErrors } from "../../components/molecules";
 import LoginImage from "../../components/images/Login";
 import { LoginProps } from "../../navigation/Profile";
-import { LOGIN } from "../../api/mutations";
-import { Login as ILogin, LoginVariables } from "../../api/types/Login";
 import { useAuth } from "../../components/organisms/AuthContext";
 
 interface LoginState {
@@ -27,9 +25,7 @@ const Login = ({ navigation }: LoginProps) => {
     defaultValues: intialState,
   });
   const Auth = useAuth();
-  const [login, { error, loading }] = useMutation<ILogin, LoginVariables>(
-    LOGIN
-  );
+  const [login, { error, loading }] = useLogin();
   function onSubmit(loginState: LoginState) {
     login({
       variables: {

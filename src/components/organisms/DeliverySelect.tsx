@@ -1,14 +1,7 @@
-import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { useSetDeliverOption, useGetCarriers } from "@yownes/api";
 
-import { SET_DELIVERY_OPTION } from "../../api/mutations";
-import { CARRIER_LIST } from "../../api/queries";
-import { CarrierList } from "../../api/types/CarrierList";
-import {
-  SetDeliveryOption,
-  SetDeliveryOptionVariables,
-} from "../../api/types/SetDeliveryOption";
 import { Card, Text, Box, RadioButton } from "../atoms";
 
 interface DeliverySelectProps {
@@ -16,11 +9,8 @@ interface DeliverySelectProps {
 }
 
 const DeliverySelect = ({ selected }: DeliverySelectProps) => {
-  const { data } = useQuery<CarrierList>(CARRIER_LIST);
-  const [setDeliveryOption] = useMutation<
-    SetDeliveryOption,
-    SetDeliveryOptionVariables
-  >(SET_DELIVERY_OPTION);
+  const { data } = useGetCarriers();
+  const [setDeliveryOption] = useSetDeliverOption();
   return (
     <Card padding="l">
       <Text marginBottom="l">Método de envío</Text>

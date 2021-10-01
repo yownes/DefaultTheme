@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { Products_productsList_sortOrders } from "@yownes/api";
 
-import { Products_productsList_sortOrders } from "../../../api/types/Products";
 import { Box, Text } from "../../../components/atoms";
 
 interface OrderProps {

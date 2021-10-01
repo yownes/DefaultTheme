@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
-import { useQuery } from "@apollo/client";
 import { ScrollView } from "react-native-gesture-handler";
+import { useGetHome } from "@yownes/api";
 
-import { Home as IHome } from "../api/types/Home";
 import { Box, Button, Loading } from "../components/atoms";
-import { HOME } from "../api/queries";
 import { HorizontalScrollProducts, HomeSlide } from "../components/molecules";
 import { HomeProps } from "../navigation/Home";
 
@@ -19,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({ navigation }: HomeProps) => {
-  const { loading, data } = useQuery<IHome>(HOME);
+  const { loading, data } = useGetHome();
   useEffect(() => {
     navigation.setOptions({
       title: data?.home?.meta?.title ?? "",

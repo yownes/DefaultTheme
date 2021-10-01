@@ -1,8 +1,6 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useGetCountries } from "@yownes/api";
 
-import { COUNTRIES_LIST } from "../../../api/queries";
-import { CountriesList } from "../../../api/types/CountriesList";
 import { Select, SelectItem } from "../../molecules";
 
 interface ListCountriesProps {
@@ -11,7 +9,7 @@ interface ListCountriesProps {
 }
 
 const ListCountries = ({ onSelect, defaultValue }: ListCountriesProps) => {
-  const { data } = useQuery<CountriesList>(COUNTRIES_LIST);
+  const { data } = useGetCountries();
   return (
     <Select
       placeholder="Selecciona el país"

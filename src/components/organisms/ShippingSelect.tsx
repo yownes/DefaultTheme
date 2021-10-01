@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useQuery } from "@apollo/client";
 import { TouchableOpacity } from "react-native";
 import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { useGetAddresses } from "@yownes/api";
 
-import { ADDRESS_LIST } from "../../api/queries";
-import { AddressList } from "../../api/types/AddressList";
 import { Box, Card, Text } from "../atoms";
 import { Address, Placeholder } from "../molecules";
 import ShippingImage from "../images/Shipping";
@@ -21,7 +19,7 @@ const ShippingSelect = () => {
     paymentAddress,
     setPaymentAddress,
   } = useCheckout();
-  const { data } = useQuery<AddressList>(ADDRESS_LIST);
+  const { data } = useGetAddresses();
   useEffect(() => {
     if ((data?.accountAddressList?.length ?? 0) > 0) {
       setAddress?.(data?.accountAddressList[0]);

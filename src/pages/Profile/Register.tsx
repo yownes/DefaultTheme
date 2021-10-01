@@ -1,16 +1,11 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ScrollView } from "react-native-gesture-handler";
-import { useMutation } from "@apollo/client";
+import { useRegister } from "@yownes/api";
 
 import { Box, Button, Text } from "../../components/atoms";
 import { InputWithErrors } from "../../components/molecules";
 import { RegisterProps } from "../../navigation/Profile";
-import { REGISTER } from "../../api/mutations";
-import {
-  Register as IRegister,
-  RegisterVariables,
-} from "../../api/types/Register";
 import RegisterImage from "../../components/images/Register";
 
 interface RegisterState {
@@ -33,9 +28,7 @@ const Register = ({ navigation }: RegisterProps) => {
   const { control, handleSubmit, errors } = useForm<RegisterState>({
     defaultValues: intialState,
   });
-  const [register, { error }] = useMutation<IRegister, RegisterVariables>(
-    REGISTER
-  );
+  const [register, { error }] = useRegister();
   function onSubmit(state: RegisterState) {
     register({
       variables: {

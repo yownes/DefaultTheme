@@ -1,10 +1,10 @@
 import React from "react";
 import { StackScreenProps } from "@react-navigation/stack";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+import { Product_product } from "@yownes/api";
 
 import Images from "../pages/Products/Images";
 import Product from "../pages/Products/Product";
-import { Product_product } from "../api/types/Product";
 
 const ProductStack = createSharedElementStackNavigator();
 

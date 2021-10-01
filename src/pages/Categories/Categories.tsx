@@ -1,10 +1,7 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
+import { useGetCategories, useGetLazyProducts } from "@yownes/api";
 
-import { CATEGORIES, PRODUCTS } from "../../api/queries";
-import { Categories as ICategories } from "../../api/types/Categories";
-import { Products, ProductsVariables } from "../../api/types/Products";
 import { Box, Loading } from "../../components/atoms";
 import { SearchHeader, Category } from "../../components/molecules";
 import { TopSalesProducts } from "../../components/organisms";
@@ -12,11 +9,8 @@ import { TopSalesProducts } from "../../components/organisms";
 import SearchSuggestions from "./Components/SearchSuggestions";
 
 const Categories = () => {
-  const { loading, data } = useQuery<ICategories>(CATEGORIES);
-  const [queryProducts, productsResult] = useLazyQuery<
-    Products,
-    ProductsVariables
-  >(PRODUCTS);
+  const { loading, data } = useGetCategories();
+  const [queryProducts, productsResult] = useGetLazyProducts();
   const [search, setSearch] = useState("");
   useEffect(() => {
     if (search) {

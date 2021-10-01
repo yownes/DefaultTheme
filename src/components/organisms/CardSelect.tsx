@@ -8,10 +8,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { PaymentMethodList_accountPaymentMethodList } from "@yownes/api";
 
 import { Box, Text } from "../atoms";
 import { CreditCard, Placeholder, CREDIT_CARD_HEIGHT } from "../molecules";
-import { PaymentMethodList_accountPaymentMethodList } from "../../api/types/PaymentMethodList";
 import BillingImage from "../images/Billing";
 
 import Payments from "./Payments";

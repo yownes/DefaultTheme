@@ -1,6 +1,6 @@
 import React from "react";
+import { Orders_orders } from "@yownes/api";
 
-import { Orders_orders } from "../../api/types/Orders";
 import { Box, Card, Tag, Text } from "../atoms";
 
 interface OrderProps {

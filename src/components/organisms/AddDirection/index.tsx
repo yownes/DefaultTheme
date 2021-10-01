@@ -2,29 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button as NativeButton } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { Reference, useMutation } from "@apollo/client";
+import {
+  useAddAddress,
+  useDeleteAddress,
+  useEditAddress,
+  AddAddress_accountAddAddress,
+  AccountAddressInput,
+} from "@yownes/api";
 
 import { Box, Text, Switch, Button } from "../../atoms";
 import { Confirm, InputWithErrors, SelectProvider } from "../../molecules";
-import { AccountAddressInput } from "../../../api/types/globalTypes";
-import {
-  ADD_ADDRESS,
-  EDIT_ADDRESS,
-  DELETE_ADDRESS,
-} from "../../../api/mutations";
-import {
-  AddAddress,
-  AddAddressVariables,
-  AddAddress_accountAddAddress,
-} from "../../../api/types/AddAddress";
-import {
-  EditAddress,
-  EditAddressVariables,
-} from "../../../api/types/EditAddress";
-import {
-  DeleteAddress,
-  DeleteAddressVariables,
-} from "../../../api/types/DeleteAddress";
 
 import ListZones from "./ListZones";
 import ListCountries from "./ListCountries";
@@ -48,59 +35,9 @@ const initialState: AccountAddressInput = {
 const AddDirection = ({ address, onSuccess }: AddDirectionProps) => {
   const [isDefault, setIsDefault] = useState(true);
   const navigation = useNavigation();
-  const [addAddress] = useMutation<AddAddress, AddAddressVariables>(
-    ADD_ADDRESS,
-    {
-      update(cache, { data }) {
-        if (data?.accountAddAddress?.id) {
-          cache.modify({
-            fields: {
-              accountAddressList(existing: Reference[], { toReference }) {
-                const addressRef = toReference({ ...data.accountAddAddress });
-
-                return [...existing, addressRef];
-              },
-            },
-          });
-          onSuccess?.(data.accountAddAddress);
-        }
-      },
-    }
-  );
-  const [editAddress] = useMutation<EditAddress, EditAddressVariables>(
-    EDIT_ADDRESS,
-    {
-      onCompleted({ accountEditAddress }) {
-        if (accountEditAddress?.id) {
-          onSuccess?.(accountEditAddress);
-        }
-      },
-    }
-  );
-  const [deleteAddress] = useMutation<DeleteAddress, DeleteAddressVariables>(
-    DELETE_ADDRESS,
-    {
-      onCompleted({ accountRemoveAddress }) {
-        if (accountRemoveAddress) {
-          onSuccess?.();
-        }
-      },
-      update(cache, { data }) {
-        if (data?.accountRemoveAddress) {
-          cache.modify({
-            fields: {
-              accountAddressList(existing: Reference[], { toReference }) {
-                const all = data.accountRemoveAddress?.map((a) =>
-                  toReference({ ...a })
-                );
-                return all;
-              },
-            },
-          });
-        }
-      },
-    }
-  );
+  const [addAddress] = useAddAddress({ onSuccess });
+  const [editAddress] = useEditAddress({ onSuccess });
+  const [deleteAddress] = useDeleteAddress({ onSuccess });
   const { control, handleSubmit, errors, watch } = useForm<AccountAddressInput>(
     {
       defaultValues: address || initialState,

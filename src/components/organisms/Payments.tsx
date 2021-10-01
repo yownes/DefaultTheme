@@ -1,22 +1,19 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useQuery } from "@apollo/client";
 import { SharedElement } from "react-navigation-shared-element";
+import { useGetPaymentMethods, PaymentMethodFragment } from "@yownes/api";
 
 import { Box, Button, Text } from "../atoms";
 import { CreditCard, Placeholder, Slider } from "../molecules";
 import BillingImage from "../images/Billing";
-import { PAYMENT_METHOD_LIST } from "../../api/queries";
-import { PaymentMethodList } from "../../api/types/PaymentMethodList";
-import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
 
 interface PaymentsProps {
   onSelect: (paymentMethod: PaymentMethodFragment) => void;
 }
 
 const Payments = ({ onSelect }: PaymentsProps) => {
-  const { data } = useQuery<PaymentMethodList>(PAYMENT_METHOD_LIST);
+  const { data } = useGetPaymentMethods();
   const navigation = useNavigation();
   return (
     <Box>

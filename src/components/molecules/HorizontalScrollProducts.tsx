@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView } from "react-native";
+import { BasicProduct } from "@yownes/api";
 
-import { BasicProduct } from "../../api/types/BasicProduct";
 import { useTheme } from "../../lib/theme";
 import { Box, Text } from "../atoms";
 

@@ -1,8 +1,8 @@
-import { useMutation } from "@apollo/client";
 import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PaymentIntents, useConfirmPayment } from "@stripe/stripe-react-native";
+import { useConfirmOrder, useCreatePaymentIntent } from "@yownes/api";
 
 import { Box, Button } from "../../components/atoms";
 import {
@@ -12,15 +12,6 @@ import {
 } from "../../components/organisms";
 import { CheckoutProps } from "../../navigation/Cart";
 import {
-  CreatePaymentIntent,
-  CreatePaymentIntentVariables,
-} from "../../api/types/CreatePaymentIntent";
-import {
-  ConfirmOrder,
-  ConfirmOrderVariables,
-} from "../../api/types/ConfirmOrder";
-import { CONFIRM_ORDER, CREATE_PAYMENT_INTENT } from "../../api/mutations";
-import {
   CheckoutProvider,
   useCheckout,
 } from "../../components/organisms/CheckoutContext";
@@ -28,29 +19,11 @@ import {
 import Summary from "./Components/Summary";
 
 const CheckoutContent = ({ navigation }: CheckoutProps) => {
-  const scrollView = useRef<ScrollView>();
+  const scrollView = useRef<ScrollView>(null);
   const { paymentMethod, address, paymentAddress, cart } = useCheckout();
   const { confirmPayment, loading: loadingConfirm } = useConfirmPayment();
-  const [createPaymentIntent, { loading }] = useMutation<
-    CreatePaymentIntent,
-    CreatePaymentIntentVariables
-  >(CREATE_PAYMENT_INTENT);
-  const [confirmOrder, { loading: loadingOrder }] = useMutation<
-    ConfirmOrder,
-    ConfirmOrderVariables
-  >(CONFIRM_ORDER, {
-    update(cache, { data: updateData }) {
-      if (updateData?.confirmOrder?.order?.id) {
-        cache.modify({
-          fields: {
-            cart() {
-              return [];
-            },
-          },
-        });
-      }
-    },
-  });
+  const [createPaymentIntent, { loading }] = useCreatePaymentIntent();
+  const [confirmOrder, { loading: loadingOrder }] = useConfirmOrder();
 
   const finishCheckout = async () => {
     const { data: dataOrder } = await confirmOrder({

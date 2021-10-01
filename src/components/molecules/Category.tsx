@@ -13,11 +13,11 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-
 import {
   Categories_categoriesList_content,
   Categories_categoriesList_content_categories,
-} from "../../api/types/Categories";
+} from "@yownes/api";
+
 import { Box, Chevron, Text } from "../atoms";
 
 interface CategoryProps {

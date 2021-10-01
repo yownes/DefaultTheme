@@ -1,6 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+import { AddressFragment, PaymentMethodFragment } from "@yownes/api";
 
 import AddDirection from "../pages/Profile/AddDirection";
 import Order from "../pages/Profile/Order";
@@ -12,8 +13,6 @@ import Register from "../pages/Profile/Register";
 import Favourites from "../pages/Profile/Favourites";
 import PaymentMethod from "../pages/Profile/PaymentMethod";
 import { useAuth } from "../components/organisms/AuthContext";
-import { AddressFragment } from "../api/types/AddressFragment";
-import { PaymentMethodFragment } from "../api/types/PaymentMethodFragment";
 
 type ProfileStackParamList = {
   Profile: undefined;

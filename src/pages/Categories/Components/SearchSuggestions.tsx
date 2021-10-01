@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
+import { BasicProduct } from "@yownes/api";
 
-import { BasicProduct } from "../../../api/types/BasicProduct";
 import { Box, Card } from "../../../components/atoms";
 
 import ProductSuggestion from "./ProductSuggestion";

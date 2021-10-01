@@ -1,8 +1,6 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useGetZones } from "@yownes/api";
 
-import { ZONES_LIST } from "../../../api/queries";
-import { ZonesList } from "../../../api/types/ZonesList";
 import { Select, SelectItem } from "../../molecules";
 
 interface ListZonesProps {
@@ -12,9 +10,7 @@ interface ListZonesProps {
 }
 
 const ListZones = ({ countryId, onSelect, defaultValue }: ListZonesProps) => {
-  const { data } = useQuery<ZonesList>(ZONES_LIST, {
-    variables: { countryId },
-  });
+  const { data } = useGetZones(countryId);
   return (
     <Select
       placeholder="Selecciona la provincia"

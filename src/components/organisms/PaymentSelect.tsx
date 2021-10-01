@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { FetchResult, MutationFunctionOptions, useQuery } from "@apollo/client";
+import { FetchResult, MutationFunctionOptions } from "@apollo/client";
 import { ScrollView } from "react-native";
 import {
   ApplePay,
   ApplePayButton,
   useApplePay,
 } from "@stripe/stripe-react-native";
-
-import { Button, Card, Text } from "../atoms";
-import { PAYMENT_METHOD_LIST } from "../../api/queries";
-import { PaymentMethodList } from "../../api/types/PaymentMethodList";
-import { CartFragment } from "../../api/types/CartFragment";
 import {
+  useGetPaymentMethods,
+  CartFragment,
   CreatePaymentIntent,
   CreatePaymentIntentVariables,
-} from "../../api/types/CreatePaymentIntent";
+} from "@yownes/api";
+
+import { Button, Card, Text } from "../atoms";
 
 import CardSelect from "./CardSelect";
 import { useCheckout } from "./CheckoutContext";
@@ -31,7 +30,7 @@ interface PaymentSelectProps {
     FetchResult<CreatePaymentIntent, Record<string, any>, Record<string, any>>
   >;
   finishCheckout: () => Promise<void>;
-  scrollView: React.MutableRefObject<ScrollView | undefined>;
+  scrollView: React.RefObject<ScrollView>;
 }
 
 function cartToApplePay(cart: CartFragment): ApplePay.PresentParams {
@@ -51,7 +50,7 @@ const PaymentSelect = ({
 }: PaymentSelectProps) => {
   const [method, setMethod] = useState(false);
   const { cart } = useCheckout();
-  const { data } = useQuery<PaymentMethodList>(PAYMENT_METHOD_LIST);
+  const { data } = useGetPaymentMethods();
   const {
     presentApplePay,
     confirmApplePayPayment,

@@ -1,10 +1,8 @@
 import React from "react";
 import { FlatList } from "react-native";
-import { useQuery } from "@apollo/client";
+import { useGetFavourites } from "@yownes/api";
 
 import { Box, Text } from "../../components/atoms";
-import { FAVOURITES } from "../../api/queries";
-import { Favourites as IFavourites } from "../../api/types/Favourites";
 import { ProductCard } from "../../components/molecules";
 import NoFavsImage from "../../components/images/NoFavs";
 
@@ -18,7 +16,7 @@ const FavouritesPlaceholder = () => (
 );
 
 const Favourites = () => {
-  const { data } = useQuery<IFavourites>(FAVOURITES);
+  const { data } = useGetFavourites();
   return (
     <Box flex={1} paddingHorizontal="l" paddingTop="m">
       <FlatList

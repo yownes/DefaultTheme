@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import { NetworkStatus, useQuery } from "@apollo/client";
+import { NetworkStatus } from "@apollo/client";
 import { FlatList } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -13,15 +13,10 @@ import {
   BottomSheetModalProvider,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
+import { useGetProducts, Products_productsList_content } from "@yownes/api";
 
 import { Box, Loading } from "../../components/atoms";
 import { ProductsProps } from "../../navigation/Root";
-import { PRODUCTS } from "../../api/queries";
-import {
-  Products as IProducts,
-  ProductsVariables,
-  Products_productsList_content,
-} from "../../api/types/Products";
 import { ProductCard, VerticalProductCard } from "../../components/molecules";
 import { useTheme } from "../../lib/theme";
 
@@ -50,12 +45,7 @@ const Products = ({ route }: ProductsProps) => {
     sort: orderState.sort,
     order: orderState.order,
   };
-  const { loading, data, networkStatus } = useQuery<
-    IProducts,
-    ProductsVariables
-  >(PRODUCTS, {
-    variables,
-  });
+  const { loading, data, networkStatus } = useGetProducts(variables);
   const onScroll = useAnimatedScrollHandler<{ y: number }>({
     onBeginDrag({ contentOffset }, ctx) {
       ctx.y = contentOffset.y;

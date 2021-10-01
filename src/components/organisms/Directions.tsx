@@ -1,13 +1,8 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useQuery } from "@apollo/client";
+import { useGetAddresses, AddressList_accountAddressList } from "@yownes/api";
 
-import { ADDRESS_LIST } from "../../api/queries";
-import {
-  AddressList,
-  AddressList_accountAddressList,
-} from "../../api/types/AddressList";
 import { Box, Button, Text } from "../atoms";
 import { Address, Placeholder, Slider } from "../molecules";
 import ShippingImage from "../images/Shipping";
@@ -18,9 +13,8 @@ interface DirectionsProps {
 }
 
 const Directions = ({ title, onSelect }: DirectionsProps) => {
-  const { data } = useQuery<AddressList>(ADDRESS_LIST);
+  const { data } = useGetAddresses();
   const navigation = useNavigation();
-
   return (
     <Box>
       <Text variant="header3" marginBottom="l">

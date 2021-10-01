@@ -1,4 +1,3 @@
-import { Reference, useMutation, useQuery } from "@apollo/client";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import { Dimensions, Image, Pressable, ScrollView } from "react-native";
@@ -9,23 +8,13 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
+import {
+  useGetProduct,
+  useAddToCart,
+  useAddToFavourite,
+  useRemoveFavourite,
+} from "@yownes/api";
 
-import {
-  ADD_TO_CART,
-  ADD_TO_FAVOURITE,
-  REMOVE_FAVOURITE,
-} from "../../api/mutations";
-import { PRODUCT } from "../../api/queries";
-import { AddToCart, AddToCartVariables } from "../../api/types/AddToCart";
-import {
-  AddToFavourite,
-  AddToFavouriteVariables,
-} from "../../api/types/AddToFavourite";
-import { Product as IProduct, ProductVariables } from "../../api/types/Product";
-import {
-  RemoveFavourite,
-  RemoveFavouriteVariables,
-} from "../../api/types/RemoveFavourite";
 import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
 import { Favourite, FavouriteOutlined } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
@@ -42,54 +31,10 @@ const Product = ({ route, navigation }: ProductProps) => {
   const [opacity, setOpacity] = useState(1);
   const { isAuthenticated } = useAuth();
   const ref = useRef<BottomSheetModal>(null);
-  const { data } = useQuery<IProduct, ProductVariables>(PRODUCT, {
-    variables: { id },
-  });
-  const [addToCart] = useMutation<AddToCart, AddToCartVariables>(ADD_TO_CART);
-  const [addToFavourite] = useMutation<AddToFavourite, AddToFavouriteVariables>(
-    ADD_TO_FAVOURITE,
-    {
-      variables: { id: parseInt(id, 10) },
-      update(cache, { data: addData }) {
-        if (addData?.addToWishlist) {
-          cache.modify({
-            fields: {
-              wishlist(existing: Reference[], { toReference }) {
-                return [...existing, toReference({ ...data?.product })];
-              },
-            },
-          });
-        }
-      },
-    }
-  );
-  const [removeFavourite] = useMutation<
-    RemoveFavourite,
-    RemoveFavouriteVariables
-  >(REMOVE_FAVOURITE, {
-    variables: { id },
-    update(cache, { data: removeData }) {
-      if (removeData?.removeWishlist) {
-        cache.modify({
-          fields: {
-            wishlist(existing: Reference[], { readField }) {
-              return existing.filter(
-                (productRef) => id !== readField("id", productRef)
-              );
-            },
-          },
-        });
-        cache.modify({
-          id: cache.identify({ ...data?.product }),
-          fields: {
-            inWishlist() {
-              return false;
-            },
-          },
-        });
-      }
-    },
-  });
+  const { data } = useGetProduct(id);
+  const [addToCart] = useAddToCart();
+  const [addToFavourite] = useAddToFavourite(id, data);
+  const [removeFavourite] = useRemoveFavourite(id, data);
   const [qty, setQty] = useState(1);
   const [options, setOptions] = useState({});
   useFocusEffect(() => {

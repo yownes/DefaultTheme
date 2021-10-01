@@ -1,16 +1,12 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
 import { Image, ScrollView } from "react-native";
+import { useGetOrder } from "@yownes/api";
 
-import { ORDER } from "../../api/queries";
-import { Order as IOrder, OrderVariables } from "../../api/types/Order";
 import { Box, Card, Text } from "../../components/atoms";
 import { OrderProps } from "../../navigation/Profile";
 
 const Order = ({ route }: OrderProps) => {
-  const { data } = useQuery<IOrder, OrderVariables>(ORDER, {
-    variables: { id: route.params.id },
-  });
+  const { data } = useGetOrder(route.params.id);
 
   return (
     <ScrollView>

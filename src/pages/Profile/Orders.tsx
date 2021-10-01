@@ -1,16 +1,14 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
 import { FlatList, Pressable } from "react-native";
+import { useGetOrders } from "@yownes/api";
 
-import { Box, Button } from "../../components/atoms";
+import { Box } from "../../components/atoms";
 import { Order } from "../../components/molecules";
 import { OrdersProps } from "../../navigation/Profile";
-import { ORDERS } from "../../api/queries";
-import { Orders as IOrders } from "../../api/types/Orders";
 import { useTheme } from "../../lib/theme";
 
 const Orders = ({ navigation }: OrdersProps) => {
-  const { data } = useQuery<IOrders>(ORDERS);
+  const { data } = useGetOrders();
   const theme = useTheme();
   return (
     <FlatList

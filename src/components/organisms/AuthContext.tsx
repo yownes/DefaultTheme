@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import React, {
   createContext,
   ReactNode,
@@ -6,12 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-
-import { PROFILE } from "../../api/queries";
-import {
-  Profile as IProfile,
-  Profile_accountCheckLogged_customer,
-} from "../../api/types/Profile";
+import { useProfile, Profile_accountCheckLogged_customer } from "@yownes/api";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -46,7 +40,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState(initialState);
-  const { loading, data } = useQuery<IProfile>(PROFILE);
+  const { loading, data } = useProfile();
 
   useEffect(() => {
     if (!loading) {

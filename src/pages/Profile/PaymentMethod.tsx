@@ -1,6 +1,5 @@
-import { Reference, useMutation } from "@apollo/client";
 import React from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -14,6 +13,7 @@ import Animated, {
 import { snapPoint, useVector } from "react-native-redash";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
+import { useDeletePaymentMethod } from "@yownes/api";
 
 import { Box, Button } from "../../components/atoms";
 import {
@@ -22,39 +22,11 @@ import {
   SelectProvider,
 } from "../../components/molecules";
 import { PaymentMethodProps } from "../../navigation/Profile";
-import { DELETE_PAYMENT_METHOD } from "../../api/mutations";
-import {
-  DeletePaymentMethod,
-  DeletePaymentMethodVariables,
-} from "../../api/types/DeletePaymentMethod";
 
 const { height } = Dimensions.get("screen");
 
 const PaymentMethod = ({ route, navigation }: PaymentMethodProps) => {
-  const [deletePaymentMethod, { loading }] = useMutation<
-    DeletePaymentMethod,
-    DeletePaymentMethodVariables
-  >(DELETE_PAYMENT_METHOD, {
-    onCompleted({ accountRemovePaymentMethod }) {
-      if (accountRemovePaymentMethod) {
-        console.log("eliminado");
-      }
-    },
-    update(cache, { data }) {
-      if (data?.accountRemovePaymentMethod) {
-        cache.modify({
-          fields: {
-            accountPaymentMethodList(existing: Reference[], { toReference }) {
-              const all = data.accountRemovePaymentMethod?.map((a) =>
-                toReference({ ...a })
-              );
-              return all;
-            },
-          },
-        });
-      }
-    },
-  });
+  const [deletePaymentMethod, { loading }] = useDeletePaymentMethod();
   const translation = useVector();
   const isGestureActive = useSharedValue(false);
   const onGestureEvent = useAnimatedGestureHandler({

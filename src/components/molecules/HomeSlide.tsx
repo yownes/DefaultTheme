@@ -1,8 +1,8 @@
 import React from "react";
 import { Dimensions, Image, View, StyleSheet } from "react-native";
+import { Home_home_slides_slides } from "@yownes/api";
 
 import { Text, Box } from "../atoms";
-import { Home_home_slides_slides } from "../../api/types/Home";
 
 const { width } = Dimensions.get("window");
 

@@ -1,11 +1,10 @@
-import { useQuery } from "@apollo/client";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-
-import { CART } from "../../api/queries";
-import { AddressFragment } from "../../api/types/AddressFragment";
-import { Cart } from "../../api/types/Cart";
-import { CartFragment } from "../../api/types/CartFragment";
-import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
+import {
+  useGetCart,
+  AddressFragment,
+  CartFragment,
+  PaymentMethodFragment,
+} from "@yownes/api";
 
 interface CheckoutContextProps {
   cart?: CartFragment;
@@ -32,7 +31,7 @@ interface CheckoutProviderProps {
 }
 
 export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
-  const { data } = useQuery<Cart>(CART);
+  const { data } = useGetCart();
   const [address, setAddress] = useState<AddressFragment>();
   const [paymentAddress, setPaymentAddress] = useState<AddressFragment>();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodFragment>();

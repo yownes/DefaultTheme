@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, Image, TouchableOpacity } from "react-native";
+import { BasicProduct } from "@yownes/api";
 
-import { BasicProduct } from "../../api/types/BasicProduct";
 import { useTheme } from "../../lib/theme";
 import { Box, Tag, Text } from "../atoms";
 

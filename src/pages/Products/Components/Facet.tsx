@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
+import { Products_productsList_facets } from "@yownes/api";
 
 import { Box, Tag, Text } from "../../../components/atoms";
-import { Products_productsList_facets } from "../../../api/types/Products";
 
 interface FacetProps {
   facet: Products_productsList_facets | null;

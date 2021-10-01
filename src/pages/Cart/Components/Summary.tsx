@@ -1,13 +1,7 @@
-import { useMutation } from "@apollo/client";
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { useRemoveDiscount, Cart_cart } from "@yownes/api";
 
-import { REMOVE_DISCOUNT } from "../../../api/mutations";
-import { Cart_cart } from "../../../api/types/Cart";
-import {
-  RemoveDiscount,
-  RemoveDiscountVariables,
-} from "../../../api/types/RemoveDiscount";
 import { Box, Card, Text } from "../../../components/atoms";
 
 interface SummaryProps {
@@ -15,9 +9,7 @@ interface SummaryProps {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
-  const [removeDiscount] = useMutation<RemoveDiscount, RemoveDiscountVariables>(
-    REMOVE_DISCOUNT
-  );
+  const [removeDiscount] = useRemoveDiscount();
   if (!cart) return null;
   return (
     <Card padding="l">

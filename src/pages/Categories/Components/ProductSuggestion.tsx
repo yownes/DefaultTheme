@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { BasicProduct } from "@yownes/api";
 
-import { BasicProduct } from "../../../api/types/BasicProduct";
 import { Box, Card, Text } from "../../../components/atoms";
 
 interface ProductSuggestionProps {

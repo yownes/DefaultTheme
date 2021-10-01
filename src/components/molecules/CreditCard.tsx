@@ -1,6 +1,6 @@
 import React from "react";
+import { PaymentMethodFragment } from "@yownes/api";
 
-import { PaymentMethodFragment } from "../../api/types/PaymentMethodFragment";
 import { Card, Text } from "../atoms";
 
 interface CreditCardProps {

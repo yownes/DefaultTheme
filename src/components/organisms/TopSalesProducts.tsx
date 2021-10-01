@@ -1,13 +1,11 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useGetTopSales } from "@yownes/api";
 
 import { Box, Loading, Text } from "../atoms";
 import { Slider, ProductCard } from "../molecules";
-import { TOP_SALES } from "../../api/queries";
-import { TopSales } from "../../api/types/TopSales";
 
 const TopSalesProducts = () => {
-  const { loading, data } = useQuery<TopSales>(TOP_SALES);
+  const { loading, data } = useGetTopSales();
   if (loading) return <Loading />;
   if (!data) return null;
   return (

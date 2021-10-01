@@ -4,6 +4,7 @@ import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
+import { useRemoveCart, useUpdateCart, Cart_cart_products } from "@yownes/api";
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -12,18 +13,10 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
-import { useMutation } from "@apollo/client";
 
 import { Box, Card, Tag, Text } from "../../../components/atoms";
 import { Quantity } from "../../../components/molecules";
 import { Trash } from "../../../components/icons";
-import { Cart_cart_products } from "../../../api/types/Cart";
-import { REMOVE_FROM_CART, UPDATE_CART } from "../../../api/mutations";
-import {
-  RemoveFromCart,
-  RemoveFromCartVariables,
-} from "../../../api/types/RemoveFromCart";
-import { UpdateCart, UpdateCartVariables } from "../../../api/types/UpdateCart";
 
 interface RowProps {
   product: Cart_cart_products;
@@ -43,12 +36,8 @@ const points = [0, -THRESHOLD, -width];
 const Row = ({ product }: RowProps) => {
   const translateX = useSharedValue(0);
   const deleting = useSharedValue(false);
-  const [removeCart] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
-    REMOVE_FROM_CART
-  );
-  const [updateCart] = useMutation<UpdateCart, UpdateCartVariables>(
-    UPDATE_CART
-  );
+  const [removeCart] = useRemoveCart();
+  const [updateCart] = useUpdateCart();
 
   const deleteProduct = useCallback(() => {
     removeCart({ variables: { key: product.key } });
