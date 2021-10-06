@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { RefreshControl, ScrollView, Alert } from "react-native";
 import { NetworkStatus } from "@apollo/client";
 import { useAddDiscount, useGetCart } from "@yownes/api";
+import { useAuth } from "@yownes/core";
 
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   Text,
 } from "../../components/atoms";
 import { CartProps } from "../../navigation/Cart";
-import { useAuth } from "../../components/organisms/AuthContext";
 
 import Summary from "./Components/Summary";
 import Row from "./Components/Row";

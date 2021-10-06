@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useGetAddresses } from "@yownes/api";
+import { useCheckout } from "@yownes/core";
 
 import { Box, Card, Text } from "../atoms";
 import { Address, Placeholder } from "../molecules";
 import ShippingImage from "../images/Shipping";
 
 import Directions from "./Directions";
-import { useCheckout } from "./CheckoutContext";
 
 const ShippingSelect = () => {
   const ref = useRef<BottomSheetModal>(null);

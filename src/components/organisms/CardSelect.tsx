@@ -9,13 +9,13 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { PaymentMethodList_accountPaymentMethodList } from "@yownes/api";
+import { useCheckout } from "@yownes/core";
 
 import { Box, Text } from "../atoms";
 import { CreditCard, Placeholder, CREDIT_CARD_HEIGHT } from "../molecules";
 import BillingImage from "../images/Billing";
 
 import Payments from "./Payments";
-import { useCheckout } from "./CheckoutContext";
 
 interface CardSelectProps {
   onCancel: () => void;

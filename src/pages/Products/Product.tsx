@@ -14,11 +14,11 @@ import {
   useAddToFavourite,
   useRemoveFavourite,
 } from "@yownes/api";
+import { useAuth } from "@yownes/core";
 
 import { Box, Button, Tag, Text, HtmlText } from "../../components/atoms";
 import { Favourite, FavouriteOutlined } from "../../components/icons";
 import { Quantity } from "../../components/molecules";
-import { useAuth } from "../../components/organisms/AuthContext";
 import { useTheme } from "../../lib/theme";
 import { ProductProps } from "../../navigation/Product";
 

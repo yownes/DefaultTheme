@@ -3,12 +3,12 @@ import { TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { ScrollView } from "react-native-gesture-handler";
 import { useLogin } from "@yownes/api";
+import { useAuth } from "@yownes/core";
 
 import { Box, Button, Text } from "../../components/atoms";
 import { InputWithErrors } from "../../components/molecules";
 import LoginImage from "../../components/images/Login";
 import { LoginProps } from "../../navigation/Profile";
-import { useAuth } from "../../components/organisms/AuthContext";
 
 interface LoginState {
   mail: string;

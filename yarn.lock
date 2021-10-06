@@ -3654,6 +3654,15 @@
     graphql "^15.6.0"
     react "^17.0.2"
 
+"@yownes/core@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@yownes/core/-/core-1.1.1.tgz#a8cc8d8f4f0c24a528acae8ef8a05789142d8675"
+  integrity sha512-mzGXCX/HzXSH7grokaMvUbWFOTaWjhf1rBDzw9ZBYskc+r3FrS7ndrFPREb6lbHHBsjtTSh7N2GfD8I0ZAgD+g==
+  dependencies:
+    "@yownes/api" "^1.1.1"
+    graphql "^15.6.0"
+    react "^17.0.2"
+
 abab@^2.0.0, abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"

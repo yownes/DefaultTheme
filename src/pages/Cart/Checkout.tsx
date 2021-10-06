@@ -3,6 +3,7 @@ import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PaymentIntents, useConfirmPayment } from "@stripe/stripe-react-native";
 import { useConfirmOrder, useCreatePaymentIntent } from "@yownes/api";
+import { CheckoutProvider, useCheckout } from "@yownes/core";
 
 import { Box, Button } from "../../components/atoms";
 import {
@@ -11,10 +12,6 @@ import {
   ShippingSelect,
 } from "../../components/organisms";
 import { CheckoutProps } from "../../navigation/Cart";
-import {
-  CheckoutProvider,
-  useCheckout,
-} from "../../components/organisms/CheckoutContext";
 
 import Summary from "./Components/Summary";
 

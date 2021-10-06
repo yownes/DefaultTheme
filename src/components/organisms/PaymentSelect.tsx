@@ -12,11 +12,11 @@ import {
   CreatePaymentIntent,
   CreatePaymentIntentVariables,
 } from "@yownes/api";
+import { useCheckout } from "@yownes/core";
 
 import { Button, Card, Text } from "../atoms";
 
 import CardSelect from "./CardSelect";
-import { useCheckout } from "./CheckoutContext";
 
 interface PaymentSelectProps {
   createPaymentIntent: (
