@@ -3644,13 +3644,15 @@
   dependencies:
     tslib "^2.1.0"
 
-"@yownes/api@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@yownes/api/-/api-1.0.4.tgz#b88824423eb087fa49e4a55f993859c69a292180"
-  integrity sha512-wk9aw1dmkwDZBQ9zIirqNiZwR+GO94VgpLH0HXly20fXolJQ4FFhD4BFO2GKbmDe5h2IznJWNb7d/rzE2Ljc3g==
+"@yownes/api@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@yownes/api/-/api-1.1.1.tgz#a7a378201505d13eb8d373936ad8b360c9448992"
+  integrity sha512-/bFoeVVIWMse5mBp2lJEtAxhXOEO0cziUWA7Gg5vSMJ+fuplxydZGCyFL/OlJXZGBkLXcxLfDTC8UYxBwVmv4w==
   dependencies:
     "@apollo/client" "^3.4.15"
+    expo-secure-store "^10.2.0"
     graphql "^15.6.0"
+    react "^17.0.2"
 
 abab@^2.0.0, abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
@@ -6306,7 +6308,7 @@ expo-modules-core@~0.2.0:
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.2.0.tgz#68e5b6e53d0afbf8d131578831aed657589a2d42"
   integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
 
-expo-secure-store@~10.2.0:
+expo-secure-store@^10.2.0, expo-secure-store@~10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-10.2.0.tgz#561dfea4d6b4d05a738643d80a15403ebe0e515d"
   integrity sha512-yNahMY3qzEotAYdsE02ps4yGfDay2twasHfsI/7gJB9SrwXYFx5bJuCDk8uTo8jsm6psvDjO+9VMM2DSPHik2A==
