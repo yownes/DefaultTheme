@@ -1,9 +1,6 @@
 import React from "react";
-import { CardField, useStripe } from "@stripe/stripe-react-native";
-import {
-  useAddPaymentMethod,
-  AddPaymentMethod_accountAddPaymentMethod,
-} from "@yownes/api";
+import { AddPaymentMethod_accountAddPaymentMethod } from "@yownes/api";
+import { useCreateCard, CardField } from "@yownes/core";
 
 import { Button, Box, Card } from "../atoms";
 
@@ -12,8 +9,7 @@ interface AddPaymentMethodProps {
 }
 
 const AddPaymentMethod = ({ onSuccess }: AddPaymentMethodProps) => {
-  const [assignPaymentMethod, { loading }] = useAddPaymentMethod({ onSuccess });
-  const { createPaymentMethod } = useStripe();
+  const [createPaymentMethod, { loading }] = useCreateCard(onSuccess);
   return (
     <Box padding="m">
       <Card padding="l">
@@ -26,12 +22,7 @@ const AddPaymentMethod = ({ onSuccess }: AddPaymentMethodProps) => {
           mt="l"
           disabled={loading}
           label="Crear método de pago"
-          onPress={async () => {
-            const result = await createPaymentMethod({ type: "Card" });
-            assignPaymentMethod({
-              variables: { paymentMethod: result.paymentMethod?.id },
-            });
-          }}
+          onPress={createPaymentMethod}
         />
       </Card>
     </Box>

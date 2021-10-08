@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { PaymentIntents, useConfirmPayment } from "@stripe/stripe-react-native";
-import { useConfirmOrder, useCreatePaymentIntent } from "@yownes/api";
-import { CheckoutProvider, useCheckout } from "@yownes/core";
+import { CheckoutProvider, useCheckout, useHandlePayment } from "@yownes/core";
 
 import { Box, Button } from "../../components/atoms";
 import {
@@ -18,44 +16,14 @@ import Summary from "./Components/Summary";
 const CheckoutContent = ({ navigation }: CheckoutProps) => {
   const scrollView = useRef<ScrollView>(null);
   const { paymentMethod, address, paymentAddress, cart } = useCheckout();
-  const { confirmPayment, loading: loadingConfirm } = useConfirmPayment();
-  const [createPaymentIntent, { loading }] = useCreatePaymentIntent();
-  const [confirmOrder, { loading: loadingOrder }] = useConfirmOrder();
-
-  const finishCheckout = async () => {
-    const { data: dataOrder } = await confirmOrder({
-      variables: {
-        paymentAddress: paymentAddress ? paymentAddress?.id : address?.id,
-        shippingAddress: address?.id,
-      },
-    });
-    if (dataOrder?.confirmOrder?.order?.id) {
+  const { handlePayment, finishCheckout, loading } = useHandlePayment({
+    paymentAddress,
+    address,
+    paymentMethodId: paymentMethod?.id,
+    onOrderConfirmed: () => {
       navigation.replace("PaymentConfirmed");
-    }
-  };
-
-  const handlePayment = async () => {
-    if (paymentMethod?.id) {
-      const { data: dataIntent } = await createPaymentIntent({
-        variables: { paymentMethod: paymentMethod.id },
-      });
-      if (dataIntent?.createPaymentIntent?.clientSecret) {
-        const confirmation = await confirmPayment(
-          dataIntent?.createPaymentIntent?.clientSecret,
-          {
-            paymentMethodId: paymentMethod.id,
-            type: "Card",
-          }
-        );
-
-        if (
-          confirmation.paymentIntent?.status === PaymentIntents.Status.Succeeded
-        ) {
-          finishCheckout();
-        }
-      }
-    }
-  };
+    },
+  });
 
   return (
     <BottomSheetModalProvider>
@@ -73,15 +41,14 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
           <Box marginTop="m">
             <PaymentSelect
               scrollView={scrollView}
-              createPaymentIntent={createPaymentIntent}
               finishCheckout={finishCheckout}
             />
           </Box>
           {paymentMethod && (
             <Button
               marginTop="m"
-              isLoading={loading || loadingConfirm || loadingOrder}
-              disabled={loading || loadingConfirm || loadingOrder}
+              isLoading={loading}
+              disabled={loading}
               onPress={handlePayment}
               label="Confirmar Compra"
             />

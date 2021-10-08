@@ -1,5 +1,4 @@
 import React, { useMemo, useRef, useState } from "react";
-import { NetworkStatus } from "@apollo/client";
 import { FlatList } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -13,7 +12,11 @@ import {
   BottomSheetModalProvider,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
-import { useGetProducts, Products_productsList_content } from "@yownes/api";
+import {
+  useGetProducts,
+  Products_productsList_content,
+  NetworkStatus,
+} from "@yownes/api";
 
 import { Box, Loading } from "../../components/atoms";
 import { ProductsProps } from "../../navigation/Root";

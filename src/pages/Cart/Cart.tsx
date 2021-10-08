@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { RefreshControl, ScrollView, Alert } from "react-native";
-import { NetworkStatus } from "@apollo/client";
-import { useAddDiscount, useGetCart } from "@yownes/api";
+import { useAddDiscount, useGetCart, NetworkStatus } from "@yownes/api";
 import { useAuth } from "@yownes/core";
 
 import {
