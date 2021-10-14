@@ -10,9 +10,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { useVector, Vector } from "react-native-redash";
-
-import { transformOrigin } from "../../../lib/transformations";
+import { useVector, Vector, transformOrigin } from "react-native-redash";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -42,7 +40,9 @@ const ZoomImage = ({ image }: ZoomImageProps) => {
   );
   const style = useAnimatedStyle(() => {
     return {
-      transform: [...transformOrigin(focal, { scale: imageScale.value })],
+      transform: transformOrigin({ x: focal.x.value, y: focal.y.value }, [
+        { scale: imageScale.value },
+      ]),
       flex: 1,
     };
   });
