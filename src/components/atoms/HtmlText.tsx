@@ -13,21 +13,21 @@ type HtmlTextProps = ColorProps<Theme> &
 
 const HtmlText = ({ children, ...rest }: HtmlTextProps) => {
   const renderers: RendererDictionary<unknown> = {
-    p(htmlAttrs, child, convertedCSS, passProps) {
+    p(_htmlAttrs, child, _convertedCSS, passProps) {
       return (
         <Text key={passProps.key} {...rest}>
           {child}
         </Text>
       );
     },
-    h1(htmlAttrs, child, convertedCSS, passProps) {
+    h1(_htmlAttrs, child, _convertedCSS, passProps) {
       return (
         <Text key={passProps.key} {...rest} variant="header">
           {child}
         </Text>
       );
     },
-    h2(htmlAttrs, child, convertedCSS, passProps) {
+    h2(_htmlAttrs, child, _convertedCSS, passProps) {
       return (
         <Text key={passProps.key} {...rest} variant="header2">
           {child}

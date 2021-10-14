@@ -67,7 +67,9 @@ const Summary = ({ cart }: SummaryProps) => {
               key={voucher?.id}
               justifyContent="space-between"
               flexDirection="row"
-              marginBottom={i === cart.vouchers?.added?.length - 1 ? "s" : "m"}
+              marginBottom={
+                i === (cart.vouchers?.added?.length ?? 0) - 1 ? "s" : "m"
+              }
             >
               <Box flexDirection="row">
                 <Text>{voucher?.name}</Text>

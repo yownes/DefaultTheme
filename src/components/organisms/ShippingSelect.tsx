@@ -7,6 +7,7 @@ import { useCheckout } from "@yownes/core";
 import { Box, Card, Text } from "../atoms";
 import { Address, Placeholder } from "../molecules";
 import ShippingImage from "../images/Shipping";
+import filterNulls from "../../lib/filterNulls";
 
 import Directions from "./Directions";
 
@@ -21,8 +22,9 @@ const ShippingSelect = () => {
   } = useCheckout();
   const { data } = useGetAddresses();
   useEffect(() => {
-    if ((data?.accountAddressList?.length ?? 0) > 0) {
-      setAddress?.(data?.accountAddressList[0]);
+    const list = data?.accountAddressList?.filter(filterNulls);
+    if (list && list.length > 0) {
+      setAddress?.(list[0]);
     }
   }, [data, setAddress]);
   return (
@@ -87,9 +89,9 @@ const ShippingSelect = () => {
             title={
               change === "PAYMENT" ? "Dirección de facturación" : undefined
             }
-            onSelect={(address) => {
+            onSelect={(addr) => {
               const idx = data?.accountAddressList?.find(
-                (a) => a?.id === address.id
+                (a) => a?.id === addr.id
               );
               if (idx) {
                 if (change === "PAYMENT") {

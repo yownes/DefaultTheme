@@ -17,7 +17,7 @@ import { TouchableOpacity } from "react-native";
 import { Box, Input, Text } from "../atoms";
 
 interface SelectProps {
-  children: React.ReactNode;
+  children: React.ReactElement[];
   placeholder: string;
   defaultValue?: string;
   onChange: (value?: string | null) => void;
@@ -25,12 +25,12 @@ interface SelectProps {
 }
 
 interface SelectItemProps {
-  id: string;
-  title: string;
+  id?: string | null;
+  title?: string | null;
 }
 
 const SelectContext = createContext<{
-  selected: string | undefined;
+  selected?: string | null;
   setSelected: (value: string) => void;
 }>({
   selected: undefined,
@@ -96,7 +96,9 @@ const PrivateItem = ({ id, title }: SelectItemProps) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        setSelected(id);
+        if (id) {
+          setSelected(id);
+        }
       }}
     >
       <Box

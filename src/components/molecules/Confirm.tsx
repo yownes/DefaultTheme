@@ -7,7 +7,7 @@ interface ConfirmProps {
   onConfirm: () => void;
   onReject?: () => void;
   title: string;
-  children: React.ReactNode;
+  children: React.ReactElement;
 }
 
 const snapPoints = [200];

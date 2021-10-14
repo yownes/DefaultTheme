@@ -6,13 +6,15 @@ import { Box } from "../../components/atoms";
 import { Order } from "../../components/molecules";
 import { OrdersProps } from "../../navigation/Profile";
 import { useTheme } from "../../lib/theme";
+import filterNulls from "../../lib/filterNulls";
 
 const Orders = ({ navigation }: OrdersProps) => {
   const { data } = useGetOrders();
   const theme = useTheme();
+  const orders = data?.orders?.filter(filterNulls);
   return (
     <FlatList
-      data={data?.orders}
+      data={orders}
       keyExtractor={(item) => String(item?.id)}
       contentContainerStyle={{
         paddingTop: theme.spacing.m,
@@ -20,7 +22,11 @@ const Orders = ({ navigation }: OrdersProps) => {
       }}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => navigation.navigate("Order", { id: item?.id })}
+          onPress={() => {
+            if (item.id) {
+              navigation.navigate("Order", { id: item?.id });
+            }
+          }}
         >
           <Box paddingBottom="m">
             <Order order={item} />

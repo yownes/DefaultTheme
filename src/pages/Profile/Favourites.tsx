@@ -5,6 +5,7 @@ import { useGetFavourites } from "@yownes/api";
 import { Box, Text } from "../../components/atoms";
 import { ProductCard } from "../../components/molecules";
 import NoFavsImage from "../../components/images/NoFavs";
+import filterNulls from "../../lib/filterNulls";
 
 const FavouritesPlaceholder = () => (
   <Box padding="l">
@@ -17,10 +18,11 @@ const FavouritesPlaceholder = () => (
 
 const Favourites = () => {
   const { data } = useGetFavourites();
+  const favourites = data?.wishlist?.filter(filterNulls);
   return (
     <Box flex={1} paddingHorizontal="l" paddingTop="m">
       <FlatList
-        data={data?.wishlist}
+        data={favourites}
         keyExtractor={(item) => String(item?.id)}
         ListEmptyComponent={<FavouritesPlaceholder />}
         renderItem={({ item }) => (

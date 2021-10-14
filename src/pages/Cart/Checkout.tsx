@@ -19,7 +19,7 @@ const CheckoutContent = ({ navigation }: CheckoutProps) => {
   const { handlePayment, finishCheckout, loading } = useHandlePayment({
     paymentAddress,
     address,
-    paymentMethodId: paymentMethod?.id,
+    paymentMethodId: paymentMethod?.id ?? undefined,
     onOrderConfirmed: () => {
       navigation.replace("PaymentConfirmed");
     },

@@ -17,10 +17,12 @@ const HomeSlide = ({ slide }: HomeSlideProps) => {
   }
   return (
     <View style={{ position: "relative" }}>
-      <Image
-        source={{ uri: slide?.imageUrl }}
-        style={{ width, height: width * aspectRatio }}
-      />
+      {slide?.imageUrl && (
+        <Image
+          source={{ uri: slide.imageUrl }}
+          style={{ width, height: width * aspectRatio }}
+        />
+      )}
       <Box padding="l" justifyContent="center" style={StyleSheet.absoluteFill}>
         <Text variant="header" color="white">
           {slide.title}

@@ -10,7 +10,7 @@ import { AuthProvider, PaymentsProvider } from "@yownes/core";
 import Root from "./src/navigation/Root";
 import theme from "./src/lib/theme";
 
-const uri = `${Constants.manifest.extra.apiUrl}/module/yownes/graphql`;
+const uri = `${Constants.manifest?.extra?.apiUrl}/module/yownes/graphql`;
 
 const App = () => {
   return (

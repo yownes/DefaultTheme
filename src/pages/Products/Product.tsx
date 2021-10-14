@@ -36,7 +36,9 @@ const Product = ({ route, navigation }: ProductProps) => {
   const [addToFavourite] = useAddToFavourite(id, data);
   const [removeFavourite] = useRemoveFavourite(id, data);
   const [qty, setQty] = useState(1);
-  const [options, setOptions] = useState({});
+  const [options, setOptions] = useState<
+    Record<string, string | null | undefined>
+  >({});
   useFocusEffect(() => {
     if (navigation.isFocused()) {
       setOpacity(1);
@@ -152,7 +154,7 @@ const Product = ({ route, navigation }: ProductProps) => {
                       <Box
                         marginRight="l"
                         backgroundColor={
-                          options[option.name] === value?.id
+                          option?.name && options[option.name] === value?.id
                             ? "greyscale5"
                             : "greyscale2"
                         }

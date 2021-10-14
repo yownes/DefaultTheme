@@ -30,7 +30,9 @@ const ProductSuggestion = ({ product }: ProductSuggestionProps) => {
       }}
     >
       <Card flexDirection="row">
-        <Image source={{ uri: product.image }} style={styles.image} />
+        {product.image && (
+          <Image source={{ uri: product.image }} style={styles.image} />
+        )}
         <Box padding="m">
           <Text>{product.name}</Text>
         </Box>

@@ -28,7 +28,9 @@ const Home = ({ navigation }: HomeProps) => {
   }
   return (
     <ScrollView>
-      <Image source={{ uri: data?.home?.banner }} style={styles.banner} />
+      {data?.home?.banner && (
+        <Image source={{ uri: data.home.banner }} style={styles.banner} />
+      )}
       <ScrollView horizontal snapToInterval={width} decelerationRate="fast">
         {data?.home?.slides?.slides?.map((slide) => (
           <HomeSlide key={slide?.id} slide={slide} />

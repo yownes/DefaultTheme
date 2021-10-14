@@ -58,7 +58,7 @@ const AnimatedView = ({
     const rotate = interpolate(
       translationX.value,
       inputRange,
-      [-Math.PI / 2, 0, Math.PI / 2],
+      [Math.PI / 2, 0, -Math.PI / 2],
       Extrapolate.CLAMP
     );
     const scale = interpolate(

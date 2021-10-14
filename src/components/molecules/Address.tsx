@@ -8,6 +8,8 @@ interface AddressProps {
   address: AddressFragment;
 }
 
+export const ADDRESS_HEIGHT = 150;
+
 const Address = ({ address }: AddressProps) => {
   return (
     <Card
@@ -15,6 +17,7 @@ const Address = ({ address }: AddressProps) => {
       backgroundColor="greyscale2"
       padding="m"
       flexDirection="row"
+      height={ADDRESS_HEIGHT}
     >
       <Stamp color="greyscale4" size={30} />
       <Box marginLeft="m">

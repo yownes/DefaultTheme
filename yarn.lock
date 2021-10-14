@@ -3320,20 +3320,20 @@
     graphql "^15.6.0"
     react "^17.0.2"
 
-"@yownes/api@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@yownes/api/-/api-1.5.0.tgz#a99904a783226207eff41a9920ba9a7edc6ef96a"
-  integrity sha512-tHqmBiFAJfasIrmRJsG3A6jfVRQrg7Sd1P7m9TNBnD3esS1VmrFTobqEQTDxwrYh1ZQuvptO2gOTnTJiRy5kcQ==
+"@yownes/api@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@yownes/api/-/api-1.5.2.tgz#a5d9781da76264bdf5f396550d7355562f094856"
+  integrity sha512-oWa4hh5Lqf4/WmMdbAqQjQJXTOIRNq/PxT7IiMkvwrQQcxqjWBm2+lzVCzlwux1QRwe43goG/u4RaHR5hwVOtA==
   dependencies:
     "@apollo/client" "^3.4.15"
     expo-secure-store "^10.2.0"
     graphql "^15.6.0"
     react "^17.0.2"
 
-"@yownes/core@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@yownes/core/-/core-1.5.0.tgz#78127582b1aecab711c8dbbdd7854be5388f05fd"
-  integrity sha512-W0tZUkPbIozvNBFjxYoZv+3TmdMvOCa32kutrumGaHUC/c50qFiEfd90gpp1ZaDZqEe5Td+3e4oKhbSkAWWeSg==
+"@yownes/core@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@yownes/core/-/core-1.5.2.tgz#d6b918358cd56880685ec615292a83a852c0451e"
+  integrity sha512-yAiXj8RN2+S3SmPS4Ug4dbNb63O9baWH5r6+wQzc7tabSnV2znXojGfHjvORdAXhExbU+BFvWfAjiXWvTslzkA==
   dependencies:
     "@stripe/stripe-react-native" "^0.2.2"
     "@yownes/api" "^1.1.1"

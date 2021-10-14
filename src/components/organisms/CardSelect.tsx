@@ -14,12 +14,13 @@ import { useCheckout } from "@yownes/core";
 import { Box, Text } from "../atoms";
 import { CreditCard, Placeholder, CREDIT_CARD_HEIGHT } from "../molecules";
 import BillingImage from "../images/Billing";
+import filterNulls from "../../lib/filterNulls";
 
 import Payments from "./Payments";
 
 interface CardSelectProps {
   onCancel: () => void;
-  cards?: PaymentMethodList_accountPaymentMethodList[];
+  cards?: (PaymentMethodList_accountPaymentMethodList | null)[] | null;
 }
 
 const ROTATION = 1.25;
@@ -30,8 +31,9 @@ const CardSelect = ({ cards, onCancel }: CardSelectProps) => {
   const visible = useSharedValue(false);
   const closing = useSharedValue(false);
   useEffect(() => {
-    if ((cards?.length ?? 0) > 0 && !paymentMethod && !closing.value) {
-      setPaymentMethod?.(cards?.[0]);
+    const list = cards?.filter(filterNulls);
+    if (list && list?.length > 0 && !paymentMethod && !closing.value) {
+      setPaymentMethod?.(list[0]);
     }
   }, [cards, closing.value, paymentMethod, setPaymentMethod]);
   useEffect(() => {
@@ -92,7 +94,7 @@ const CardSelect = ({ cards, onCancel }: CardSelectProps) => {
             onPress={() => {
               visible.value = false;
               closing.value = true;
-              rotateX.value = withTiming(ROTATION, null, () => {
+              rotateX.value = withTiming(ROTATION, {}, () => {
                 runOnJS(cancelSelection)();
               });
             }}
