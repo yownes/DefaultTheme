@@ -18,8 +18,8 @@ export type ProductStackParamList = {
 const ProductStack = createSharedElementStackNavigator<ProductStackParamList>();
 
 export type ProductProps = CompositeScreenProps<
-  BottomTabScreenProps<TabsParamList>,
-  StackScreenProps<ProductStackParamList, "Product">
+  StackScreenProps<ProductStackParamList, "Product">,
+  BottomTabScreenProps<TabsParamList>
 >;
 export type ImagesProps = StackScreenProps<ProductStackParamList, "Images">;
 
@@ -40,8 +40,11 @@ const ProductNavigator = () => (
         gestureEnabled: false,
         cardStyle: { backgroundColor: "transparent" },
       }}
-      sharedElements={(route: ImagesProps["route"]) => {
-        const { index, product } = route.params;
+      sharedElements={(route) => {
+        const {
+          index,
+          product,
+        } = route.params as ImagesProps["route"]["params"];
         return [`image.${index}.${product.id}`];
       }}
     />

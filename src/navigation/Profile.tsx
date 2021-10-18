@@ -58,6 +58,7 @@ const ProfileNavigation = () => {
       <ProfileStack.Navigator
         initialRouteName="Profile"
         screenOptions={{ presentation: "modal" }}
+        detachInactiveScreens={false}
       >
         <ProfileStack.Screen name="Profile" component={Profile} />
         <ProfileStack.Screen name="AddDirection" component={AddDirection} />
@@ -74,8 +75,11 @@ const ProfileNavigation = () => {
             gestureEnabled: false,
             cardStyle: { backgroundColor: "transparent" },
           }}
-          sharedElements={(route: PaymentMethodProps["route"]) => {
-            return [`card.${route.params.pm.id}`];
+          sharedElements={(route) => {
+            const {
+              pm,
+            } = route.params as PaymentMethodProps["route"]["params"];
+            return [`card.${pm.id}`];
           }}
         />
         <ProfileStack.Screen name="Orders" component={Orders} />
