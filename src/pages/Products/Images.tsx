@@ -36,8 +36,12 @@ const Images = ({ route, navigation }: ImagesProps) => {
         snapPoint(translationY, velocityY, [0, height]) === height;
 
       if (snapBack) {
-        runOnJS(navigation.navigate)("Product", {
-          index: scrollPosition.value / width,
+        runOnJS(navigation.navigate)({
+          name: "Product",
+          params: {
+            id: String(product.id),
+            index: scrollPosition.value / width,
+          },
         });
       } else {
         isGestureActive.value = false;

@@ -1,12 +1,12 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { SharedElement } from "react-navigation-shared-element";
 import { useGetPaymentMethods, PaymentMethodFragment } from "@yownes/api";
 
 import { Box, Button, Text } from "../atoms";
 import { CreditCard, Placeholder, Slider } from "../molecules";
 import BillingImage from "../images/Billing";
+import { useNavigation } from "../../navigation/Root";
 
 interface PaymentsProps {
   onSelect: (paymentMethod: PaymentMethodFragment) => void;
@@ -47,7 +47,14 @@ const Payments = ({ onSelect }: PaymentsProps) => {
         />
       )}
       <Button
-        onPress={() => navigation.navigate("AddPaymentMethod")}
+        onPress={() =>
+          navigation.navigate("App", {
+            screen: "Perfil",
+            params: {
+              screen: "AddPaymentMethod",
+            },
+          })
+        }
         marginTop="l"
         label="Añadir nuevo"
       />

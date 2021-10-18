@@ -14,7 +14,7 @@ import Register from "../pages/Profile/Register";
 import Favourites from "../pages/Profile/Favourites";
 import PaymentMethod from "../pages/Profile/PaymentMethod";
 
-type ProfileStackParamList = {
+export type ProfileStackParamList = {
   Profile: undefined;
   Login: undefined;
   Register: undefined;
@@ -55,7 +55,10 @@ const ProfileNavigation = () => {
 
   if (isAuthenticated) {
     return (
-      <ProfileStack.Navigator initialRouteName="Profile" mode="modal">
+      <ProfileStack.Navigator
+        initialRouteName="Profile"
+        screenOptions={{ presentation: "modal" }}
+      >
         <ProfileStack.Screen name="Profile" component={Profile} />
         <ProfileStack.Screen name="AddDirection" component={AddDirection} />
         <ProfileStack.Screen
@@ -82,7 +85,7 @@ const ProfileNavigation = () => {
     );
   } else {
     return (
-      <ProfileStack.Navigator mode="modal">
+      <ProfileStack.Navigator screenOptions={{ presentation: "modal" }}>
         <ProfileStack.Screen name="Login" component={Login} />
         <ProfileStack.Screen name="Register" component={Register} />
       </ProfileStack.Navigator>

@@ -1,23 +1,35 @@
 import React from "react";
 import { StackScreenProps } from "@react-navigation/stack";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { Product_product } from "@yownes/api";
 
 import Images from "../pages/Products/Images";
 import Product from "../pages/Products/Product";
 
-const ProductStack = createSharedElementStackNavigator();
+import { TabsParamList } from "./Root";
 
-type AppStackParamList = {
+export type ProductStackParamList = {
   Product: { id: string; index?: number };
   Images: { product: Product_product; index: number };
 };
 
-export type ProductProps = StackScreenProps<AppStackParamList, "Product">;
-export type ImagesProps = StackScreenProps<AppStackParamList, "Images">;
+const ProductStack = createSharedElementStackNavigator<ProductStackParamList>();
+
+export type ProductProps = CompositeScreenProps<
+  BottomTabScreenProps<TabsParamList>,
+  StackScreenProps<ProductStackParamList, "Product">
+>;
+export type ImagesProps = StackScreenProps<ProductStackParamList, "Images">;
 
 const ProductNavigator = () => (
-  <ProductStack.Navigator mode="modal">
+  <ProductStack.Navigator
+    screenOptions={{
+      presentation: "modal",
+    }}
+    detachInactiveScreens={false}
+  >
     <ProductStack.Screen name="Product" component={Product} />
     <ProductStack.Screen
       name="Images"

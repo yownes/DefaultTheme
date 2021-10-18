@@ -40,7 +40,7 @@ const PaymentMethod = ({ route, navigation }: PaymentMethodProps) => {
         snapPoint(translationY, velocityY, [0, height]) === height;
 
       if (snapBack) {
-        runOnJS(navigation.navigate)("Profile");
+        runOnJS(navigation.navigate)({ name: "Profile" });
       } else {
         isGestureActive.value = false;
         translation.x.value = withSpring(0);

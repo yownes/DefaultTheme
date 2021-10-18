@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
@@ -19,6 +18,7 @@ import {
 } from "@yownes/api";
 
 import { Box, Chevron, Text } from "../atoms";
+import { useNavigation } from "../../navigation/Root";
 
 interface CategoryProps {
   category?: Categories_categoriesList_content;

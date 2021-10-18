@@ -1,10 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, Image, TouchableOpacity } from "react-native";
 import { BasicProduct } from "@yownes/api";
 
 import { useTheme } from "../../lib/theme";
 import { Box, Tag, Text } from "../atoms";
+import { useNavigation } from "../../navigation/Root";
 
 interface ProductCardProps {
   product: BasicProduct;
@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <TouchableOpacity
       onPress={() => {
         if (product.id) {
-          navigation.navigate("Product", {
+          navigation.navigate("ProductStack", {
             screen: "Product",
             params: { id: product.id },
           });

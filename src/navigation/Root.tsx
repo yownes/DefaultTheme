@@ -3,6 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { StackScreenProps } from "@react-navigation/stack";
 import { Categories_categoriesList_content_categories } from "@yownes/api";
+import {
+  NavigatorScreenParams,
+  useNavigation as useNativeNavigation,
+} from "@react-navigation/native";
 
 import Categories from "../pages/Categories/Categories";
 import ProductsPage from "../pages/Products/Products";
@@ -18,29 +22,41 @@ import {
 } from "../components/icons";
 import { useTheme } from "../lib/theme";
 
-import Profile from "./Profile";
-import Home from "./Home";
-import Cart from "./Cart";
-import Product from "./Product";
+import Profile, { ProfileStackParamList } from "./Profile";
+import Home, { HomeStackParamList } from "./Home";
+import Cart, { CartStackParamList } from "./Cart";
+import Product, { ProductStackParamList } from "./Product";
+
+export type TabsParamList = {
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Categorías: undefined;
+  Carrito: NavigatorScreenParams<CartStackParamList>;
+  Perfil: NavigatorScreenParams<ProfileStackParamList>;
+};
 
 type AppStackParamList = {
-  App: undefined;
+  App: NavigatorScreenParams<TabsParamList>;
   Products: { category?: Categories_categoriesList_content_categories };
-  Product: undefined;
+  ProductStack: NavigatorScreenParams<ProductStackParamList>;
 };
 
 export type ProductsProps = StackScreenProps<AppStackParamList, "Products">;
+export type AppProps = StackScreenProps<AppStackParamList>;
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabsParamList>();
 const Stack = createSharedElementStackNavigator<AppStackParamList>();
+
+export const useNavigation = () =>
+  useNativeNavigation<AppProps["navigation"]>();
 
 const Root = () => {
   const theme = useTheme();
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: theme.colors.primary,
-        inactiveTintColor: theme.colors.dark,
+      screenOptions={{
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.dark,
+        headerShown: false,
       }}
     >
       <Tab.Screen
@@ -108,7 +124,7 @@ const App = () => {
         component={Root}
       />
       <Stack.Screen
-        name="Product"
+        name="ProductStack"
         options={{ headerShown: false }}
         component={Product}
       />

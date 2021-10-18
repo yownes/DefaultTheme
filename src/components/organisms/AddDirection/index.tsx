@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button as NativeButton } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigation } from "@react-navigation/native";
 import {
   useAddAddress,
   useDeleteAddress,
@@ -10,6 +9,7 @@ import {
   AccountAddressInput,
 } from "@yownes/api";
 
+import { useNavigation } from "../../../navigation/Root";
 import { Box, Text, Switch, Button } from "../../atoms";
 import { Confirm, InputWithErrors, SelectProvider } from "../../molecules";
 

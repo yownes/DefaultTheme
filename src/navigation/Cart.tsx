@@ -1,3 +1,5 @@
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { CompositeScreenProps } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackScreenProps,
@@ -8,17 +10,22 @@ import Cart from "../pages/Cart/Cart";
 import Checkout from "../pages/Cart/Checkout";
 import PaymentConfirmed from "../pages/Cart/PaymentConfirmed";
 
-type CartStackParamList = {
+import { TabsParamList } from "./Root";
+
+export type CartStackParamList = {
   Cart: undefined;
   Checkout: undefined;
   PaymentConfirmed: undefined;
 };
 
-export type CartProps = StackScreenProps<CartStackParamList, "Cart">;
+export type CartProps = CompositeScreenProps<
+  BottomTabScreenProps<TabsParamList>,
+  StackScreenProps<CartStackParamList, "Cart">
+>;
 export type CheckoutProps = StackScreenProps<CartStackParamList, "Checkout">;
-export type PaymentConfirmedProps = StackScreenProps<
-  CartStackParamList,
-  "PaymentConfirmed"
+export type PaymentConfirmedProps = CompositeScreenProps<
+  BottomTabScreenProps<TabsParamList>,
+  StackScreenProps<CartStackParamList, "PaymentConfirmed">
 >;
 
 const CartStack = createStackNavigator<CartStackParamList>();

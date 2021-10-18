@@ -1,11 +1,11 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useGetAddresses, AddressList_accountAddressList } from "@yownes/api";
 
 import { Box, Button, Text } from "../atoms";
 import { Address, Placeholder, Slider } from "../molecules";
 import ShippingImage from "../images/Shipping";
+import { useNavigation } from "../../navigation/Root";
 
 interface DirectionsProps {
   title?: string;
@@ -42,7 +42,15 @@ const Directions = ({ title, onSelect }: DirectionsProps) => {
         />
       )}
       <Button
-        onPress={() => navigation.navigate("AddDirection")}
+        onPress={() =>
+          navigation.navigate("App", {
+            screen: "Perfil",
+            params: {
+              screen: "AddDirection",
+              params: {},
+            },
+          })
+        }
         marginTop="l"
         label="Añadir nueva"
       />

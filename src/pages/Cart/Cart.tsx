@@ -40,7 +40,9 @@ const Cart = ({ navigation }: CartProps) => {
             text: "Iniciar sesión",
             style: "default",
             onPress: () => {
-              navigation.navigate("Login");
+              navigation.navigate("Perfil", {
+                screen: "Login",
+              });
             },
           },
         ]
